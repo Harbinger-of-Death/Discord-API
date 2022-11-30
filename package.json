@@ -1,0 +1,19 @@
+{
+  "name": "discord-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "discord.js": "^14.2.0",
+    "form-data": "^4.0.0",
+    "node-fetch": "^2.6.7",
+    "ws": "^8.8.1"
+  }
+}
