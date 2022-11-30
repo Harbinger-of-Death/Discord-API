@@ -91,6 +91,14 @@ class InputTextBuilder {
             placeholder: this.placeholder
         }
     }
+
+    static from(textInput) {
+        if(textInput) {
+            return new InputTextBuilder(textInput)
+        }
+
+        throw new RangeError(`Please specify a valid component`)
+    }
 }
 
 module.exports = InputTextBuilder

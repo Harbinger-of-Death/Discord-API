@@ -72,7 +72,7 @@ class ButtonBuilder {
 
     static from(button) {
         if(button) {
-            if(button.type !== 2) throw new TypeError(`Invalid Component type`)
+            if(button.type !== ComponentTypesEnums.Button) throw new TypeError(`Invalid Component type`)
             return new ButtonBuilder(button)
         }
 

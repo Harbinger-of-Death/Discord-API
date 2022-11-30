@@ -9,7 +9,8 @@ class MessageComponentInteraction extends BaseInteraction {
     }
 
     get component() {
-        return this.message?.components.reduce((acc, prev) => acc = prev.components.find(o => o.customId === this.customId), {})
+        if(this.message) return this.message.components.flatMap(o => o.components).find(component => component.customId === this.customId)
+        return null
     }
 
     async update(options = {}) {

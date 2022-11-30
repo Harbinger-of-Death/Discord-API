@@ -2046,6 +2046,41 @@ export interface Oauth2ClientOptions {
     clientSecret: string
 }
 
+export interface TextInputComponent {
+    /**
+     * The custom id of this Text Input
+     */
+    customId: string
+    /**
+     * The style of this Text Input
+     */
+    style: number
+    /**
+     * The label of this Text Input
+     */
+    label: string
+    /**
+     * The minimum length set for this Text input
+     */
+    minLength: number
+    /**
+     * The maximum length set for this Text Input
+     */
+    maxLength: number
+    /**
+     * Whether or not this Text Input is required to be filled
+     */
+    required: boolean
+    /**
+     * The pre-filled value of this Text Input
+     */
+    value: string
+    /**
+     * The placeholder of this Text Input
+     */
+    placeholder: string
+}
+
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
 export type GuildMemberFlagsStrings = "DidRejoin" | "CompletedOnboarding"
 export type GuildMemberFlagsResolvable = bigint | GuildMemberFlagsStrings

@@ -3,7 +3,6 @@ const ReactionManager = require("../Managers/ReactionManager");
 const Collection = require("../Util/Collection");
 const { SnowflakeRegex, NonSystemMessageTypes, MessageTypeEnums } = require("../Util/Constants");
 const MessageFlags = require("../Util/MessageFlags");
-const Permissions = require("../Util/Permissions");
 const Snowflake = require("../Util/Snowflake");
 const Application = require("./Application");
 const Attachment = require("./Attachment");

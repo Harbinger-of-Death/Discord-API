@@ -34,6 +34,11 @@ class AttachmentBuilder {
             description: this.description
         }
     }
+
+    static from(attachment) {
+        if(attachment) return new AttachmentBuilder(attachment)
+        throw new RangeError(`Please specify an Attachment`)
+    }
 }
 
 module.exports = AttachmentBuilder

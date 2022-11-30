@@ -1,4 +1,4 @@
-import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, RoleConnectionMetadata, Oauth2ClientOptions } from "./Typings/discord-api-types";
+import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, RoleConnectionMetadata, Oauth2ClientOptions, TextInputComponent } from "./Typings/discord-api-types";
 import { EventEmitter } from "node:events"
 import { WebSocket } from "ws";
 
@@ -949,7 +949,7 @@ export class InputTextBuilder {
     /**
      * Makes a Builder from an API Input Text data
      */
-    public static from(inputText: {}): InputTextBuilder
+    public static from(inputText: TextInputComponent): InputTextBuilder
     toJSON(): {}
 }
 
@@ -2443,6 +2443,10 @@ export class Attachment extends Base {
      * Whether or not this is an Ephemeral Attachment
      */
     public ephemeral: Readonly<boolean>
+    /**
+     * Whether or not this Attachment is spoilered
+     */
+    public spoiler: Readonly<boolean>
 }
 
 export class MessageMentions extends Base {
@@ -5884,6 +5888,10 @@ export class AttachmentBuilder {
      * Sets the spoiler state of this Attachment
      */
     public setSpoiler(): this
+    /**
+     * Resolve an Attachment data to this AttachmentBuilder
+     */
+    public static from(attachment: Attachment): AttachmentBuilder
 }
 
 export class GuildMemberFlags extends Bitfield {

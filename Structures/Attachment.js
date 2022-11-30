@@ -46,6 +46,10 @@ class Attachment extends Base {
         return this.data?.ephemeral ?? null
     }
 
+    get spoiler() {
+        return this.filename?.startsWith("SPOILER_")
+    }   
+
 }
 
 module.exports = Attachment
