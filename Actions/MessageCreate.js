@@ -11,7 +11,7 @@ class MessageCreate extends BaseAction {
         const packet = data.d
         if(this.client.partials?.includes(PartialsEnums.Channel) && !this.client.channels.cache.has(packet.channel_id)) await this.cacher.cacheDm(packet.channel_id)
         const channel = this.client.channels.cache.get(packet.channel_id)
-        const message = channel?.messages._add(packet, { cache: true })
+        const message = channel?.messages._add(packet, { cache: true }, { id: packet.id })
         return this.client.emit(EventTypes.MessageCreate, message)
     }
 }

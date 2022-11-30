@@ -9,14 +9,10 @@ class GuildMemberManager extends CachedManager  {
         this.guildId = guildId ?? null
     }
 
-    _add(members, options = { cache: true, force: false }) {
-        return super._add(members, options)
-    }
-
     async fetch(member, options) {
         if(member instanceof GuildMember || member instanceof User || typeof member === "string") return this._fetchId(member, options)
         if(typeof member === "object" && !options) options = member
-        const { cache = true, force = false, query = "", limit = 0, withPresence = false, user, time = this.client.restRequestTimeout } = options ?? {}
+        const { cache = true, force = false, query = "", limit = 0, withPresence = false, user, time = 120e3 } = options ?? {}
         this.client.ws.send({
             op: OpCodes.RequestGuildMembers,
             d: {
@@ -37,7 +33,7 @@ class GuildMemberManager extends CachedManager  {
             this.client.on(EventTypes.GuildMembersChunk, chunk => {
                 clearTimeout(timeout)
                 
-                if(chunk.guild_id === this.guildId) resolve(new this.cache.constructor(chunk.members?.map(o => [o.user?.id, this._add(o, { cache, force })])))
+                if(chunk.guild_id === this.guildId) resolve(new this.cache.constructor(chunk.members?.map(o => [o.user?.id, this._add(o, { cache, force }, { id: o.user?.id })])))
             })
         })
     }
@@ -48,7 +44,7 @@ class GuildMemberManager extends CachedManager  {
         if(!SnowflakeRegex.test(memberId)) throw new RangeError(`Invalid Guild Member`)
         if(this.cache.has(memberId) && !force) return this.cache.get(memberId)
         member = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/members/${memberId}`)
-        return this._add(member, { cache, force: true })
+        return this._add(member, { cache, force: true }, { id: member.user?.id })
     }
 
     async search(options = {}) {
@@ -59,7 +55,18 @@ class GuildMemberManager extends CachedManager  {
         }
 
         const members = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/members/search`, { query })
-        return new this.cache.constructor(members?.map(o => [o.user?.id, this._add(o, { cache, force })]))
+        return new this.cache.constructor(members?.map(o => [o.user?.id, this._add(o, { cache, force }, { id: o.user?.id })]))
+    }
+
+    async list(options = {}) {
+        const { cache = true, force = false } = options
+        const query = {
+            limit: options.limit ?? 1000,
+            after: typeof options.after === "string" ? options.after : options.after?.id
+        }
+
+        const members = await this.client.api.get(`${this.client.root}guilds/${this.guildId}/members`, { query })
+        return new this.cache.constructor(members?.map(o => [o.user?.id, this._add(o, { cache, force }, { id: o.user?.id })]))
     }
 
     async edit(member, options = {}) {
@@ -69,7 +76,7 @@ class GuildMemberManager extends CachedManager  {
         const body =  GuildMemberManager.transformPayload(options)
         if(this.client.user.id === memberId && body.nick?.length) memberId = "@me"
         member = await this.client.api.patch(`${this.client.root}/guilds/${this.guildId}/members/${memberId}`, { body, reason })
-        return this._add(member, { cache: true, force: true })
+        return this._add(member, { cache: true, force: true }, { id: member.user?.id })
     }
 
     async kick(member, reason) {
@@ -106,7 +113,7 @@ class GuildMemberManager extends CachedManager  {
         }
 
         user = await this.client.api.put(`${this.client.root}/guilds/${this.guildId}/members/${userId}`, { body })
-        return this._add(user, { cache: true })
+        return this._add(user, { cache: true }, { id: user.user?.id })
     }
 
     async addRole(user, options = {}) {

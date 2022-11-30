@@ -5,8 +5,8 @@ class MessageMentions extends Base {
     constructor(data = {}, guildId, client) {
         super(client)
         this.guildId = guildId ?? null
-        this.users = new Collection(data.mentions?.map(o => [o.id, this.client.users._add(o)]))
-        this.members = new Collection(data.mentions?.map(o => [o.id, this.guild?.members._add({ id: o.id, ...o.member })]))
+        this.users = new Collection(data.mentions?.map(o => [o.id, this.client.users._add(o, { cache: true }, { id: o.id })]))
+        this.members = new Collection(data.mentions?.map(o => [o.id, this.guild?.members._add(o.member, { cache: true }, { id: o.id })]))
         this.roles = new Collection(data.roles?.map(o => [o, this.guild?.roles.cache.get(o)]))
         this.channels = new Collection(data.channels?.map(o => {
             const channelId = o.replace(/[^\d]+/gi, "")

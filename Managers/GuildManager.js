@@ -13,10 +13,6 @@ class GuildManager extends CachedManager {
         super(Guild, client)
     }
 
-    _add(guilds, options = { cache: true, force: false }) {
-        return super._add(guilds, options)
-    }
-
     async fetch(guild, options) {
         if(guild instanceof Guild || typeof guild === "string") return this._fetchId(guild, options)
         if(typeof guild === "object" && !options) options = guild

@@ -9,10 +9,6 @@ class GuildBanManager extends CachedManager {
         this.guildId = guildId ?? null
     }
 
-    _add(bans, options = { cache: true, force: false }) {
-        return super._add(bans, options)
-    }
-
     async fetch(user, options) {
         if(user instanceof User || user instanceof GuildMember || typeof user === "string") return this._fetchId(user, options)
         if(typeof user === "object" & !options) options = user

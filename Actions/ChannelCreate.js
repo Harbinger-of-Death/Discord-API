@@ -10,7 +10,7 @@ class ChannelCreate extends BaseAction {
 
     _patch(data) {
         const packet = data.d
-        const channel = this.client.channels._add(packet, { cache: true }, { guildId: packet.guild_id })
+        const channel = this.client.channels._add(packet, { cache: true }, { guildId: packet.guild_id, id: packet.id })
         return this.client.emit(EventTypes.ChannelCreate, channel)
     }
 }

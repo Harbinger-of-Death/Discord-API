@@ -11,7 +11,7 @@ class GuildScheduledEventUpdate extends BaseAction {
         const packet = data.d
         const manager = this.client.guilds.cache.get(packet.guild_id)?.guildScheduledEvents
         const oldScheduledEvent = manager.cache.get(packet.id)
-        const newScheduledEvent = manager._add(packet, { cache: true, force: true })
+        const newScheduledEvent = manager._add(packet, { cache: true, force: true }, { id: packet.id })
         if(oldScheduledEvent?.equals(newScheduledEvent)) return;
         return this.client.emit(EventTypes.GuildScheduledEventUpdate, oldScheduledEvent, newScheduledEvent)
     }

@@ -16,8 +16,8 @@ class GuildStickersUpdate extends BaseAction {
             const sticker = manager.cache.get(val.id)
             if(sticker) {
                 deletion.delete(val.id)
-                if(!sticker?.equals(val)) return this.client.emit(EventTypes.StickersUpdate, sticker, manager._add(val, { cache: true, force: true }))
-            } else if(!sticker && val) return this.client.emit(EventTypes.StickersCreate, manager._add(val, { cache: true }))
+                if(!sticker?.equals(val)) return this.client.emit(EventTypes.StickersUpdate, sticker, manager._add(val, { cache: true, force: true }, { id: val.id }))
+            } else if(!sticker && val) return this.client.emit(EventTypes.StickersCreate, manager._add(val, { cache: true }, { id: val.id }))
         }
 
         for(const key of deletion.keys()) {

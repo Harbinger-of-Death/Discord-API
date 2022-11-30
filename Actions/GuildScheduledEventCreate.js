@@ -10,7 +10,7 @@ class GuildScheduledEventCreate extends BaseAction {
     _patch(data) {
         const packet = data.d
         const manager = this.client.guilds.cache.get(packet.guild_id)?.guildScheduledEvents
-        const scheduledEvent = manager._add(packet, { cache: true })
+        const scheduledEvent = manager._add(packet, { cache: true }, { id: packet.id })
         return this.client.emit(EventTypes.GuildScheduledEventCreate, scheduledEvent)
     }
 }

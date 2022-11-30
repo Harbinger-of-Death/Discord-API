@@ -8,10 +8,6 @@ class GuildStickerManager extends CachedManager {
         this.guildId = guildId ?? null
     }
 
-    _add(stickers, options = { cache: true, force: false }) {
-        return super._add(stickers, options)
-    }
-
     async fetch(sticker, options) {
         if(sticker instanceof Sticker || typeof sticker === "string") return this._fetchId(sticker, options)
         if(typeof sticker === "object" && !options) options = sticker

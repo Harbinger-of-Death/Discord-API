@@ -15,7 +15,7 @@ class ApplicationCommandPermissionsUpdate extends BaseAction {
             const command = guild.commands.cache.get(packet.id)
             if(command) {
                 const oldPermission = command.permissions.cache.get(packet.id)
-                const newPermission = command.permissions._add(packet, { cache: true, force: true })
+                const newPermission = command.permissions._add(packet, { cache: true, force: true }, { id: packet.id })
                 return this.client.emit(EventTypes.ApplicationCommandPermissionsUpdate, oldPermission, newPermission)
             }
         }

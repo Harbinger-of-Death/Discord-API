@@ -7,7 +7,7 @@ class EmojiManager extends CachedManager {
 
     _add(emojis, options = { cache: true, force: false }, extras = this.extras ?? {}) {
         if(!emojis) return null;
-        const emojiId = typeof emojis === "string" ? emojis : emojis.id
+        const emojiId = typeof emojis === "string" ? emojis : extras.id ?? emojis.id
         let emoji
         if(this.cache.has(emojiId) && !options.force) {
             emoji = this.cache.get(emojiId)

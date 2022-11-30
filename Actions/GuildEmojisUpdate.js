@@ -17,10 +17,10 @@ class GuildEmojisUpdate extends BaseAction {
                 if(cachedEmoji) {
                     deletion.delete(val.id)
                     if(!cachedEmoji.equals(val)) {
-                        return this.client.emit(EventTypes.EmojiUpdate, cachedEmoji, this.client.emojis._add(val, { cache: true, force: true }, { guildId: packet.guild_id }))}
+                        return this.client.emit(EventTypes.EmojiUpdate, cachedEmoji, this.client.emojis._add(val, { cache: true, force: true }, { guildId: packet.guild_id, id: val.id }))}
                 }
                 if(!cachedEmoji && val) {
-                    return this.client.emit(EventTypes.EmojiCreate, this.client.emojis._add(val, { cache: true, force: true }, { guildId: packet.guild_id }))}
+                    return this.client.emit(EventTypes.EmojiCreate, this.client.emojis._add(val, { cache: true, force: true }, { guildId: packet.guild_id, id: val.id }))}
             }
 
             for(const key of deletion.keys()) {

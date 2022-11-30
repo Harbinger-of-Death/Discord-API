@@ -13,7 +13,7 @@ class ChannelManager extends CachedManager {
 
     _add(channels, options = { cache: true, force: false }, extras = {}) {
         if(!channels) return null;
-        const channelId = typeof channels === "string" ? channels : channels.id
+        const channelId = typeof channels === "string" ? channels : extras.id ?? channels.id
         let channel
         if(this.cache.has(channelId) && !options.force) {
             channel = this.cache.get(channelId)

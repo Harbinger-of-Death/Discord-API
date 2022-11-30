@@ -11,7 +11,7 @@ class MessageUpdate extends BaseAction {
         const packet = data.d
         const channel = this.client.channels.cache.get(packet.channel_id)
         const oldMessage = channel?.messages.cache.get(packet.id)
-        const newMessage = channel?.messages._add(packet, { cache: true, force: true })
+        const newMessage = channel?.messages._add(packet, { cache: true, force: true }, { id: packet.id })
         return this.client.emit(EventTypes.MessageUpdate, oldMessage, newMessage)
     }
 }

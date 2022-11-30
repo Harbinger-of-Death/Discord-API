@@ -26,7 +26,7 @@ class CachedManager extends Base {
 
     _add(data, options = { cache: true, force: false }, extras = this.extras ?? {}) {
         if(!data) return null;
-        const snowflake = typeof data === "string" ? data : data.user?.id ?? data.user_id ?? data.id
+        const snowflake = typeof data === "string" ? data : extras.id ?? data.user_id ?? data.user?.id ?? data.id
         let entry
         if(this.cache.has(snowflake) && !options.force) {
             entry = this.cache.get(snowflake)

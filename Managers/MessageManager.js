@@ -10,11 +10,7 @@ class MessageManager extends CachedManager {
         this.channelId = channelId
         this.guildId = guildId
     }
-
-    _add(messages, options = { cache: true, force: false }) {
-        return super._add(messages, options)
-    }
-
+    
     async fetch(message, options) {
         if(message instanceof Message || typeof message === "string") return this._fetchId(message, options)
         if(typeof message === "object" && !options) options = message

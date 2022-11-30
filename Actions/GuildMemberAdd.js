@@ -11,11 +11,7 @@ class GuildMemberAdd extends BaseAction {
     _patch(data) {
         const packet = data.d
         const guild = this.client.guilds.cache.get(packet.guild_id)
-        if(guild) {
-            return this.client.emit(EventTypes.GuildMemberAdd, guild.members._add(packet, { cache: true }))
-        }
-
-        return;
+        if(guild) return this.client.emit(EventTypes.GuildMemberAdd, guild.members._add(packet, { cache: true }, { id: packet.user?.id }))
     }
 
 }

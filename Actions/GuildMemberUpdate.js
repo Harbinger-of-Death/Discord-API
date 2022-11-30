@@ -13,7 +13,7 @@ class GuildMemberUpdate extends BaseAction {
         const guild = this.client.guilds.cache.get(packet.guild_id)
         if(guild) {
             const oldMember = guild.members.cache.get(packet.user?.id)
-            const newMember = guild.members._add(packet, { cache: true, force: true })
+            const newMember = guild.members._add(packet, { cache: true, force: true }, { id: packet.user?.id })
             if(oldMember?.equals(newMember)) return;
             return this.client.emit(EventTypes.GuildMemberUpdate, oldMember, newMember)
         }

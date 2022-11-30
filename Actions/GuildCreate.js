@@ -8,7 +8,7 @@ class GuildCreate extends BaseAction {
 
     _patch(data) {
         const packet = data.d
-        const guild = this.client.guilds._add(packet, { cache: true })
+        const guild = this.client.guilds._add(packet, { cache: true }, { id: packet.id })
         if(packet.unavailable) return this.client.emit(EventTypes.GuildUnavailable, guild)
         this.cacher.cacheChannels(packet)
         this.cacher.cacheEmojis(packet)

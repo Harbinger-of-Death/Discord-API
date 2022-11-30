@@ -12,7 +12,7 @@ class GuildScheduledEventUserAdd extends BaseAction {
         const guild = this.client.guilds.cache.get(packet.guild_id)
         const event = guild.guildScheduledEvents.cache.get(packet.guild_scheduled_event_id)
         if(event) {
-            const user = event.users._add({ user: this.client.users.cache.get(packet.user_id) }, { cache: true })
+            const user = event.users._add({ user: this.client.users.cache.get(packet.user_id) }, { cache: true }, { id: packet.user_id })
             return this.client.emit(EventTypes.GuildScheduledEventUserAdd, user)
         }
     }
