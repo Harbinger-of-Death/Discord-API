@@ -10,7 +10,7 @@ class MessageManager extends CachedManager {
         this.channelId = channelId
         this.guildId = guildId
     }
-    
+
     async fetch(message, options) {
         if(message instanceof Message || typeof message === "string") return this._fetchId(message, options)
         if(typeof message === "object" && !options) options = message
@@ -23,7 +23,6 @@ class MessageManager extends CachedManager {
         }
 
         const messages = await this.client.api.get(`${this.client.root}/channels/${this.channelId}/messages`, { query })
-        return messages
         return new this.cache.constructor(messages?.map(o => [o.id, this._add(o, { cache, force })]))
     }
 

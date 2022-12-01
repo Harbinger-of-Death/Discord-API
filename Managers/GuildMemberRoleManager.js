@@ -2,10 +2,9 @@ const Role = require("../Structures/Role");
 const { SnowflakeRegex } = require("../Util/Constants");
 const CachedManager = require("./CachedManager");
 class GuildMemberRoleManager extends CachedManager {
-    constructor(data = {}, guildId, client) {
-        super(Role, client, [], { guildId })
-        this.member = data.member ?? null
-        this.roles = data.roles ?? []
+    constructor(member, guildId, iterable, client) {
+        super(Role, client, iterable, { guildId })
+        this.member = member ?? null
         this.guildId = guildId ?? null
     }
 
@@ -100,11 +99,6 @@ class GuildMemberRoleManager extends CachedManager {
 
     get everyone() {
         return this.client.guilds.cache.get(this.guildId)?.roles.cache.get(this.guildId) ?? null
-    }
-
-
-    get cache() {
-        return this.client.guilds.cache.get(this.guildId)?.roles.cache.filter(o => this.roles?.includes(o.id)).set(this.everyone.id, this.everyone)
     }
 
 }

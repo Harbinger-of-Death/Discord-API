@@ -7,7 +7,7 @@ class GuildMember extends Base {
     constructor(data = {}, client, extras) {
         super(client)
         Object.defineProperty(this, "_data", { value: data })
-        this.guildId = data.guild_id ?? extras?.guildId ?? null
+        this.guildId = extras.guildId ?? data.guild_id ?? null
         this.partial = data.partial ?? false
         this.id = data.id ?? data.user?.id ?? null
         this.banner = data.banner ?? null
@@ -27,7 +27,9 @@ class GuildMember extends Base {
     }
 
     get roles() {
-        return new GuildMemberRoleManager({ roles: this._data?.roles, member: this }, this.guildId, this.client)
+        const roles = this.guild?.roles.cache.filter(o => this._data.roles?.includes(o.id))
+        roles.set(this.guildId, this.guild?.roles.everyone)
+        return new GuildMemberRoleManager(this, this.guildId, [...roles.values()], this.client)
     }
 
     get permissions() {

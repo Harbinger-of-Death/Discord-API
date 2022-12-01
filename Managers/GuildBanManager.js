@@ -9,6 +9,10 @@ class GuildBanManager extends CachedManager {
         this.guildId = guildId ?? null
     }
 
+    _add(bans, options = { cache: true, force: false }, extras = {}) {
+        return super._add(bans, options, Object.assign(this.extras, extras))
+    }
+
     async fetch(user, options) {
         if(user instanceof User || user instanceof GuildMember || typeof user === "string") return this._fetchId(user, options)
         if(typeof user === "object" & !options) options = user
@@ -20,7 +24,7 @@ class GuildBanManager extends CachedManager {
         }
 
         const bans = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/bans`, { query })
-        return new this.cache.constructor(bans?.map(o => [o.user?.id, this._add(o, { cache, force })]))
+        return new this.cache.constructor(bans?.map(o => [o.user?.id, this._add(o, { cache, force }, { id: o.user?.id })]))
     }
 
     async _fetchId(user, options = {}) {
@@ -29,7 +33,7 @@ class GuildBanManager extends CachedManager {
         if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
         if(this.cache.has(userId) && !force) return this.cache.get(userId)
         const ban = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/bans/${userId}`)
-        return this._add(ban, { cache, force: true })
+        return this._add(ban, { cache, force: true }, { id: userId })
     }
     
     async create(user, options = {}) {

@@ -9,6 +9,10 @@ class GuildMemberManager extends CachedManager  {
         this.guildId = guildId ?? null
     }
 
+    _add(members, options = { cache: true, force: false }, extras = {}) {
+        return super._add(members, options, Object.assign(this.extras, extras))
+    }
+
     async fetch(member, options) {
         if(member instanceof GuildMember || member instanceof User || typeof member === "string") return this._fetchId(member, options)
         if(typeof member === "object" && !options) options = member

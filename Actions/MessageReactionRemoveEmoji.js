@@ -12,7 +12,7 @@ class MessageReactionRemoveEmoji extends BaseAction {
         const packet = data.d
         const channel = this.client.channels.cache.get(packet.channel_id)
         if(channel) {
-            if(this.client.partials?.includes(PartialsEnums.Message) && !channel.messages.cache.has(packet.message_id)) await channel.messages.fetch(packet.message_id)
+            if(this.client.partials?.includes(PartialsEnums.Message)) await channel.messages.fetch(packet.message_id)
             const message = channel.messages.cache.get(packet.message_id)
             if(message) {
                 const reactionId = packet.emoji?.id ?? packet.emoji?.name

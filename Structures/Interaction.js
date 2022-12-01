@@ -12,7 +12,7 @@ class Interaction extends Base {
         this.type = data.type ?? null
         this.guildId = data.guild_id ?? guildId ?? null
         this.channelId = data.channel_id ?? null
-        this.member = this.guild?.members._add(data.member, this.guildId, { cache: true, force: true })
+        this.member = this.guild?.members._add(data.member, this.guildId, { cache: true, force: true }, { id: data.user?.id })
         this.user = this.client.users._add(data.user, { cache: true, force: true })
         this.token = data.token ?? null
         this.appPermissions = new Permissions(data.app_permissions ? BigInt(data.app_permissions) : 0n).freeze()

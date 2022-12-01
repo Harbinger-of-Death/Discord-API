@@ -10,7 +10,7 @@ class BaseInteraction extends Interaction {
     }
 
     async editReply(options = {}) {
-        return await this.webhook.editMessage(options)
+        return await this.webhook.editMessage("@original", options)
     }
 
     async deleteReply() {

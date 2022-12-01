@@ -11,9 +11,9 @@ class ChannelManager extends CachedManager {
         super(extras?.guildId ? GuildChannel : Channel, client, iterable, extras)
     }
 
-    _add(channels, options = { cache: true, force: false }, extras = {}) {
+    _add(channels, options = { cache: true, force: false }, extras = this.extras ?? {}) {
         if(!channels) return null;
-        const channelId = typeof channels === "string" ? channels : extras.id ?? channels.id
+        const channelId = typeof channels === "string" ? channels : channels.id
         let channel
         if(this.cache.has(channelId) && !options.force) {
             channel = this.cache.get(channelId)
@@ -38,7 +38,7 @@ class ChannelManager extends CachedManager {
         if(!SnowflakeRegex.test(channelId)) throw new RangeError(`Invalid Channel`)
         if(this.cache.has(channelId) && !force) return this.cache.get(channelId)
         channel = await this.client.api.get(`${this.client.root}/channels/${channelId}`)
-        return this._add(channel, { cache, force: true }, { guildId: channel.guild_id })
+        return this._add(channel, { cache, force: true })
     }
 
     async edit(channel, options = {}) {
@@ -47,7 +47,7 @@ class ChannelManager extends CachedManager {
         const body = ChannelManager.transformPayload(options)
         const { reason } = options
         channel = await this.client.api.patch(`${this.client.root}/channels/${channelId}`, { body, reason })
-        return this._add(channel, { cache: true, force: true }, { guildId: channel.guild_id })
+        return this._add(channel, { cache: true, force: true })
     } 
 
     async delete(channel, reason) {

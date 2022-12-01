@@ -78,11 +78,11 @@ class Message extends Base {
     }
 
     get member() {
-        return this.guild?.members._add(this._member, { cache: true }, { id: this.author?.id })
+        return this.guild?.members._add(this._member, { cache: true }, { id: this._author?.id })
     }
 
     get author() {
-        return this.client.users._add(this._author, { cache: true }, { id: this._author?.id })
+        return this.client.users._add(this._author, { cache: true })
     }
 
     get guild() {

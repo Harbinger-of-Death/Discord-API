@@ -4226,15 +4226,11 @@ export class Role extends Base {
 }
 
 export class GuildMemberRoleManager extends CachedManager {
-    public constructor(data: { member: GuildMember, roles: string[] }, guildId: string, client: Client)
+    public constructor(member: GuildMember, guildId: string, iterable: Role[], client: Client)
     /**
      * The GuildMember this belongs to
      */
     public member: GuildMember
-    /**
-     * The Roles of the GuildMember this belongs to
-     */
-    public roles: string[]
     /**
      * The id of the Guild this belongs to
      */
