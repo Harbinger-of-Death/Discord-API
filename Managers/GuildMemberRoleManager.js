@@ -63,6 +63,10 @@ class GuildMemberRoleManager extends CachedManager {
         return member
     }
 
+    displayColor() {
+        return this.highest?.color ?? 0
+    }
+
     static transformRoles(roles) {
         if(Array.isArray(roles)) return roles.map(o => o instanceof Role ? o.id : o)
         if(roles instanceof Map) return this.transformRoles([...roles.keys()])

@@ -4250,6 +4250,10 @@ export class GuildMemberRoleManager extends CachedManager {
      */
     public set(roles: MultiRoleResolvable, reason?: string): Promise<GuildMember>
     /**
+     * The display color of this GuildMember
+     */
+    public displayColor(): number
+    /**
      * Compare the position of two Roles. 1 if `role1` is higher than `role2`. -1 if `role1` is lower than `role2`. 0 if equals
      */
     public comparePositionTo(role1: RoleResolvable, role2: RoleResolvable): number
