@@ -6837,7 +6837,7 @@ export class EmbedBuilder {
     /**
      * The color of this Embed
      */
-    public color: number
+    public color: ColorResolvable
     /**
      * The Embed Footer
      */

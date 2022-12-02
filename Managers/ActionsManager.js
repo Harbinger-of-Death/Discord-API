@@ -1,5 +1,5 @@
 const Base = require("../Base/base");
-const { OpCodes, EventTypes, WebsocketEvents, WsReadyStateCodes } = require("../Util/Constants");
+const { OpCodes, EventTypes } = require("../Util/Constants");
 const Heartbeat = require("../Actions/Handlers/Heartbeat");
 const HeartbeatAck = require("../Actions/Handlers/HeartbeatAck");
 const Hello = require("../Actions/Handlers/Hello");
@@ -29,7 +29,8 @@ class ActionsManager extends Base {
                 return new Hello(data, this.client)
         }
         
-        return new PacketHandler[data.t](data, this.client)
+        const Handler = PacketHandler[data.t]
+        return Handler ? new Handler(data, this.client) : null
     }
 
 }

@@ -8,10 +8,13 @@ class Util {
             else color = parseInt(color.replace("#", ""), 16)
         }
 
+        if(Array.isArray(color)) {
+            color = (color[0] << 16) + (color[1] << 8) + color[2]
+        }
 
         if(color > 0xffffff || color < 0) throw new RangeError(`Color must be between 0-255 in range`)
         else if(isNaN(color)) throw new RangeError(`Invalid Color type`)
-        return BigInt(color)
+        return color
     }
 
     static generateDateISOString(date = Date.now()) {
