@@ -25,7 +25,7 @@ class GuildMemberRoleManager extends CachedManager {
         const roleId = roles instanceof Role ? roles.id : roles
         if(!SnowflakeRegex.test(roleId)) throw new RangeError(`Invalid Role`)
         await this.client.api.put(`${this.client.root}/guilds/${this.guildId}/members/${this.member?.id}/roles/${roleId}`, { reason })
-        return;
+        return this.member
     }
 
     async remove(roles, reason) {
@@ -43,7 +43,7 @@ class GuildMemberRoleManager extends CachedManager {
         const roleId = roles instanceof Role ? roles.id : roles
         if(!SnowflakeRegex.test(roleId)) throw new RangeError(`Invalid Role`)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/members/${this.member?.id}/roles/${roleId}`, { reason })
-        return;
+        return this.member
     }
 
     async set(roles, reason) {
