@@ -6,7 +6,6 @@ class GuildApplicationCommandManager extends ApplicationCommandManager {
         this.guildId = guildId ?? null
         this.permissions = new GuildApplicationCommandPermissionsManager(this.guildId, null, this.client)
     }
-
 }
 
 module.exports = GuildApplicationCommandManager

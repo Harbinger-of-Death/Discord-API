@@ -9,7 +9,7 @@ class Presence extends Base {
         this.partial = data.partial ?? false
         this.status = data.status ?? null
         this.clientStatus = data.client_status ? {} : null
-        if(this.clientStatus) {
+        if(data.client_status) {
             if("desktop" in data.client_status) this.clientStatus.desktop = data.client_status.desktop
             if("mobile" in data.client_status) this.clientStatus.mobile = data.client_status.mobile
             if("web" in data.client_status) this.clientStatus.web = data.client_status.web

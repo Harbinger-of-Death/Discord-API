@@ -5,7 +5,7 @@ class RoleConnections extends Base {
         this.platformName = data.platform_name ?? null
         this.platformUsername = data.platform_username ?? null
         this.metadata = data.metadata ? {} : null
-        if(this.metadata) {
+        if(data.metadata) {
             if("key" in data.metadata) this.metadata.key = data.metadata.key
             if("name" in data.metadata) this.metadata.name = data.metadata.name
             if("type" in data.metadata) this.metadata.type = data.metadata.type
