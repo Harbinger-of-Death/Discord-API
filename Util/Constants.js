@@ -644,3 +644,9 @@ module.exports.WebsocketStatus = {
     Closed: "CLOSED",
     Reconnecting: "RECONNECTING"
 }
+
+module.exports.ForumLayoutTypesEnums = {
+    Default: 0,
+    List: 1,
+    Grid: 2
+}

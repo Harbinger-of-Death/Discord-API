@@ -539,6 +539,10 @@ export interface CreateChannelData extends BaseOptions {
      */
     defaultSortOrder?: number
     /**
+     * The default forum layout of this Forum Channel
+     */
+    defaultForumLayout?: number
+    /**
      * Sets the applied tags for this Thread Channel in a Forum Channel
      */
     appliedTags?: ForumTagResolvable[]
