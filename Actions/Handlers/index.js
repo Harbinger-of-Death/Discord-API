@@ -1,14 +1,14 @@
 const fs = require("fs");
 const path = require("path");
 const { WebsocketEvents } = require("../../Util/Constants");
-let arr = []
-const files = fs.readdirSync(path.dirname(__dirname)).filter(o => !o.startsWith("BaseAction") && !fs.statSync(path.join(path.dirname(__dirname), o)).isDirectory())
+let arrayOfHandlers = []
+const dirname = path.dirname(__dirname)
+const files = fs.readdirSync(dirname).filter(o => o !== "BaseAction.js" && !fs.statSync(path.join(dirname, o)).isDirectory())
 
 for(const file of files) {
     const handlers = require(`../${file}`)
 
-    arr.push([WebsocketEvents[file.slice(0, -3)], handlers])
+    arrayOfHandlers.push([WebsocketEvents[file.slice(0, -3)], handlers])
 }
 
-
-module.exports = Object.fromEntries(arr)
+module.exports = Object.fromEntries(arrayOfHandlers)
