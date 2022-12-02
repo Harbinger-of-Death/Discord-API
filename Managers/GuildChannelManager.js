@@ -27,7 +27,7 @@ class GuildChannelManager extends ChannelManager {
     }
 
     async create(options = {}) {
-        const body = ChannelManager.transformPayload(options)
+        const body = this.constructor.transformPayload(options)
         const { reason } = options
         const channel = await this.client.api.post(`${this.client.root}/guilds/${this.guildId}/channels`, { body, reason })
         return this._add(channel, { cache: true })
@@ -59,7 +59,7 @@ class GuildChannelManager extends ChannelManager {
     async edit(channel, options = {}) {
         const channelId = typeof channel === "string" ? channel : channel?.id
         if(!this.cache.has(channelId) && !SnowflakeRegex.test(channelId)) throw new RangeError(`Invalid Channel`)
-        const body = ChannelManager.transformPayload(options)
+        const body = this.constructor.transformPayload(options)
         const { reason } = options
         channel = await this.client.api.patch(`${this.client.root}/channels/${channelId}`, { body, reason })
         return this._add(channel, { cache: true, force: true })
