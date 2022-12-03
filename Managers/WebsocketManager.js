@@ -126,7 +126,6 @@ class WebsocketManager extends WebSocket {
         this.on(WSEventCodes.Open, () => {
             if(!this.reconnected) this.client.debug(`[Websocket]: Connected to Discord Gateway`)
             else {
-                this.reconnected = false
                 this.client.debug(`[Websocket]: Successfully reconnected to Discord Gateway. Now resuming missed events`)
             }
             this.handleConnect()
