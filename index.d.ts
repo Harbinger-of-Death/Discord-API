@@ -6511,6 +6511,10 @@ export class WebsocketManager extends WebSocket {
      * The status of this Websocket
      */
     public status: string
+    /**
+     * Whether or not this Websocket is reconnected
+     */
+    public reconnected: boolean
 }
 
 export class RaidenSet<V> extends Set<V> {
@@ -6736,6 +6740,10 @@ export class Client extends EventEmitter {
      * The timesstamp when this Client entered Ready state
      */
     public readyTimestamp: number
+    /**
+     * The resume gateway url of this Client
+     */
+    public resumeGatewayURL: string
     /**
      * Whether or not Client is ready
      */
