@@ -159,7 +159,10 @@ class WebsocketManager extends WebSocket {
         }
         this.client.debug(`[Websocket]: Discord requested for a Reconnect. Reconnecting`)
         this.client.debug(`[Websocket]: Making a close timeout of 5s for a clean reconnect`)
-        if(this.interval) clearInterval(this.interval)
+        if(this.interval && !this.interval?._destroyed) {
+            this.client.debug(`[Heartbeat]: Clearing the heartbeat interval`)
+            clearInterval(this.interval)
+        }
         this.status = WebsocketStatus.Reconnecting
         this.removeAllListeners()
         setTimeout(() => {
@@ -172,7 +175,7 @@ class WebsocketManager extends WebSocket {
             this.client.debug(`[Websocket]: Now connecting to resume gateway url: ${this.client.resumeGatewayURL}`)
             this.client.ws = new WebsocketManager(this.client, this.client.resumeGatewayURL)
             this.client.ws.reconnected = true
-        }, 5_000)
+        }, 5_000).unref()
     }
 
     parsePresence(presence = {}) {

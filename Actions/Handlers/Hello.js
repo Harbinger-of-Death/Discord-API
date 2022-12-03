@@ -13,7 +13,7 @@ class Hello extends Base {
         this.client.debug(`[Websocket]: Setting the heartbeat interval to ${this.client.heartbeatInterval}ms`)
         setTimeout(() => {
             this.handleheartBeat()
-        }, 2_000)
+        }, 2_000).unref()
 
         if(this.client.ws.reconnected) {
             this.client.ws.reconnected = false
@@ -23,12 +23,12 @@ class Hello extends Base {
 
     handleheartBeat() {
         this.client.ws.interval = setInterval(() => {
-            this.client.heartbeatInterval = Math.floor(Math.random() * (35_000 - 20_000 + 1) + 20_000)
+            this.client.heartbeatInterval = Math.floor(Math.random() * (40_250 - 28_523 + 1) + 28_523)
             this.client.ws.send({ op: OpCodes.Hearbeat, d: this.client.seq ?? null })
             this.client.debug(`[Heartbeat]: Successfully sent a heartbeat`)
-            this.handleheartBeat()
             clearInterval(this.client.ws.interval)
-        }, this.client.heartbeatInterval)
+            this.handleheartBeat()
+        }, this.client.heartbeatInterval).unref()
     }
 }
 
