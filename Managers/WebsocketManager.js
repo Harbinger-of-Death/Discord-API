@@ -125,6 +125,11 @@ class WebsocketManager extends WebSocket {
     handleOpen() {
         this.on(WSEventCodes.Open, () => {
             this.client.emit(EventTypes.Debug, `[Websocket]: Connected to Discord Gateway`)
+            if(!this.reconnected) this.client.debug(`[Websocket]: Connected to Discord Gateway`)
+            else {
+                this.reconnected = false
+                this.client.debug(`[Websocket]: Successfully reconnected to Discord Gateway. Now resuming missed events`)
+            }
             this.handleConnect()
             if(this.client.sessionId) this.handleResume()
             else this.connect()
@@ -150,6 +155,8 @@ class WebsocketManager extends WebSocket {
     handleReconnect() {
         this.client.emit(EventTypes.Debug, `[Websocket]: Discord requested for a Reconnect. Reconnecting`)
         this.client.emit(EventTypes.Debug, `[Websocket]: Making a close timeout of 5s for a clean reconnect`)
+        if(!this.client.resumeGatewayURL) {
+            return this.connect()
         if(this.interval) clearInterval(this.interval)
         this.status = WebsocketStatus.Reconnecting
         this.removeAllListeners()
@@ -159,10 +166,15 @@ class WebsocketManager extends WebSocket {
             if(this.readyState !== this.CLOSED) {
                 this.close()
                 this.client.emit(EventTypes.Debug, `[Websocket]: Successfully closed previous WebSocket connection`)
+                this.close(4000, "Reconnect")
             }
             this.client.ws = new WebsocketManager(this.client)
         }, 5_000).unref()
         return;
+            if(this.readyState === this.CLOSED) this.client.debug(`[Websocket]: Websocket has been already closed. So this should be easy`)
+            this.client.ws = new WebsocketManager(this.client, this.client.resumeGatewayURL)
+            this.client.ws.reconnected = true
+        }, 5_000)
     }
 
     parsePresence(presence = {}) {
