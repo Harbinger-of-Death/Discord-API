@@ -15,7 +15,7 @@ const Sticker = require("../Structures/Sticker");
 const StickerPack = require("../Structures/StickerPack");
 const VoiceRegion = require("../Structures/VoiceRegion");
 const Collection = require("../Util/Collection");
-const { CdnEndPoints, SnowflakeRegex, WebsocketEvents } = require("../Util/Constants");
+const { CdnEndPoints, SnowflakeRegex, WebsocketEvents, EventTypes } = require("../Util/Constants");
 const Intents = require("../Util/Intents");
 class Client extends EventEmitter {
     constructor(options = {}) {
@@ -37,7 +37,7 @@ class Client extends EventEmitter {
         
 
         //Managers
-        this.ws = new WebsocketManager(this)
+        this.ws = new WebsocketManager(this, this.wssURL)
         this.guilds = new GuildManager(this)
         this.users = new UserManager(this)
         this.channels = new ChannelManager(this)
@@ -122,6 +122,10 @@ class Client extends EventEmitter {
         if(!accessToken) throw new RangeError(`Missing Access Token`)
         const oauth = await this.api.get(`${this.root}/oauth2/@me`, { authorization: accessToken, tokenType: "Bearer" })
         return oauth
+    }
+
+    debug(message) {
+        return this.emit(EventTypes.Debug, message)
     }
 
 }

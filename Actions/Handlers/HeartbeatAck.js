@@ -1,6 +1,4 @@
 const Base = require("../../Base/base");
-const { EventTypes } = require("../../Util/Constants");
-
 class HeartbeatAck extends Base {
     constructor(client) {
         super(client)
@@ -8,7 +6,7 @@ class HeartbeatAck extends Base {
     }
 
     _patch() {
-        return this.client.emit(EventTypes.Debug, `[Heartbeat]: Heartbeat acknowledged. Sending next heartbeat in ${this.client.heartbeatInterval}ms`)
+        return this.client.debug(`[Heartbeat]: Heartbeat acknowledged. Sending next heartbeat in ${this.client.heartbeatInterval}ms`)
     }
 }
 

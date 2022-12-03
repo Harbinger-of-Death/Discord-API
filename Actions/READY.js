@@ -5,7 +5,7 @@ const ClientUser = require("../Structures/ClientUser");
 const ClientApplication = require("../Structures/ClientApplication");
 const ClientPresence = require("../Structures/ClientPresence");
 class Ready extends BaseAction {
-    constructor(data = {}, client) {
+    constructor(client, data) {
         super(client)
 
         this._patch(data)
@@ -17,11 +17,11 @@ class Ready extends BaseAction {
         this.client.application = new ClientApplication(packet.application, this.client)
         if(this.client.presence) this.client.presence = new ClientPresence(this.client.presence, this.client)
         await setTimeout(this.client.restReadyTimeout)
-        this.client.emit(EventTypes.Debug, `[Client]: Global cache size of ${this.client.users.cache.size + this.client.guilds.cache.size + this.client.channels.cache.size + this.client.emojis.cache.size}`)
+        this.client.debug(`[Client]: Global cache size of ${this.client.users.cache.size + this.client.guilds.cache.size + this.client.channels.cache.size + this.client.emojis.cache.size}`)
         this.client.readyAt = new Date()
         this.client.readyTimestamp = this.client.readyAt?.getTime() ?? null
         this.client.sessionId = packet.session_id
-        this.client.wssURL = packet.resume_gateway_url
+        this.client.resumeGatewayURL = `${packet.resume_gateway_url}?v=${this.client.version}&encoding=${this.client.encoding}`
         this.client.ws.status = WebsocketStatus.Ready
         return this.client.emit(EventTypes.Ready, () => {})
     }
