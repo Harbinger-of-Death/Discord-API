@@ -139,6 +139,10 @@ class WebsocketManager extends WebSocket {
     }
 
     handleResume() {
+        if(!this.client.sessionId) {
+            this.client.debug(`[Websocket]: No session id found, cannot resume events. Re-identifying`)
+            return this.connect()
+        }
         return this.send({
             op: OpCodes.Resume,
             d: {

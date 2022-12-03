@@ -15,7 +15,7 @@ class Hello extends Base {
             this.handleheartBeat()
         }, 2_000)
 
-        if(this.client.ws.reconnected && this.client.sessionId) this.client.ws.handleResume()
+        if(this.client.ws.reconnected) this.client.ws.handleResume()
         else this.client.ws.connect()
     }
 
