@@ -53,7 +53,7 @@ class Message extends Base {
         this.position = data.position ?? null
         this.mentions = new MessageMentions({
             mentions: data.mentions,
-            channels: data.content?.match(/<#\d{17,19}>/gi),
+            content: data.content,
             crossPostedChannels: data.mention_channels,
             roles: data.mention_roles ?? null,
             reference: this.reference,
@@ -78,7 +78,7 @@ class Message extends Base {
     }
 
     get member() {
-        return this.guild?.members._add(this._member, { cache: true }, { id: this._author?.id })
+        return this.guild?.members._add({ user: this._author, ...this._member }, { cache: true }, { id: this._author?.id })
     }
 
     get author() {
