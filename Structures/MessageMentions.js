@@ -4,19 +4,30 @@ const Collection = require("../Util/Collection");
 class MessageMentions extends Base {
     constructor(data = {}, guildId, client) {
         super(client)
-        Object.defineProperty(this, "_content", { value: data.content })
+        Object.defineProperties(this, {
+            _content: { value: data.content },
+            _mentions: { value: data.mentions },
+            _roles: { value: data.roles },
+        })
         this.guildId = guildId ?? null
-        this.members = new Collection()
-        this.users = new Collection(data.mentions?.map(o => {
-            this.members.set(o.id, this.guild?.members._add({ user: o, ...o.member }, { cache: true, force: true }))
-            return [o.id, this.client.users._add(o, { cache: true, force: true })]
-        }))
-        this.roles = new Collection(data.roles?.map(o => [o, this.guild?.roles.cache.get(o)]))
         this._crossPostedChannels = new Collection(data.crossPostedChannels?.map(o => [o.id, { id: o.id, type: o.type, guildId: o.guild_id, name: o.name }]))
         this.everyone = data.everyone ?? null
         if(data.reference) {
             this.repliedUser = data.reference.message?.author ?? null
         }
+    }
+
+    get members() {
+        this._members = new Collection()
+        if(this._mentions?.length) this._mentions.map(o => this._members.set(o.id, this.guild?.members._add({ user: o, ...o.member }, { cache: true })))
+
+        return this._members
+    }
+
+    get users() {
+        this._users = new Collection()
+        if(this._mentions?.length) this._mentions.map(o => this._users.set(o.id, this.client.users._add(o)))
+        return this._users
     }
 
     get channels() {
