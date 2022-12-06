@@ -4405,10 +4405,6 @@ export class User extends Base {
      */
     public avatar: string
     /**
-     * The avatar decoration hash of this User
-     */
-    public avatarDecoration: string
-    /**
      * Whether or not this User is a bot
      */
     public bot: boolean
