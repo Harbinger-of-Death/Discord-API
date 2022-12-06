@@ -702,10 +702,6 @@ export interface CdnEndpoints {
      */
     ApplicationCover: (cover: string, extension: ImageFormatWithoutLottieAnimate, size: number, applicationId: string) => string
     /**
-     * Forms a User Avatar Decoration url
-     */
-    UserAvatarDecoration: (avatarDecoration: string, extension: ImageFormatWithoutLottie, size: number, forceStatic: boolean, userId: string) => string
-    /**
      * Forms an Emoji image url
      */
     EmojiImage: (emoji: Emoji, extension: ImageFormatWithoutLottie, size: number, forceStatic: boolean) => string
