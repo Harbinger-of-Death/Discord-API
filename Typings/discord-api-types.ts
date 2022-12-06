@@ -704,7 +704,7 @@ export interface CdnEndpoints {
     /**
      * Forms a User Avatar Decoration url
      */
-    UserAvatarDecoration: (avatarDecoration: string, extension: ImageFormatWithoutLottie, size: number, userId: string) => string
+    UserAvatarDecoration: (avatarDecoration: string, extension: ImageFormatWithoutLottie, size: number, forceStatic: boolean, userId: string) => string
     /**
      * Forms an Emoji image url
      */

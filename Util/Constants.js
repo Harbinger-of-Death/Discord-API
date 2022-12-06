@@ -529,7 +529,8 @@ module.exports.CdnEndPoints = {
     ApplicationCover: (cover, extension = ".png", size = 64, applicationId) => {
         return `${this.cdnRoot}/app-icons/${applicationId}/${cover}${extension}${size ? `?size=${size}` : ""}`
     },
-    UserAvatarDecoration: (avatarDecoration, extension = ".png", size = 64, userId) => {
+    UserAvatarDecoration: (avatarDecoration, extension = ".png", size = 64, forceStatic = false, userId) => {
+        if(avatarDecoration.startsWith("a_") && !forceStatic) extension = ".gif"
         return `${this.cdnRoot}/avatar-decorations/${userId}/${avatarDecoration}${extension}${size ? `?size=${size}` : ""}`
     },
     EmojiImage: (emoji, extension = ".png", size = 64, forceStatic = false) => {
