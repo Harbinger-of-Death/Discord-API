@@ -713,6 +713,10 @@ export interface CdnEndpoints {
      * Forms a Guild Member Banner url
      */
     GuildMemberBanner: (banner: string, extension: ImageFormatWithoutLottie, size: number, forceStatic: boolean, guildId: string, userId: string) => string
+    /**
+     * Forms a User Avatar Decoration url
+     */
+    UserAvatarDecoration: (avatarDecoration: string, extension: ImageFormatWithoutLottieAnimate, size: number, userId: string) => string
 }
 
 export interface ImageURLOptions<T = undefined> {
