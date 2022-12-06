@@ -73,7 +73,7 @@ class User extends Base {
 
     avatarDecorationURL(options = {}) {
         if(!this.avatarDecoration) return null;
-        return this.client.cdn.UserAvatarDecoration(this.avatarDecoration, options.extension, options.size, this.id)
+        return this.client.cdn.UserAvatarDecoration(this.avatarDecoration, options.extension, options.size, options.forceStatic, this.id)
     }
 
     toString() {
