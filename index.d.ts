@@ -2624,6 +2624,10 @@ export class Message extends Base {
      */
     public channel: BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel
     /**
+     * Whether or not this Message is repliable
+     */
+    public repliable: boolean
+    /**
      * Fetches this Message
      */
     public fetch(options?: BaseFetchOptions): Promise<this>
