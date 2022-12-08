@@ -1,4 +1,5 @@
 const { ButtonStylesEnums, ComponentTypesEnums } = require("../Util/Constants")
+const EmojiParser = require("./EmojiParser")
 
 class ButtonBuilder {
     constructor(data = {}) {
@@ -22,8 +23,7 @@ class ButtonBuilder {
     }
 
     setEmoji(emoji) {
-        if(typeof emoji === "string") this.emoji = { id: emoji }
-        else this.emoji = { id: emoji.id, name: emoji.name, animated: emoji.animated }
+        this.emoji = EmojiParser.create(emoji)
         return this;
     }
 

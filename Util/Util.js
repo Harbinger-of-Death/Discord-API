@@ -31,11 +31,10 @@ class Util {
             return await attachment.buffer()
         }
 
+        if(attachment.startsWith("data") || typeof attachment === "string") return Util.base64ToBuffer(attachment)
         if(fs.statSync(attachment).isFile()) {
             return fs.readFileSync(attachment)
         }
-
-        if(attachment.startsWith("data") || typeof attachment === "string") return Util.base64ToBuffer(attachment)
         throw new TypeError(`Invalid Attachment Type`)
     }
 

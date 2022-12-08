@@ -22,7 +22,7 @@ module.exports.MessageTypeEnums = {
     ThreadStarterMessage: 21,
     GuildInviteReminder: 22,
     ContextMenuCommand: 23,
-    AutoModerationAction: 24
+    AutoModerationAction: 24,
 }
 
 module.exports.ApplicationCommandTypesEnums = {
@@ -484,6 +484,15 @@ module.exports.NonSystemMessageTypes = [
     this.MessageTypeEnums.ContextMenuCommand
 ]
 
+module.exports.RepliableMessageTypes = [
+    this.MessageTypeEnums.Default,
+    this.MessageTypeEnums.UserJoin,
+    this.MessageTypeEnums.Reply,
+    this.MessageTypeEnums.ChatInputCommand,
+    this.MessageTypeEnums.ContextMenuCommand,
+    this.MessageTypeEnums.AutoModerationAction,
+]
+
 module.exports.CdnEndPoints = {
     GuildIcon: (icon, extension = ".png", size = 64, forceStatic = false, guildId) => {
         if(icon.startsWith("a_") && !forceStatic) extension = ".gif"
@@ -528,9 +537,6 @@ module.exports.CdnEndPoints = {
     },
     ApplicationCover: (cover, extension = ".png", size = 64, applicationId) => {
         return `${this.cdnRoot}/app-icons/${applicationId}/${cover}${extension}${size ? `?size=${size}` : ""}`
-    },
-    UserAvatarDecoration: (avatarDecoration, extension = ".png", size = 64, userId) => {
-        return `${this.cdnRoot}/avatar-decorations/${userId}/${avatarDecoration}${extension}${size ? `?size=${size}` : ""}`
     },
     EmojiImage: (emoji, extension = ".png", size = 64, forceStatic = false) => {
         if(emoji.animated && !forceStatic) extension = ".gif"

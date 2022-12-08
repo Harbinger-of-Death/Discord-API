@@ -1,5 +1,4 @@
 const Base = require("../Base/base");
-const { SnowflakeRegex } = require("../Util/Constants");
 const Snowflake = require("../Util/Snowflake");
 const UserFlags = require("../Util/UserFlags");
 
@@ -11,7 +10,6 @@ class User extends Base {
         this.username = data.username ?? null
         this.discriminator = data.discriminator ?? null
         this.avatar = data.avatar ?? null
-        this.avatarDecoration = data.avatar_decoration ?? null
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
         this.bot = data.bot ?? null
@@ -54,11 +52,6 @@ class User extends Base {
     displayAvatarURL(options = {}) {
         if(!this.avatar) return this.defaultUserAvatarURL(options)
         return this.avatarURL(options)
-    }
-
-    avatarDecorationURL(options = {}) {
-        if(!this.avatarDecoration) return null;
-        return this.client.cdn.UserAvatarDecoration(this.avatarDecoration, options.extension, options.size, this.id)
     }
 
     hexAccentColor() {

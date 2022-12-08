@@ -7,10 +7,7 @@ class GuildScheduledEventUser extends Base {
         this.guildScheduledEventId = data.guild_scheduled_event_id ?? extras?.scheduledEventId ?? null
         this.guildId = extras?.guildId ?? null
         this.user = this.client.users._add(data.user, { cache: true })
-        if(data.member) {
-            data.member["user"] = data.user
-            this.member = this.guild?.members._add(data.member, { cache: true })
-        } else this.member = null
+        this.member = this.guild?.members._add(data.member, { cache: true }, { id: data.user?.id }) ?? null
     }
 
     get guild() {

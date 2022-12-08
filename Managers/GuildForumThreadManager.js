@@ -22,10 +22,10 @@ class GuildForumThreadManager extends CachedManager {
 
     async createPost(options = {}) {
         const { reason } = options
-        const payload = await DataPayload.create(options.message)
-        const body = { data: { name: options.name, auto_archive_duration: options.autoArchiveDuration, rate_limit_per_user: options.rateLimitPerUser, message: payload.data, applied_tags: options.appliedTags?.map(o => typeof o === "string" ? o : o.id) }, files: payload.files}
-        const thread = await this.client.api.post(`${this.client.root}/channels/${this.channelId}/threads`, { body, reason })
-        return this.client.channels._add(thread)
+        const { data, files } = await DataPayload.create(options.message)
+        const body = { data: {...options, message: data }, files }
+        const post = await this.client.api.post(`${this.client.root}/channels/${this.channelId}/threads`, { body, reason })
+        return this._add(post, { cache: true })
     }
 
 }

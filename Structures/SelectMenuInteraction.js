@@ -46,8 +46,7 @@ class SelectMenuInteraction extends MessageComponentInteraction {
             if(!this.guildId) throw new RangeError(`Must be done in Guild`)
             for(const [key, val] of Object.entries(this.data.resolved.users)) {
                 if(!val) continue;
-                val["user"] = this.data.resolved.users[key]
-                const member = this.guild?.members._add(val, this.guildId)
+                const member = this.guild?.members._add({ user: val, ...this.data.resolved.members[key] }, this.guildId)
                 collection.set(key, member)
             }
 
@@ -77,13 +76,11 @@ class SelectMenuInteraction extends MessageComponentInteraction {
     mentionables() {
         if(this.componentType !== ComponentTypesEnums.MentionableSelect) throw new RangeError(`Select Menu is expected to be type 7. Received=${this.componentType}`)
         const collection = new Collection()
-        if(Object.hasOwn(this.data.resolved, "members") || Object.hasOwn(this.data.resolved, "users")) {
-            for (const [key, val] of Object.entries(this.data.resolved.members)) {
+        if(Object.hasOwn(this.data.resolved, "users")) {
+            for (const [key, val] of Object.entries(this.data.resolved.users)) {
                 if(!val) continue;
                 if(this.guildId) {
-                    val["user"] = this.data.resolved.users[key]
-                    const member = this.guild?.members._add(val, this.guildId)
-                    collection.set(key, member)
+                    collection.set(key, this.guild?.members._add({ user: val, ...this.data.resolved.members[key] }))
                 } else {
                     const user = this.client.users._add(val)
                     collection.set(key, user)

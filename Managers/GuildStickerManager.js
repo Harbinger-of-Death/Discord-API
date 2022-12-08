@@ -1,6 +1,8 @@
+const FormData = require("form-data");
 const Sticker = require("../Structures/Sticker");
 const { SnowflakeRegex } = require("../Util/Constants");
 const DataResolver = require("../Util/DataResolver");
+const Util = require("../Util/Util");
 const CachedManager = require("./CachedManager");
 class GuildStickerManager extends CachedManager {
     constructor(guildId, client, iterable) {
@@ -26,13 +28,16 @@ class GuildStickerManager extends CachedManager {
     }
 
     async create(options = {}) {
-        const { reason } = options
-        const body = { data: {
-            type: "sticker",
-            name: options.name,
-            description: options.description,
-            tags: options.tags,
-        }, files: await DataResolver.resolveFile(options.file)}
+        const { reason, file } = options
+        const body = new FormData()
+        const resolveFile = await DataResolver.resolveFile(file)
+        for(const [key, val] of Object.entries(options)) {
+            if(!val || ["file", "reason"].includes(key)) continue;
+            body.append(key, val)
+        }
+
+        body.append("file", resolveFile.buffer, resolveFile.filename)
+        
         const sticker = await this.client.api.post(`${this.client.root}/guilds/${this.guildId}/stickers`, { reason, body })
         return this._add(sticker, { cache: true })
     }

@@ -3,7 +3,7 @@ class EmojiResolver {
     static create(emoji, client) {
         const manager = client.emojis
         if(typeof emoji === "string") {
-            if(/^\d{17,19}/gi.test(emoji)) {
+            if(/^\d{17,19}$/gi.test(emoji)) {
                 emoji = manager.cache.get(emoji)
                 return encodeURIComponent(`${emoji.animated ? "a:" : ""}${emoji.name}:${emoji.id}`)
             }

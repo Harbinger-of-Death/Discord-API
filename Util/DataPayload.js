@@ -8,9 +8,16 @@ class DataPayload {
     static async create(payload = {}, type) {
         let data = this.resolveData(payload)
         let files
+        
         if(payload.files?.length) {
-            files = await Promise.all(payload.files?.map(o => DataResolver.resolveFile(o)))
-            
+            files = await Promise.all(payload.files.map(o => DataResolver.resolveFile(o)))
+            for(const [index, val] of files.entries()) {
+                data.attachments.push({
+                    id: index,
+                    description: val.description,
+                    filename: val.filename
+                })
+            }
         }
 
         if(type) {

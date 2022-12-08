@@ -94,7 +94,6 @@ class Guild extends Base {
         this.presences = new PresenceManager(this.id, this.client, data.presences)
         this.channels = new GuildChannelManager(this.id, this.client, data.channels)
         this.commands = new GuildApplicationCommandManager(this.id, this.client)
-        this.safetyAlertsChannelId = data.safety_alerts_channel_id ?? null
     }
 
     get owner() {
@@ -191,10 +190,6 @@ class Guild extends Base {
 
     async setPremiumProgressBar(premiumProgressBar, reason) {
         return await this.edit({ premiumProgressBar, reason })
-    }
-
-    get safetyAlertsChannel() {
-        return this.client.channels.cache.get(this.safetyAlertsChannelId) ?? null
     }
 
     get systemChannel() {

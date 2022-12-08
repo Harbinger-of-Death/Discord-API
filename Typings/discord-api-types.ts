@@ -46,7 +46,7 @@ export interface SelectMenuOptions {
     /**
      * The emoji of this option
      */
-    emoji: ComponentEmoji
+    emoji: EmojiIdentifierResolvable
     /**
      * Whether or not this option is select by default
      */
@@ -705,10 +705,6 @@ export interface CdnEndpoints {
      * Forms an Application Cover Image url
      */
     ApplicationCover: (cover: string, extension: ImageFormatWithoutLottieAnimate, size: number, applicationId: string) => string
-    /**
-     * Forms a User Avatar Decoration url
-     */
-    UserAvatarDecoration: (avatarDecoration: string, extension: ImageFormatWithoutLottieAnimate, size: number, userId: string) => string
     /**
      * Forms an Emoji image url
      */
@@ -2084,7 +2080,14 @@ export interface TextInputComponent {
      */
     placeholder: string
 }
-
+/**
+ * Identifiers that can be resolved to an emoji
+ * @example
+ * <a:name:id>
+ * a:name:id
+ * ❌
+ */
+export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
 export type GuildMemberFlagsStrings = "DidRejoin" | "CompletedOnboarding"
 export type GuildMemberFlagsResolvable = bigint | GuildMemberFlagsStrings

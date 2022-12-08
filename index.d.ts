@@ -1,4 +1,4 @@
-import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, RoleConnectionMetadata, Oauth2ClientOptions, TextInputComponent } from "./Typings/discord-api-types";
+import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, RoleConnectionMetadata, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable } from "./Typings/discord-api-types";
 import { EventEmitter } from "node:events"
 import { WebSocket } from "ws";
 
@@ -2642,7 +2642,7 @@ export class Message extends Base {
     /**
      * Reacts to this Message
      */
-    public react(emoji: EmojiResolvable): Promise<this>
+    public react(emoji: EmojiIdentifierResolvable): Promise<this>
     /**
      * Pins this Message
      */
@@ -4405,10 +4405,6 @@ export class User extends Base {
      */
     public avatar: string
     /**
-     * The avatar decoration hash of this User
-     */
-    public avatarDecoration: string
-    /**
      * Whether or not this User is a bot
      */
     public bot: boolean
@@ -5783,7 +5779,7 @@ export class GuildChannelManager extends ChannelManager {
     /**
      * Creates an Invite to a Channel
      */
-    public createInvite(channel: ChannelResolvable, options: CreateInviteData): Promise<Invite>
+    public createInvite(channel: ChannelResolvable, options?: CreateInviteData): Promise<Invite>
     /**
      * Fetches the Invites of a Channel
      */
@@ -6515,6 +6511,10 @@ export class WebsocketManager extends WebSocket {
      * The status of this Websocket
      */
     public status: string
+    /**
+     * Whether or not this Websocket is reconnected
+     */
+    public reconnected: boolean
 }
 
 export class RaidenSet<V> extends Set<V> {
@@ -6740,6 +6740,10 @@ export class Client extends EventEmitter {
      * The timesstamp when this Client entered Ready state
      */
     public readyTimestamp: number
+    /**
+     * The resume gateway url of this Client
+     */
+    public resumeGatewayURL: string
     /**
      * Whether or not Client is ready
      */
@@ -7003,7 +7007,7 @@ export class ButtonBuilder {
     /**
      * The emoji of this Button
      */
-    public emoji: ComponentEmoji
+    public emoji: Omit<EmojiIdentifierResolvable, "Emoji">
     /**
      * The custom id of this Button
      */
@@ -7027,7 +7031,7 @@ export class ButtonBuilder {
     /**
      * Sets the emoji of this Button
      */
-    public setEmoji(emoji: ComponentEmoji): this
+    public setEmoji(emoji: EmojiIdentifierResolvable): this
     /**
      * Sets the custom id of this Button
      */
@@ -8015,7 +8019,8 @@ export enum MessageTypeEnums {
     ThreadStarterMessage = 21,
     GuildInviteReminder = 22,
     ContextMenuCommand = 23,
-    AutoModerationAction = 24
+    AutoModerationAction = 24,
+    RoleSubscriptionPurchase = 25
 }
 
 export enum ActivityTypesEnums {

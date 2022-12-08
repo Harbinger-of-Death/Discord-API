@@ -15,8 +15,6 @@ class ActionsManager extends Base {
         this.client.ws.emit(data.t, data.d)
         if(data.s) this.client.seq = data.s
         switch(data.op) {
-            case OpCodes.Resume: 
-                return this.client.emit(EventTypes.Debug, `[Websocket]: Successfully Resumed`)
             case OpCodes.InvalidSession:
                 return new InvalidSession(data, this.client)
             case OpCodes.Hearbeat:
@@ -30,7 +28,7 @@ class ActionsManager extends Base {
         }
         
         const Handler = PacketHandler[data.t]
-        return Handler ? new Handler(data, this.client) : null
+        return Handler ? new Handler(this.client, data) : null
     }
 
 }

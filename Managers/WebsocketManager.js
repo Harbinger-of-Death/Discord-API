@@ -1,11 +1,11 @@
 const WebSocket = require("ws");
 const WebsocketError = require("../Errors/WebsocketError");
-const { OpCodes, WSEventCodes, WsReadyStateCodes, EventTypes, WsCloseCodes, WebsocketEvents, WebsocketStatus } = require("../Util/Constants");
+const { OpCodes, WSEventCodes, WsReadyStateCodes, EventTypes, WsCloseCodes, WebsocketStatus } = require("../Util/Constants");
 const ActionsManager = require("./ActionsManager");
 
 class WebsocketManager extends WebSocket {
-    constructor(client) {
-        super(client.wssURL)
+    constructor(client, wssURL) {
+        super(wssURL ?? client.wssURL)
         Object.defineProperty(this, "client", { value: client })
         this.status = null
         this.interval = null
@@ -17,7 +17,7 @@ class WebsocketManager extends WebSocket {
         const botInfo = await this.client.api.get(`${this.client.root}/gateway/bot`)
         if(!botInfo) return;
         if(botInfo.session_start_limit?.remaining < 1) {
-            this.client.emit(EventTypes.Debug, `[Websocket]: You exceeded your daily login limit`)
+            this.client.debug(`[Websocket]: You exceeded your daily login limit`)
             return process.exit()
         }
         const debug = `[Websocket Info]:\nURL: ${botInfo.url}\nShards: ${botInfo.shards}\nRemaining: ${botInfo.session_start_limit?.remaining}/${botInfo.session_start_limit?.total}`
@@ -124,10 +124,11 @@ class WebsocketManager extends WebSocket {
 
     handleOpen() {
         this.on(WSEventCodes.Open, () => {
-            this.client.emit(EventTypes.Debug, `[Websocket]: Connected to Discord Gateway`)
+            if(!this.reconnected) this.client.debug(`[Websocket]: Connected to Discord Gateway`)
+            else {
+                this.client.debug(`[Websocket]: Successfully reconnected to Discord Gateway. Now resuming missed events`)
+            }
             this.handleConnect()
-            if(this.client.sessionId) this.handleResume()
-            else this.connect()
         })
     }
 
@@ -137,6 +138,10 @@ class WebsocketManager extends WebSocket {
     }
 
     handleResume() {
+        if(!this.client.sessionId) {
+            this.client.debug(`[Websocket]: No session id found, cannot resume events. Re-identifying`)
+            return this.connect()
+        }
         return this.send({
             op: OpCodes.Resume,
             d: {
@@ -148,21 +153,29 @@ class WebsocketManager extends WebSocket {
     }
 
     handleReconnect() {
-        this.client.emit(EventTypes.Debug, `[Websocket]: Discord requested for a Reconnect. Reconnecting`)
-        this.client.emit(EventTypes.Debug, `[Websocket]: Making a close timeout of 5s for a clean reconnect`)
-        if(this.interval) clearInterval(this.interval)
+        if(!this.client.resumeGatewayURL) {
+            this.client.debug(`[Websocket]: Tried to reconnect but there's no resume gateway url found. Re-identifying`)
+            return this.connect()
+        }
+        this.client.debug(`[Websocket]: Discord requested for a Reconnect. Reconnecting`)
+        this.client.debug(`[Websocket]: Making a close timeout of 5s for a clean reconnect`)
+        if(this.interval && !this.interval?._destroyed) {
+            this.client.debug(`[Heartbeat]: Clearing the heartbeat interval`)
+            clearInterval(this.interval)
+        }
         this.status = WebsocketStatus.Reconnecting
         this.removeAllListeners()
         setTimeout(() => {
-            this.client.sessionId = null
-            this.client.emit(EventTypes.Debug, `[Websocket]: Cleared session id, and closing the previous WebSocket connection then making a new one`)
+            this.client.debug(`[Websocket]: Closing the previous WebSocket connection then making a new one`)
             if(this.readyState !== this.CLOSED) {
-                this.close()
-                this.client.emit(EventTypes.Debug, `[Websocket]: Successfully closed previous WebSocket connection`)
+                this.close(4000, "Reconnect")
+                this.client.debug(`[Websocket]: Successfully closed previous WebSocket connection`)
             }
-            this.client.ws = new WebsocketManager(this.client)
+            if(this.readyState === this.CLOSED) this.client.debug(`[Websocket]: Websocket has been already closed. So this should be easy`)
+            this.client.debug(`[Websocket]: Now connecting to resume gateway url: ${this.client.resumeGatewayURL}`)
+            this.client.ws = new WebsocketManager(this.client, this.client.resumeGatewayURL)
+            this.client.ws.reconnected = true
         }, 5_000).unref()
-        return;
     }
 
     parsePresence(presence = {}) {

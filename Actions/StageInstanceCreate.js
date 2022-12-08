@@ -2,7 +2,7 @@ const { EventTypes } = require("../Util/Constants");
 const BaseAction = require("./BaseAction");
 
 class StageInstanceCreate extends BaseAction {
-    constructor(data = {}, client) {
+    constructor(client, data) {
         super(client)
         this._patch(data)
     }

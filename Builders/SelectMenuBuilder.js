@@ -1,4 +1,5 @@
 const { ComponentTypesEnums, ChannelTypesEnums } = require("../Util/Constants");
+const EmojiParser = require("./EmojiParser");
 
 class SelectMenuBuilder {
     constructor(data = {}) {
@@ -87,7 +88,7 @@ class SelectMenuBuilder {
             label: options.label,
             value: options.value,
             description: options.description,
-            emoji: options.emoji,
+            emoji: options.emoji ? EmojiParser.create(options.emoji) : undefined,
             default: options.default
         }
     }

@@ -12,7 +12,7 @@ const { EventTypes, InteractionTypeEnums, ApplicationCommandTypesEnums, Componen
 const BaseAction = require("./BaseAction");
 
 class InteractionCreate extends BaseAction {
-    constructor(data = {}, client) {
+    constructor(client, data) {
         super(client)
         this._patch(data)
     }
