@@ -486,7 +486,6 @@ module.exports.NonSystemMessageTypes = [
     this.MessageTypeEnums.Reply,
     this.MessageTypeEnums.ChatInputCommand,
     this.MessageTypeEnums.ContextMenuCommand,
-    this.MessageTypeEnums.RoleSubscriptionPurchase
 ]
 
 module.exports.CdnEndPoints = {
