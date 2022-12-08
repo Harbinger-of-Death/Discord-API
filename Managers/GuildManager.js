@@ -204,7 +204,8 @@ class GuildManager extends CachedManager {
             preferred_locale: payload.preferredLocale ?? payload.preferred_locale,
             features: payload.features ? this.parseFeatures(payload.features) : undefined,
             description: payload.description,
-            premium_progress_bar_enabled: payload.premiumProgressBar
+            premium_progress_bar_enabled: payload.premiumProgressBar,
+            safety_alerts_channel_id: typeof payload.safetyAlertsChannel === "string" ? payload.safetyAlertsChannel : payload.safetyAlertsChannel?.id
         } 
     }
 

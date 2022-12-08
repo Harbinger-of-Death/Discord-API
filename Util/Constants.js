@@ -439,7 +439,8 @@ module.exports.GuildFeaturesEnums = {
     Verified: "VERIFIED",
     VipRegions: "VIP_REGIONS",
     WelcomeScreenEnabled: "WELCOME_SCREEN_ENABLED",
-    ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2"
+    ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2",
+    RaidAlertsEnabled: "RAID_ALERTS_ENABLED"
 }
 
 module.exports.ImageFileTypes = {

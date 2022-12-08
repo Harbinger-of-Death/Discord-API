@@ -407,7 +407,7 @@ export interface GuildCreateData extends BaseOptions {
     /**
      * The Features of this Guild
      */
-    features?: Array<Extract<GuildFeatures, "InvitesDisabled" | "Community" | "Discoverable">>
+    features?: Array<Extract<GuildFeatures, "InvitesDisabled" | "Community" | "Discoverable" | "RaidAlertsEnabled">>
     /**
      * THe Description of this Guild
      */
@@ -416,6 +416,10 @@ export interface GuildCreateData extends BaseOptions {
      * Whether or not to enable the Premium Progress Bar of this Guild
      */
     premiumProgressBar?: boolean
+    /**
+     * The Channel where to send Raid Alerts to
+     */
+    safetyAlertsChannel?: ChannelResolvable
 }
 
 export interface PartialChannelData {
@@ -2122,7 +2126,7 @@ export type BufferResolvable = string | Buffer | AttachmentBuilder
 export type GuildResolvable = Guild | string
 export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
 export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies"
-export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2"
+export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2" | "RaidAlertsEnabled"
 export type IntentsResolvable = bigint | IntentStrings
 export type IntentStrings = "Guilds" | "GuildMembers" | "GuildBans" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
 export type RESTMethod = "GET" | "POST" | "DELETE" | "PUT" | "PATCH" 
