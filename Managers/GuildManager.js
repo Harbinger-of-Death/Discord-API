@@ -202,7 +202,7 @@ class GuildManager extends CachedManager {
             rules_channel_id: typeof payload.rulesChannel === "string" ? payload.rulesChannel : payload.rulesChannel?.id,
             public_updates_channel_id: typeof payload.publicUpdatesChannel === "string" ? payload.publicUpdatesChannel : payload.publicUpdatesChannel?.id,
             preferred_locale: payload.preferredLocale ?? payload.preferred_locale,
-            features: this.parseFeatures(payload.features),
+            features: payload.features ? this.parseFeatures(payload.features) : undefined,
             description: payload.description,
             premium_progress_bar_enabled: payload.premiumProgressBar
         } 

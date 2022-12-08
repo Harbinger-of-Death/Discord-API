@@ -41,7 +41,11 @@ class REST {
 
             if(body) {
                 if(body instanceof FormData || body.constructor.name === "FormData") Object.assign(headers, body.getHeaders())
-            } else headers["content-type"] = "application/json"
+                else {
+                    headers["content-type"] = "application/json"
+                    body = typeof body === "string" ? body : JSON.stringify(body)
+                }
+            }
         }
 
         if(options.query) {
