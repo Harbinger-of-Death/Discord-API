@@ -9,7 +9,7 @@ class ContextMenuOptionResolver extends Base {
         this.channelId = channelId ?? null
     }
 
-    getUser() {
+    get targetUser() {
         const resolved = this.data.resolved
         if(!resolved) return null;
         if(this.data.type !== ApplicationCommandTypesEnums.User) throw new RangeError(`Expected to be Application Command type 2. Received=${this.data.type}`)
@@ -25,7 +25,7 @@ class ContextMenuOptionResolver extends Base {
         return null;
     }
     
-    getMessage() {
+    get targetMessage() {
         const resolved = this.data.resolved
         if(!resolved) return null;
         if(this.data.type !== ApplicationCommandTypesEnums.Message) throw new RangeError(`Expected to be Application Command type 3. Received=${this.data.type}`)
