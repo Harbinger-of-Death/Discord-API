@@ -37,15 +37,13 @@ class REST {
                 }
                 form.append("payload_json", JSON.stringify(options.body.data))
                 body = form
+            } else {
+                if("data" in options.body) body = typeof options.body.data === "string" ? options.body.data : JSON.stringify(options.body.data)
+                else body = typeof options.body === "string" ? options.body : JSON.stringify(options.body)
             }
 
-            if(body) {
-                if(body instanceof FormData || body.constructor.name === "FormData") Object.assign(headers, body.getHeaders())
-                else {
-                    headers["content-type"] = "application/json"
-                    body = typeof body === "string" ? body : JSON.stringify(body)
-                }
-            }
+            if(body instanceof FormData || body.constructor.name === "FormData") Object.assign(headers, body.getHeaders())
+            else headers["content-type"] = "application/json"
         }
 
         if(options.query) {
