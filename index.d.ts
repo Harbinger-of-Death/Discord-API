@@ -5775,7 +5775,7 @@ export class GuildChannelManager extends ChannelManager {
     /**
      * Creates an Invite to a Channel
      */
-    public createInvite(channel: ChannelResolvable, options: CreateInviteData): Promise<Invite>
+    public createInvite(channel: ChannelResolvable, options?: CreateInviteData): Promise<Invite>
     /**
      * Fetches the Invites of a Channel
      */
