@@ -26,42 +26,22 @@ class REST {
 
         if(options.tokenType) headers["authorization"] = `${options.tokenType} ${options.authorization}`
         if(typeof options["reason"] === "string") headers["X-Audit-Log-Reason"] = options["reason"]
-        let body
         const oldURL = url
+        let body = options.body
         if(options.body) {
             let form = new FormData()
             if(Array.isArray(options.body.files) && options.body.files?.length) {
-                let attachment
                 for(const [index, value] of options.body.files.entries()) {
-                    if("data" in options.body.data) attachment = options.body.data.data?.attachments
-                    else attachment = options.body.data?.attachments ?? options.body.data?.message.attachments
-                    attachment.push({
-                        id: index,
-                        filename: value.filename,
-                        description: value.description
-                    })
-
+                    if(!value.buffer) continue;
                     form.append(`files[${index}]`, value.buffer, value.filename)
                 }
                 form.append("payload_json", JSON.stringify(options.body.data))
                 body = form
-            } else {
-                if(options.body.data?.type === "sticker") {
-                    delete options.body.data["type"]
-                    for(const [key, val] of Object.entries(options.body.data)) {
-                        if(!val) continue;
-                        form.append(key, val)
-                    }
-    
-                    form.append(`file`, options.body.files?.buffer, options.body.files?.filename)
-                    body = form
-                } else {
-                    if("data" in options.body) body = typeof options.body.data === "string" ? options.body.data : JSON.stringify(options.body.data)
-                    else body = typeof options.body === "string" ? options.body : JSON.stringify(options.body)
-                }
             }
-            if(body instanceof FormData || body.constructor?.name === "FormData") headers = Object.assign(headers, form.getHeaders())
-            else headers["content-type"] = "application/json"
+
+            if(body) {
+                if(body instanceof FormData || body.constructor.name === "FormData") Object.assign(headers, body.getHeaders())
+            } else headers["content-type"] = "application/json"
         }
 
         if(options.query) {
