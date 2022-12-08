@@ -22,7 +22,8 @@ module.exports.MessageTypeEnums = {
     ThreadStarterMessage: 21,
     GuildInviteReminder: 22,
     ContextMenuCommand: 23,
-    AutoModerationAction: 24
+    AutoModerationAction: 24,
+    RoleSubscriptionPurchase: 25
 }
 
 module.exports.ApplicationCommandTypesEnums = {
@@ -482,6 +483,15 @@ module.exports.NonSystemMessageTypes = [
     this.MessageTypeEnums.Reply,
     this.MessageTypeEnums.ChatInputCommand,
     this.MessageTypeEnums.ContextMenuCommand
+]
+
+module.exports.RepliableMessageTypes = [
+    this.MessageTypeEnums.Default,
+    this.MessageTypeEnums.UserJoin,
+    this.MessageTypeEnums.Reply,
+    this.MessageTypeEnums.ChatInputCommand,
+    this.MessageTypeEnums.ContextMenuCommand,
+    this.MessageTypeEnums.AutoModerationAction,
 ]
 
 module.exports.CdnEndPoints = {
