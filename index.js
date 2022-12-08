@@ -16,7 +16,7 @@ const ActivityFlags = require("./Util/ActivityFlags");
 const ApplicationFlags = require("./Util/ApplicationFlags");
 const ChannelFlags = require("./Util/ChannelFlags");
 const Collection = require("./Util/Collection");
-const { ChannelTypesEnums, OptionTypesEnums, ApplicationCommandTypesEnums, ButtonStylesEnums, ComponentTypesEnums, DefaultMessageNotificationsEnums, VerificationLevelEnums, ExplicitContentFilterEnums, MfaLevelEnums, NsfwLevelEnums, PremiumTierEnums, PartialsEnums, VideoQualityModeEnums, EventTypes, OpCodes, WSEventCodes, WsReadyStateCodes, InviteTargetTypesEnums, GuildScheduledEventPrivacyEnums, GuildScheduledEventEntityEnums, GuildScheduledEventStatusEnums, StageInstancePrivacyLevelEnums, TeamMemberMembershipStateEnums, SnowflakeRegex, InputTextStyleEnums, OverwriteTypeEnums, AuditLogEventEnums, AutoModerationEventTypesEnums, AutoModerationTriggerTypesEnums, AutoModerationKeywordPresetTypesEnums, AutoModerationActionTypesEnums, GuildFeaturesEnums, ActivityTypesEnums, ApplicationCommandPermissionTypeEnums, ForumChannelDefaultSortOrderTypeEnums, WebsocketEvents, ForumLayoutTypesEnums, RepliableMessageTypes } = require("./Util/Constants");
+const { ChannelTypesEnums, OptionTypesEnums, ApplicationCommandTypesEnums, ButtonStylesEnums, ComponentTypesEnums, DefaultMessageNotificationsEnums, VerificationLevelEnums, ExplicitContentFilterEnums, MfaLevelEnums, NsfwLevelEnums, PremiumTierEnums, PartialsEnums, VideoQualityModeEnums, EventTypes, OpCodes, WSEventCodes, WsReadyStateCodes, InviteTargetTypesEnums, GuildScheduledEventPrivacyEnums, GuildScheduledEventEntityEnums, GuildScheduledEventStatusEnums, StageInstancePrivacyLevelEnums, TeamMemberMembershipStateEnums, SnowflakeRegex, InputTextStyleEnums, OverwriteTypeEnums, AuditLogEventEnums, AutoModerationEventTypesEnums, AutoModerationTriggerTypesEnums, AutoModerationKeywordPresetTypesEnums, AutoModerationActionTypesEnums, GuildFeaturesEnums, ActivityTypesEnums, ApplicationCommandPermissionTypeEnums, ForumChannelDefaultSortOrderTypeEnums, WebsocketEvents, ForumLayoutTypesEnums } = require("./Util/Constants");
 const GuildMemberFlags = require("./Util/GuildMemberFlags");
 const Intents = require("./Util/Intents");
 const MessageFlags = require("./Util/MessageFlags");
@@ -43,7 +43,6 @@ module.exports.EmbedBuilder = EmbedBuilder;
 module.exports.InputTextBuilder = InputTextBuilder;
 module.exports.AttachmentBuilder = AttachmentBuilder;
 //Utilities
-module.exports.RepliableMessageTypes = RepliableMessageTypes;
 module.exports.ChannelTypesEnums = ChannelTypesEnums;
 module.exports.OptionTypesEnums = OptionTypesEnums;
 module.exports.ApplicationCommandTypesEnums = ApplicationCommandTypesEnums;
