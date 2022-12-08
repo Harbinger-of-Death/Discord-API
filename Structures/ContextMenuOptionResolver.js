@@ -24,7 +24,8 @@ class ContextMenuOptionResolver extends Base {
 
         return null;
     }
-    
+
+
     getMessage() {
         const resolved = this.data.resolved
         if(!resolved) return null;
