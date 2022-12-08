@@ -4479,7 +4479,7 @@ export class User extends Base {
     /**
      * Forms an Avatar Decoration url from this User
      */
-    public avatarDecorationURL(options?: ImageURLOptions<ImageFormatWithoutLottie>): string
+    public avatarDecorationURL(options?: Omit<ImageURLOptions<ImageFormatWithoutLottieAnimate>, "forceStatic">): string
     /**
      * Returns this User's banner
      */

@@ -716,7 +716,7 @@ export interface CdnEndpoints {
     /**
      * Forms a User Avatar Decoration url
      */
-    UserAvatarDecoration: (avatarDecoration: string, extension: ImageFormatWithoutLottie, forceStatic: boolean, size: number, userId: string) => string
+    UserAvatarDecoration: (avatarDecoration: string, extension: ImageFormatWithoutLottieAnimate, size: number, userId: string) => string
 }
 
 export interface ImageURLOptions<T = undefined> {
