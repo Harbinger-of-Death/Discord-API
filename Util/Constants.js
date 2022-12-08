@@ -488,6 +488,15 @@ module.exports.NonSystemMessageTypes = [
     this.MessageTypeEnums.ContextMenuCommand
 ]
 
+module.exports.RepliableMessageTypes = [
+    this.MessageTypeEnums.Default,
+    this.MessageTypeEnums.UserJoin,
+    this.MessageTypeEnums.Reply,
+    this.MessageTypeEnums.ChatInputCommand,
+    this.MessageTypeEnums.ContextMenuCommand,
+    this.MessageTypeEnums.AutoModerationAction,
+]
+
 module.exports.CdnEndPoints = {
     GuildIcon: (icon, extension = ".png", size = 64, forceStatic = false, guildId) => {
         if(icon.startsWith("a_") && !forceStatic) extension = ".gif"
