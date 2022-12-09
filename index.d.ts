@@ -4355,7 +4355,7 @@ export class Util {
     /**
      * Generates a Data URI scheme from something
      */
-    public static generateDataURI(buffer?: BufferResolvable, mimeType?: ImageFormatWithoutLottie): Promise<string>
+    public static generateDataURI(buffer: BufferResolvable, mediaType?: ImageFormatWithoutLottie | ".html"): Promise<string>
     /**
      * Transforms a Base 64 string to a Buffer
      */

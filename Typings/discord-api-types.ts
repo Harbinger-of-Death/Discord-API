@@ -2076,6 +2076,7 @@ export interface TextInputComponent {
      */
     placeholder: string
 }
+
 /**
  * Identifiers that can be resolved to an emoji
  * @example

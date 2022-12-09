@@ -32,39 +32,42 @@ class Util {
         }
 
         if(attachment.startsWith("data") || typeof attachment === "string") return Util.base64ToBuffer(attachment)
-        if(fs.statSync(attachment).isFile()) {
-            return fs.readFileSync(attachment)
-        }
+        if(fs.statSync(attachment).isFile()) return fs.readFileSync(attachment)
         throw new TypeError(`Invalid Attachment Type`)
     }
 
-    static async generateDataURI(buffer, mimeType) {
-        if(!buffer) return;
+    static async generateDataURI(buffer, mediaType = ".html") {
+        if(!buffer) throw new RangeError(`No Buffer resolvable specified`);
         if(typeof buffer === "string") {
             if(buffer.startsWith("data")) return buffer
         }
         if(!(buffer instanceof Buffer)) buffer = await this.getBuffer(buffer)
-        switch(mimeType) {
+        let mimeType
+        switch(mediaType) {
             case ".png":
             case ".webp":
-            default:
-                mimeType = "png"
-                break;
+                mimeType = "image/png"
             case ".jpg":
             case ".jpeg":
-                mimeType = "jpeg"
+                mimeType = "image/jpeg"
                 break;
             case ".gif":
-                mimeType = "gif"
+                mimeType = "image/gif"
+                break;
+            case ".html":
+                mimeType = "text/html"
+                break;
+            default:
+                mimeType = "text/plain"
                 break;
 
         }
-        return `data:image/${mimeType};base64,${buffer.toString("base64")}`
+        return `data:${mimeType};base64,${buffer.toString("base64")}`
     }
 
     static base64ToBuffer(base64) {
         if(base64 instanceof Buffer) return base64
-        if(base64.startsWith("data")) base64 = base64.replace(/^(data\:image\/\w{1,5};base64,)/, "")
+        if(base64.startsWith("data")) base64 = base64.replace(/^(data:[A-Za-z]+\/[A-Za-z]+;base64,)/, "")
         return Buffer.from(base64, "base64")
     }
 
