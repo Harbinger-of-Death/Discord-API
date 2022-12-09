@@ -78,7 +78,6 @@ class REST {
             }
         }
         const request = await fetch(url, { method: options.method, agent, signal: controller.signal, headers, body }).finally(() => clearTimeout(timeout))
-        if(request.status === 204) return this.client.emit(EventTypes.Ratelimit, `[REST]: REST request return 204`)
         this.ratelimitBucket = request.headers.get("X-RateLimit-Bucket")
         const remaining = parseInt(request.headers.get("X-RateLimit-Remaining"))
         const reset = Math.floor((request.headers.get("X-RateLimit-Reset") * 1000) - Date.now())
@@ -93,9 +92,9 @@ class REST {
                 collection.set(this.ratelimitBucket, { remaining, reset, limit, route: url, ratelimited: remaining <= 1, method: options.method, bucket: this.ratelimitBucket })
             }
         }
-        const response = await request.json().catch(err => err.type === "invalid-json" ? undefined : console.error(err))
+        const response = await request.headers.get("content-type")?.includes("application/json") ? request.json() : request.text()
         if(request.status === 429) return await this.handleRatelimit(oldURL, options)
-        if(![201, 200].includes(request.status)) throw new DiscordAPIError({
+        if(!request.ok) throw new DiscordAPIError({
             message: response.message ?? response.error_description ?? request.statusText,
             method: options.method,
             code: response.code,
