@@ -92,7 +92,7 @@ class REST {
                 collection.set(this.ratelimitBucket, { remaining, reset, limit, route: url, ratelimited: remaining <= 1, method: options.method, bucket: this.ratelimitBucket })
             }
         }
-        const response = await request.headers.get("content-type")?.includes("application/json") ? request.json() : undefined
+        const response = request.headers.get("content-type")?.includes("application/json") ? await request.json() : undefined
         if(request.status === 429) return await this.handleRatelimit(oldURL, options)
         if(!request.ok) throw new DiscordAPIError({
             message: response.message ?? response.error_description ?? request.statusText,
