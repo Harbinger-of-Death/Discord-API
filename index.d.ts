@@ -5861,7 +5861,7 @@ export class AttachmentBuilder {
      */
     public filename: string
     /**
-     * The url of this Attachment
+     * The url of this Attachment. Can also be a local file path
      */
     public url: string
     /**
