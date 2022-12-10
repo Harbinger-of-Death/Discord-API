@@ -30,7 +30,7 @@ class Util {
         if(typeof attachment === "string") {
             if(/^(http(s)?:\/\/)/.test(attachment)) {
                 attachment = await fetch(attachment)
-                return Buffer.from(await attachment.arrayBuffer())
+                return await this.getBuffer(await attachment.arrayBuffer())
             }
             if(/^[\.]{1,2}\//.test(attachment)) { 
                 if(fs.statSync(attachment).isFile()) return fs.readFileSync(attachment)
@@ -38,6 +38,7 @@ class Util {
 
             return Util.base64ToBuffer(attachment)
         }
+        if(attachment instanceof ArrayBuffer) return Buffer.from(attachment)
         if(attachment instanceof Stream) return await this.getStreamData(attachment)
         throw new TypeError(`Invalid Attachment Type`)
     }
