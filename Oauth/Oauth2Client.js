@@ -11,29 +11,29 @@ class Oauth2Client extends Base {
     }
 
     async getToken(options = {}) {
-        const auth = {
+        const body = new URLSearchParams({
             grant_type: options.grantType,
             scope: Array.isArray(options.scopes) ? options.scopes?.map(o => o).join(" ") : options.scopes,
             client_id: this.clientId,
             client_secret: this.clientSecret,
             redirect_uri: options.redirectUri,
             code: options.code
-        }
+        })
 
-        const response = await this.client.api.post(`${this.oauth2}/token`, { auth })
+        const response = await this.client.api.post(`${this.oauth2}/token`, { body })
         return new Oauth2(response, this.cleint)
     }
 
     async refreshToken(refreshToken) {
         if(!refreshToken) throw new RangeError(`Missing Refresh Token`)
-        const auth = {
+        const body = new URLSearchParams({
             grant_type: "refresh_token",
             client_id: this.clientId,
             client_secret: this.clientSecret,
             refresh_token: refreshToken
-        }
+        })
 
-        const response = await this.client.api.post(`${this.oauth2}/token`, { auth })
+        const response = await this.client.api.post(`${this.oauth2}/token`, { body })
         return new Oauth2(response, this.client)
     }
 
