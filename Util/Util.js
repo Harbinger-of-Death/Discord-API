@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 const AttachmentBuilder = require("../Builders/AttachmentBuilder");
+const { Stream } = require("stream");
 class Util {
     static resolveColor(color) {
         if(typeof color === "string") {
@@ -26,15 +27,18 @@ class Util {
     static async getBuffer(attachment) {
         if(attachment instanceof Buffer) return attachment
         if(attachment instanceof AttachmentBuilder) return this.getBuffer(attachment.attachment)
-        if(/^(http(s)?:\/\/)/.test(attachment)) {
-            attachment = await fetch(attachment)
-            return await attachment.buffer()
         }
-        if(/^[\.]{1,2}\//.test(attachment)) { 
-            if(fs.statSync(attachment).isFile()) return fs.readFileSync(attachment)
-        }
-        if(attachment.startsWith("data") || typeof attachment === "string") return Util.base64ToBuffer(attachment)
+        if(attachment instanceof Stream) return await this.getStreamData(attachment)
         throw new TypeError(`Invalid Attachment Type`)
+    }
+
+    static async getStreamData(stream) {
+        const buffers = []
+        return new Promise((res, rej) => {
+            stream.on("data", (d) => buffers.push(d))
+            stream.on("end", () => res(Buffer.concat(buffers)))
+            stream.on("error", (err) => rej(new Error(err)))
+        })
     }
 
     static async generateDataURI(buffer, mediaType = ".png") {
