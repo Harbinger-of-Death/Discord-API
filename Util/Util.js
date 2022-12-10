@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 const AttachmentBuilder = require("../Builders/AttachmentBuilder");
-const { Stream } = require("stream");
+const { Stream } = require("node:stream");
 class Util {
     static resolveColor(color) {
         if(typeof color === "string") {
