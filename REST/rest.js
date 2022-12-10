@@ -28,24 +28,33 @@ class REST {
         if(typeof options["reason"] === "string") headers["X-Audit-Log-Reason"] = options["reason"]
         const oldURL = url
         let body = options.body
-        if(options.body) {
-            let form = new FormData()
-            if(Array.isArray(options.body.files) && options.body.files?.length) {
-                for(const [index, value] of options.body.files.entries()) {
-                    if(!value.buffer) continue;
-                    form.append(`files[${index}]`, value.buffer, value.filename)
+        if(body) {
+            let json
+            if("data" in body) json = typeof body.data === "string" ? body.data : JSON.stringify(body.data)
+            else json = typeof body === "string" ? body : JSON.stringify(body)
+            headers["content-type"] = "application/json"
+            if(body.files?.length) {
+                const form = new FormData()
+                for(const [index, val] of body.files?.entries()) {
+                    if(!val) continue;
+                    form.append(`files[${index}]`, val.buffer, val.filename)
                 }
-                form.append("payload_json", JSON.stringify(options.body.data))
+
+                form.append("payload_json", json, { contentType: "application/json" })
                 body = form
-            } else {
-                if("data" in options.body) body = typeof options.body.data === "string" ? options.body.data : JSON.stringify(options.body.data)
-                else body = typeof options.body === "string" ? options.body : JSON.stringify(options.body)
             }
+            
+            if(body instanceof URLSearchParams) {
+                headers["content-type"] = "application/x-www-form-urlencoded"
+                for(const [key, val] of body.entries()) {
+                    if(val === "undefined") body.delete(key);
+                }
 
+                body = body.toString()
+            }
             if(body instanceof FormData || body.constructor.name === "FormData") Object.assign(headers, body.getHeaders())
-            else headers["content-type"] = "application/json"
+            if(headers["content-type"] === "application/json") body = json
         }
-
         if(options.query) {
             const urlSearchParams = new URLSearchParams()
             for(const [key, val] of Object.entries(options.query)) { 
@@ -54,23 +63,9 @@ class REST {
                 else urlSearchParams.append(key, val)
             }
 
-            if([...urlSearchParams.values()].length > 0) url = url.concat(`?${decodeURIComponent(urlSearchParams)}`)
+            if([...urlSearchParams.values()].length) url = url.concat(`?${decodeURIComponent(urlSearchParams)}`)
         }
 
-        if("auth" in options) {
-            delete headers["authorization"]
-            const params = new URLSearchParams()
-            for(const [key, val] of Object.entries(options.auth)) {
-                if(!val) continue;
-                params.append(key, val)
-            }
-
-            headers["content-type"] = "application/x-www-form-urlencoded"
-            
-            body = params.toString()
-        }
-
-        if(typeof options["contentType"] === "string") headers["content-type"] = options["contentType"]
         if(collection.has(this.ratelimitBucket)) {
             const rateLimit = collection.get(this.ratelimitBucket)
             if(rateLimit.route === oldURL) {
