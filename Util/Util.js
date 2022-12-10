@@ -36,7 +36,7 @@ class Util {
         throw new TypeError(`Invalid Attachment Type`)
     }
 
-    static async generateDataURI(buffer, mediaType = ".html") {
+    static async generateDataURI(buffer, mediaType = ".png") {
         if(!buffer) throw new RangeError(`No Buffer resolvable specified`);
         if(typeof buffer === "string") {
             if(buffer.startsWith("data")) return buffer
