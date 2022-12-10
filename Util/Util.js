@@ -25,14 +25,15 @@ class Util {
 
     static async getBuffer(attachment) {
         if(attachment instanceof Buffer) return attachment
-        if(attachment instanceof AttachmentBuilder) return this.getBuffer(attachment.url)
-        if(/^(http(s)?:\/\/)/gi.test(attachment)) {
+        if(attachment instanceof AttachmentBuilder) return this.getBuffer(attachment.attachment)
+        if(/^(http(s)?:\/\/)/.test(attachment)) {
             attachment = await fetch(attachment)
             return await attachment.buffer()
         }
-
+        if(/^[\.]{1,2}\//.test(attachment)) { 
+            if(fs.statSync(attachment).isFile()) return fs.readFileSync(attachment)
+        }
         if(attachment.startsWith("data") || typeof attachment === "string") return Util.base64ToBuffer(attachment)
-        if(fs.statSync(attachment).isFile()) return fs.readFileSync(attachment)
         throw new TypeError(`Invalid Attachment Type`)
     }
 
