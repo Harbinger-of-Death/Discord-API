@@ -5861,9 +5861,9 @@ export class AttachmentBuilder {
      */
     public filename: string
     /**
-     * The url of this Attachment. Can also be a local file path
+     * The attachment to send
      */
-    public url: string
+    public attachment: BufferResolvable
     /**
      * Whether or not this Attachment is spoilered
      */
@@ -5873,9 +5873,9 @@ export class AttachmentBuilder {
      */
     public description: string
     /**
-     * Sets the URL of this Attachment
+     * Sets the attachment of this AttachmentBuilder
      */
-    public setURL(url: BufferResolvable): this
+    public setAttachment(attachment: BufferResolvable): this
     /**
      * Sets the description of this Attachment
      */
