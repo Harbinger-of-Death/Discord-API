@@ -30,7 +30,7 @@ class Util {
         if(typeof attachment === "string") {
             if(/^(http(s)?:\/\/)/.test(attachment)) {
                 attachment = await fetch(attachment)
-                return await attachment.buffer()
+                return Buffer.from(await attachment.arrayBuffer())
             }
             if(/^[\.]{1,2}\//.test(attachment)) { 
                 if(fs.statSync(attachment).isFile()) return fs.readFileSync(attachment)
