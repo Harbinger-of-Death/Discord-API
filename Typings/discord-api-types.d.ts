@@ -2056,6 +2056,48 @@ export interface InteractionEditReplyOptions extends MessageOptionsData {
     message?: MessageResolvable
 }
 
+export interface ModifyRoleConnection {
+    /**
+     * The name of the platform
+     */
+    platformName?: string
+    /**
+     * The username on the platform a bot has connected
+     */
+    platformUsername?: string
+    /**
+     * The metadata of this Role Connection
+     */
+    metadata?: ModifyRoleConnectionMetadata
+}
+
+export interface ModifyRoleConnectionMetadata {
+    /**
+     * The type of the metadata
+     */
+    type: number
+    /**
+     * The dictionary key for the metadata
+     */
+    key: string
+    /**
+     * The name of the metadata
+     */
+    name: string
+    /**
+     * The name localizations for this metadata
+     */
+    nameLocalizations?: Record<Locales, string>
+    /**
+     * The description of this metadata
+     */
+    description: string
+    /**
+     * The description localizations for this metadata
+     */
+    descriptionLocalizations?: Record<Locales, string>
+}
+
 /**
  * Identifiers that can be resolved to an emoji
  * @example

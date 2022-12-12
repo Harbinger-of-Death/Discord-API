@@ -2,8 +2,8 @@ const Base = require("../Base/base");
 const ApplicationFlags = require("../Util/ApplicationFlags");
 const Permissions = require("../Util/Permissions");
 const Snowflake = require("../Util/Snowflake");
+const RoleConnectionsMetadata = require("./RoleConnectionsMetadata");
 const Team = require("./Team");
-
 class Application extends Base {
     constructor(data = {}, client) {
         super(client)
@@ -43,6 +43,19 @@ class Application extends Base {
     coverImageURL(options = {}) {
         if(!this.coverImage) return null;
         return this.client.cdn.ApplicationCover(this.coverImage, options.extension, options.size, this.id)
+    }
+
+    
+    async fetchRoleConnectionsMetadata() {
+        const metadata = await this.client.api.get(`${this.client.root}/applications/${this.id}/role-connections/metadata`)
+        if(!metadata.length) return null;
+        return metadata?.map(o => new RoleConnectionsMetadata(o, this.client))
+    }
+
+    async modifyRoleConnectionsMetadata(options = {}) {
+        const body = options.map(o => new RoleConnectionsMetadata(o, this.client).toJSON())
+        const metadata = await this.client.api.put(`${this.client.root}/applications/${this.id}/role-connections/metadata`, { body }) 
+        return metadata?.map(o => new RoleConnectionsMetadata(o, this.client))
     }
 }
 

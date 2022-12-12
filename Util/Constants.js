@@ -642,3 +642,14 @@ module.exports.WebsocketStatus = {
     Closed: "CLOSED",
     Reconnecting: "RECONNECTING"
 }
+
+module.exports.ApplicationRoleConnectionMetadataTypeEnums = {
+    IntegerLessThanOrEqual: 1,
+    IntegerGreaterThanOrEqual: 2,
+    IntegerEqual: 3,
+    IntegerNotEqual: 4,
+    DatetimeLessThanOrEqual: 5,
+    DatetimeGreaterThanOrEqual: 6,
+    BooleanEqual: 7,
+    BooleanNotEqual: 8
+}
