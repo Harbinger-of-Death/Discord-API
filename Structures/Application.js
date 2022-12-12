@@ -32,7 +32,6 @@ class Application extends Base {
             permissions: new Permissions(data.install_params.permissions).freeze()
         } : null
         this.customInstallURL = data.custom_install_url ?? null
-        this.roleConnectionsVerificationURL = data.role_connections_verification_url ?? null
     }
 
     iconURL(options = {}) {
