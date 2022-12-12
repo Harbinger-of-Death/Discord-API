@@ -23,6 +23,7 @@ module.exports.MessageTypeEnums = {
     GuildInviteReminder: 22,
     ContextMenuCommand: 23,
     AutoModerationAction: 24,
+    RoleSubscriptionPurchase: 25
 }
 
 module.exports.ApplicationCommandTypesEnums = {
@@ -439,7 +440,9 @@ module.exports.GuildFeaturesEnums = {
     Verified: "VERIFIED",
     VipRegions: "VIP_REGIONS",
     WelcomeScreenEnabled: "WELCOME_SCREEN_ENABLED",
-    ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2"
+    ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2",
+    RoleSubscriptionsAvailableForPurchase: "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+    RoleSubscriptionsEnabled: "ROLE_SUBSCRIPTIONS_ENABLED"
 }
 
 module.exports.ImageFileTypes = {

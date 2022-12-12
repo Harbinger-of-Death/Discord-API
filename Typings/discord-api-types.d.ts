@@ -2060,6 +2060,47 @@ export interface InteractionEditReplyOptions extends MessageOptionsData {
     message?: MessageResolvable
 }
 
+export interface ModifyRoleConnection {
+    /**
+     * The name of the platform
+     */
+    platformName?: string
+    /**
+     * The username on the platform a bot has connected
+     */
+    platformUsername?: string
+    /**
+     * The metadata of this Role Connection
+     */
+    metadata?: ModifyRoleConnectionMetadata
+}
+export interface ModifyRoleConnectionMetadata {
+    /**
+     * The type of the metadata
+     */
+    type: number
+    /**
+     * The dictionary key for the metadata
+     */
+    key: string
+    /**
+     * The name of the metadata
+     */
+    name: string
+    /**
+     * The name localizations for this metadata
+     */
+    nameLocalizations?: Record<Locales, string>
+    /**
+     * The description of this metadata
+     */
+    description: string
+    /**
+     * The description localizations for this metadata
+     */
+    descriptionLocalizations?: Record<Locales, string>
+}
+
 /**
  * Identifiers that can be resolved to an emoji
  * @example
@@ -2106,7 +2147,7 @@ export type BufferResolvable = string | Buffer | AttachmentBuilder | Stream | Ar
 export type GuildResolvable = Guild | string
 export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
 export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies"
-export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2"
+export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2" | "RoleSubscriptionsAvailableForPurchase" | "RoleSubscriptionsEnabled"
 export type IntentsResolvable = bigint | IntentStrings
 export type IntentStrings = "Guilds" | "GuildMembers" | "GuildBans" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
 export type RESTMethod = "GET" | "POST" | "DELETE" | "PUT" | "PATCH" 
