@@ -16,7 +16,7 @@ const ActivityFlags = require("./Util/ActivityFlags");
 const ApplicationFlags = require("./Util/ApplicationFlags");
 const ChannelFlags = require("./Util/ChannelFlags");
 const Collection = require("./Util/Collection");
-const { ChannelTypesEnums, OptionTypesEnums, ApplicationCommandTypesEnums, ButtonStylesEnums, ComponentTypesEnums, DefaultMessageNotificationsEnums, VerificationLevelEnums, ExplicitContentFilterEnums, MfaLevelEnums, NsfwLevelEnums, PremiumTierEnums, PartialsEnums, VideoQualityModeEnums, EventTypes, OpCodes, WSEventCodes, WsReadyStateCodes, InviteTargetTypesEnums, GuildScheduledEventPrivacyEnums, GuildScheduledEventEntityEnums, GuildScheduledEventStatusEnums, StageInstancePrivacyLevelEnums, TeamMemberMembershipStateEnums, SnowflakeRegex, InputTextStyleEnums, OverwriteTypeEnums, AuditLogEventEnums, AutoModerationEventTypesEnums, AutoModerationTriggerTypesEnums, AutoModerationKeywordPresetTypesEnums, AutoModerationActionTypesEnums, GuildFeaturesEnums, ActivityTypesEnums, ApplicationCommandPermissionTypeEnums, ForumChannelDefaultSortOrderTypeEnums, WebsocketEvents, ForumLayoutTypesEnums } = require("./Util/Constants");
+const { ChannelTypesEnums, OptionTypesEnums, ApplicationCommandTypesEnums, ButtonStylesEnums, ComponentTypesEnums, DefaultMessageNotificationsEnums, VerificationLevelEnums, ExplicitContentFilterEnums, MfaLevelEnums, NsfwLevelEnums, PremiumTierEnums, PartialsEnums, VideoQualityModeEnums, EventTypes, OpCodes, WSEventCodes, WsReadyStateCodes, InviteTargetTypesEnums, GuildScheduledEventPrivacyEnums, GuildScheduledEventEntityEnums, GuildScheduledEventStatusEnums, StageInstancePrivacyLevelEnums, TeamMemberMembershipStateEnums, SnowflakeRegex, InputTextStyleEnums, OverwriteTypeEnums, AuditLogEventEnums, AutoModerationEventTypesEnums, AutoModerationTriggerTypesEnums, AutoModerationKeywordPresetTypesEnums, AutoModerationActionTypesEnums, GuildFeaturesEnums, ActivityTypesEnums, ApplicationCommandPermissionTypeEnums, ForumChannelDefaultSortOrderTypeEnums, WebsocketEvents } = require("./Util/Constants");
 const GuildMemberFlags = require("./Util/GuildMemberFlags");
 const Intents = require("./Util/Intents");
 const MessageFlags = require("./Util/MessageFlags");
@@ -83,7 +83,6 @@ module.exports.GuildFeaturesEnums = GuildFeaturesEnums;
 module.exports.ForumChannelDefaultSortOrderTypeEnums = ForumChannelDefaultSortOrderTypeEnums;
 module.exports.WebsocketEvents = WebsocketEvents;
 module.exports.OpCodes = OpCodes;
-module.exports.ForumLayoutTypesEnums = ForumLayoutTypesEnums;
 //Bitfield Flags
 module.exports.Permissions = Permissions;
 module.exports.Intents = Intents;

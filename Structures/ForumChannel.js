@@ -13,7 +13,6 @@ class ForumChannel extends GuildChannel {
         this.defaultThreadRateLimitPerUser = data.default_thread_rate_limit_per_user ?? null
         this.defaultReactionEmoji = data.default_reaction_emoji ? { emojiId: data.default_reaction_emoji.emoji_id, emojiName: data.default_reaction_emoji.emoji_name } : null
         this.defaultSortOrder = data.default_sort_order ?? null
-        this.defaultForumLayout = data.default_forum_layout ?? null
         this.rateLimitPerUser = data.rate_limit_per_user ?? null
         this.defaultAutoArchiveDuration = data.default_auto_archive_duration ?? null
     }
@@ -44,10 +43,8 @@ class ForumChannel extends GuildChannel {
         this.rateLimitPerUser === channel.rateLimitPerUser &&
         this.nsfw === channel.nsfw &&
         this.defaultAutoArchiveDuration === channel.defaultAutoArchiveDuration &&
-        this.defaultSortOrder === channel.defaultSortOrder &&
-        this.defaultForumLayout === channel.defaultForumLayout
+        this.defaultSortOrder === channel.defaultSortOrder
     }
-    
 }
 
 module.exports = ForumChannel
