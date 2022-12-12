@@ -8017,7 +8017,6 @@ export enum MessageTypeEnums {
     GuildInviteReminder = 22,
     ContextMenuCommand = 23,
     AutoModerationAction = 24,
-    RoleSubscriptionPurchase = 25
 }
 
 export enum ActivityTypesEnums {
