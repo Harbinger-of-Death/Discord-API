@@ -80,13 +80,6 @@ class UserManager extends CachedManager {
         if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
         return this.client.channels.cache.find(o => o.type === ChannelTypesEnums.Dm && o.recipientId === userId)
     }
-
-    async getUserApplicationRoleConnections(accessToken) {
-        if(!accessToken) throw new RangeError(`Missing an Access Token`)
-        const connection = await this.client.api.get(`${this.client.root}/users/@me/applications/${this.client.user.id}/role-connection`, { authorization: accessToken, tokenType: `Bearer` })
-        if(!Object.keys(connection)?.length) return null;
-        return new RoleConnections(connection, this.client)
-    }
 }
 
 module.exports = UserManager
