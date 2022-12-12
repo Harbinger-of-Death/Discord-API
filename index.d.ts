@@ -5624,6 +5624,10 @@ export class GuildChannel extends Channel {
      */
     public isSystemChannel(): boolean
     /**
+     * Sync this GuildChannel to it's parent
+     */
+    public lockPermissions(reason?: string): Promise<this>
+    /**
      * Sets the position of this GuildChannel
      */
     public setPosition(position: number, reason?: string): Promise<this>
