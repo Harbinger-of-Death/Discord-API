@@ -2076,6 +2076,7 @@ export interface TextInputComponent {
      */
     placeholder: string
 }
+
 export interface InteractionEditReplyOptions extends MessageOptionsData {
     /**
      * The Message to edit
