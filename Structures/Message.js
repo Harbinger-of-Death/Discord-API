@@ -1,7 +1,7 @@
 const Base = require("../Base/base");
 const ReactionManager = require("../Managers/ReactionManager");
 const Collection = require("../Util/Collection");
-const { SnowflakeRegex, NonSystemMessageTypes, MessageTypeEnums } = require("../Util/Constants");
+const { SnowflakeRegex, NonSystemMessageTypes, MessageTypeEnums, RepliableMessageTypes } = require("../Util/Constants");
 const MessageFlags = require("../Util/MessageFlags");
 const Snowflake = require("../Util/Snowflake");
 const Application = require("./Application");
@@ -70,6 +70,10 @@ class Message extends Base {
     isReply() {
         if(this.type === MessageTypeEnums.Reply) return true;
         return false;
+    }
+
+    get repliable() {
+        return RepliableMessageTypes.includes(this.type)
     }
 
     get system() {
