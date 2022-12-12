@@ -1,4 +1,5 @@
 import { ActionRowBuilder, ApplicationCommand, ApplicationCommandPermission, Attachment, AttachmentBuilder, AuditLogEntry, AutoModeration, AutoModerationRuleAction, BaseGuildTextChannel, BaseInteraction, ButtonBuilder, Channel, ChannelTypesEnums, Collection, DMChannel, EmbedBuilder, Emoji, ForumTags, Guild, GuildBan, GuildChannel, GuildIntegration, GuildMember, GuildScheduledEvent, GuildScheduledEventUser, GuildTemplate, InputTextBuilder, Interaction, Invite, Message, MessageReaction, OpCodes, Permissions, Presence, Role, SelectMenuBuilder, StageInstance, Sticker, ThreadChannel, ThreadMember, User, VoiceChannel, VoiceState } from ".."
+import { Stream } from "node:stream"
 
 export interface Choices {
     /**
@@ -2081,6 +2082,13 @@ export interface TextInputComponent {
     placeholder: string
 }
 
+export interface InteractionEditReplyOptions extends MessageOptionsData {
+    /**
+     * The Message to edit
+     */
+    message?: MessageResolvable
+}
+
 /**
  * Identifiers that can be resolved to an emoji
  * @example
@@ -2123,7 +2131,7 @@ export type Partials = "CHANNEL"
 export type ChannelResolvable = string | Channel | GuildChannel | ThreadChannel
 export type ChannelFlagsResolvable = ChannelFlagsString | bigint
 export type ChannelFlagsString = "Pinned" | "RequireTag"
-export type BufferResolvable = string | Buffer | AttachmentBuilder
+export type BufferResolvable = string | Buffer | AttachmentBuilder | Stream | ArrayBuffer
 export type GuildResolvable = Guild | string
 export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
 export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies"
