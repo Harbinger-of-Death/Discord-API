@@ -1,4 +1,3 @@
-const CategoryChannel = require("../Structures/CategoryChannel");
 const Channel = require("../Structures/Channel");
 const GuildChannel = require("../Structures/GuildChannel");
 const ChannelFlags = require("../Util/ChannelFlags");
