@@ -407,7 +407,7 @@ export interface GuildCreateData extends BaseOptions {
     /**
      * The Features of this Guild
      */
-    features?: Array<Extract<GuildFeatures, "InvitesDisabled" | "Community" | "Discoverable" | "RaidAlertsEnabled">>
+    features?: Array<Extract<GuildFeatures, "InvitesDisabled" | "Community" | "Discoverable">>
     /**
      * THe Description of this Guild
      */
@@ -416,10 +416,6 @@ export interface GuildCreateData extends BaseOptions {
      * Whether or not to enable the Premium Progress Bar of this Guild
      */
     premiumProgressBar?: boolean
-    /**
-     * The Channel where to send Raid Alerts to
-     */
-    safetyAlertsChannel?: ChannelResolvable
 }
 
 export interface PartialChannelData {
