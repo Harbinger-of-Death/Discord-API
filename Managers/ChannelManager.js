@@ -103,8 +103,8 @@ class ChannelManager extends CachedManager {
                 }
             }),
             default_sort_order: payload.defaultSortOrder,
-            default_forum_layout: payload.defaultForumLayout,
-            applied_tags: payload.appliedTags?.map(o => typeof o === "string" ? o : o.id)
+            applied_tags: payload.appliedTags?.map(o => typeof o === "string" ? o : o.id),
+            default_forum_layout: payload.defaultForumLayout
         }
     }
 

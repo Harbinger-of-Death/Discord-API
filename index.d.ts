@@ -5377,6 +5377,10 @@ export class ForumChannel extends GuildChannel {
      */
     public defaultForumLayout: number
     /**
+     * Sets the default forum layout of this Forum Channel
+     */
+    public setDefaultForumLayout(defaultForumLayout: number, reason?: string): Promise<this>
+    /**
      * Sets the available tags for this Forum Channel
      */
     public setAvailableTags(availableTags: ForumTags, reason?: string): Promise<this>
