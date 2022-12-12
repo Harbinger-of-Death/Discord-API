@@ -5373,6 +5373,14 @@ export class ForumChannel extends GuildChannel {
      */
     public defaultAutoArchiveDuration: number
     /**
+     * The default layout of this Forum. null if not set
+     */
+    public defaultForumLayout: number
+    /**
+     * Sets the default forum layout of this Forum Channel
+     */
+    public setDefaultForumLayout(defaultForumLayout: number, reason?: string): Promise<this>
+    /**
      * Sets the available tags for this Forum Channel
      */
     public setAvailableTags(availableTags: ForumTags, reason?: string): Promise<this>
@@ -8196,4 +8204,10 @@ export enum WebsocketStatus {
     Closing = "CLOSING",
     Closed = "CLOSED",
     Reconnecting = "RECONNECTING"
+}
+
+export enum ForumLayoutTypesEnums {
+    Default = 0,
+    List = 1,
+    Grid = 2
 }
