@@ -2076,6 +2076,7 @@ export interface TextInputComponent {
      */
     placeholder: string
 }
+
 /**
  * Identifiers that can be resolved to an emoji
  * @example
@@ -2118,7 +2119,6 @@ export type Partials = "CHANNEL"
 export type ChannelResolvable = string | Channel | GuildChannel | ThreadChannel
 export type ChannelFlagsResolvable = ChannelFlagsString | bigint
 export type ChannelFlagsString = "Pinned" | "RequireTag"
-export type BufferResolvable = string | Buffer | AttachmentBuilder
 export type GuildResolvable = Guild | string
 export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
 export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies"
