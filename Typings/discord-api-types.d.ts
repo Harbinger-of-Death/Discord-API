@@ -794,9 +794,17 @@ export interface RoleTags {
      */
     integrationId: string
     /**
-     * Whether or not this Role is the Guild's premium subscriber Role
+     * Whether or not this Role is the Guild's premium subscriber Role. If true returns null
      */
-    premiumSubscriber: boolean
+    premiumSubscriber: null
+    /**
+     * The id of this Role's subscription sku and listing
+     */
+    subscriptionListingId: string
+    /**
+     * Whether this Role is available for purchase. If true returns null
+     */
+    availableForPurchase: null
 }
 
 export interface GuildBanFetchOption extends BaseFetchOptions {
