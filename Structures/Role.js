@@ -33,6 +33,14 @@ class Role extends Base {
             if("premium_subscriber" in data.tags) {
                 this.tags.premiumSubscriber = true
             }
+
+            if("subscription_listing_id" in data.tags) {
+                this.tags.subscriptionListingId = data.tags.subscription_listing_id
+            }
+
+            if("available_for_purchase" in data.tags) {
+                this.tags.availableForPurchase = data.tags.available_for_purchase
+            }
         }
     }
 
