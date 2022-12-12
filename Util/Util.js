@@ -45,7 +45,7 @@ class Util {
 
     static async getStreamData(stream) {
         const buffers = []
-        for await (const chunk of stream) buffers.push(chunk)
+        for await (const chunk of stream) buffers.push(Buffer.from(chunk))
         return Buffer.concat(buffers)
     }
 
