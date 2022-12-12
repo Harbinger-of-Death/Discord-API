@@ -1,7 +1,6 @@
 const ClientUser = require("../Structures/ClientUser");
 const OauthUser = require("../Structures/OauthUser");
 const OauthUserConnections = require("../Structures/OauthUserConnections");
-const RoleConnections = require("../Structures/RoleConnections");
 const User = require("../Structures/User");
 const { SnowflakeRegex, ChannelTypesEnums } = require("../Util/Constants");
 const Util = require("../Util/Util");
