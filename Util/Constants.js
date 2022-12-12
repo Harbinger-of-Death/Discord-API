@@ -636,17 +636,6 @@ module.exports.WebsocketEvents = {
     EmojiDelete: 'EMOJI_DELETE'
 }
 
-module.exports.ApplicationRoleConnectionMetadataTypeEnums = {
-    IntegerLessThanOrEqual: 1,
-    IntegerGreaterThanOrEqual: 2,
-    IntegerEqual: 3,
-    IntegerNotEqual: 4,
-    DatetimeLessThanOrEqual: 5,
-    DatetimeGreaterThanOrEqual: 6,
-    BooleanEqual: 7,
-    BooleanNotEqual: 8
-}
-
 module.exports.WebsocketStatus = {
     Ready: "READY",
     Closing: "CLOSING",
