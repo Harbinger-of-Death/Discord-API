@@ -407,7 +407,7 @@ export interface GuildCreateData extends BaseOptions {
     /**
      * The Features of this Guild
      */
-    features?: Array<Extract<GuildFeatures, "InvitesDisabled" | "Community" | "Discoverable">>
+    features?: Array<Extract<GuildFeatures, "InvitesDisabled" | "Community" | "Discoverable" | "RaidAlertsEnabled">>
     /**
      * THe Description of this Guild
      */
@@ -416,6 +416,10 @@ export interface GuildCreateData extends BaseOptions {
      * Whether or not to enable the Premium Progress Bar of this Guild
      */
     premiumProgressBar?: boolean
+    /**
+     * The Channel where to send Raid Alerts to
+     */
+    safetyAlertsChannel?: ChannelResolvable
 }
 
 export interface PartialChannelData {
@@ -538,10 +542,6 @@ export interface CreateChannelData extends BaseOptions {
      * The default sort order type used to order posts in this Forum Channel
      */
     defaultSortOrder?: number
-    /**
-     * The default forum layout of this Forum Channel
-     */
-    defaultForumLayout?: number
     /**
      * Sets the applied tags for this Thread Channel in a Forum Channel
      */
