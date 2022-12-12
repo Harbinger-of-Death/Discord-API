@@ -1,4 +1,3 @@
-const CategoryChannel = require("../Structures/CategoryChannel");
 const Channel = require("../Structures/Channel");
 const GuildChannel = require("../Structures/GuildChannel");
 const ChannelFlags = require("../Util/ChannelFlags");
@@ -104,6 +103,7 @@ class ChannelManager extends CachedManager {
                 }
             }),
             default_sort_order: payload.defaultSortOrder,
+            default_forum_layout: payload.defaultForumLayout,
             applied_tags: payload.appliedTags?.map(o => typeof o === "string" ? o : o.id)
         }
     }

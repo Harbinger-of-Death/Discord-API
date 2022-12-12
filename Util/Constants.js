@@ -22,7 +22,7 @@ module.exports.MessageTypeEnums = {
     ThreadStarterMessage: 21,
     GuildInviteReminder: 22,
     ContextMenuCommand: 23,
-    AutoModerationAction: 24
+    AutoModerationAction: 24,
 }
 
 module.exports.ApplicationCommandTypesEnums = {
@@ -484,6 +484,15 @@ module.exports.NonSystemMessageTypes = [
     this.MessageTypeEnums.ContextMenuCommand
 ]
 
+module.exports.RepliableMessageTypes = [
+    this.MessageTypeEnums.Default,
+    this.MessageTypeEnums.UserJoin,
+    this.MessageTypeEnums.Reply,
+    this.MessageTypeEnums.ChatInputCommand,
+    this.MessageTypeEnums.ContextMenuCommand,
+    this.MessageTypeEnums.AutoModerationAction,
+]
+
 module.exports.CdnEndPoints = {
     GuildIcon: (icon, extension = ".png", size = 64, forceStatic = false, guildId) => {
         if(icon.startsWith("a_") && !forceStatic) extension = ".gif"
@@ -643,4 +652,10 @@ module.exports.WebsocketStatus = {
     Closing: "CLOSING",
     Closed: "CLOSED",
     Reconnecting: "RECONNECTING"
+}
+
+module.exports.ForumLayoutTypesEnums = {
+    Default: 0,
+    List: 1,
+    Grid: 2
 }

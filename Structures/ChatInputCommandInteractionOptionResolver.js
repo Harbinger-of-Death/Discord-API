@@ -9,9 +9,17 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         this.guildId = guildId ?? null
     }
 
-    _parse(options = this.data?.options) {
-        if(!options) return null;
-        if(options[0]?.type === OptionTypesEnums.SubCommandGroup || options[0]?.type === OptionTypesEnums.SubCommand) return this._parse(options[0]?.options)
+    _parse(options = this.data?.options, type) {
+        if(!options?.length) return null;
+        if(type) {
+            if(type === "subcommand") {
+                const subcommand = options[0].type === OptionTypesEnums.SubCommandGroup ? options[0].options : options
+                if(subcommand && subcommand[0]?.type === OptionTypesEnums.SubCommand) return subcommand[0] ?? null
+            }
+
+            if(type === "subcommand-group" && options[0].type === OptionTypesEnums.SubCommandGroup) return options[0] ?? null
+        }
+        if(options[0].type === OptionTypesEnums.SubCommandGroup || options[0].type === OptionTypesEnums.SubCommand) return this._parse(options[0].options)
         return options
     }
 
@@ -142,19 +150,6 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         return null;
     }
 
-    getSubcommand() {
-        const option = this.data?.options
-        if(!option) return null;
-        let subcommand = option.find(o => o.type === OptionTypesEnums.SubCommand)
-        if(option[0].type === OptionTypesEnums.SubCommandGroup) {
-            subcommand = option[0].options?.find(o => o.type === OptionTypesEnums.SubCommand)
-            return subcommand.name ?? null
-        }
-
-        return subcommand.name ?? null
-
-    }
-
     getMember(name, required = false) {
         const options = this._parse()
         if(!options?.length) return null;
@@ -168,12 +163,14 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         return null;
     }
 
+    getSubcommand() {
+        const parse = this._parse(this.data.options, "subcommand")
+        return parse?.name ?? null
+    }
+
     getSubcommandGroup() {
-        const option = this.data?.options
-        if(!option) return null;
-        const group = option.find(o => o.type === OptionTypesEnums.SubCommandGroup)
-        if(group) return group.name
-        return null;
+        const parse = this._parse(this.data.options, "subcommand-group")
+        return parse?.name ?? null
     }
 
     get guild() {

@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 const AttachmentBuilder = require("../Builders/AttachmentBuilder");
+const { Stream } = require("node:stream");
 class Util {
     static resolveColor(color) {
         if(typeof color === "string") {
@@ -25,47 +26,61 @@ class Util {
 
     static async getBuffer(attachment) {
         if(attachment instanceof Buffer) return attachment
-        if(attachment instanceof AttachmentBuilder) return this.getBuffer(attachment.url)
-        if(/^(http(s)?:\/\/)/gi.test(attachment)) {
-            attachment = await fetch(attachment)
-            return await attachment.buffer()
-        }
+        if(attachment instanceof AttachmentBuilder) return this.getBuffer(attachment.attachment)
+        if(typeof attachment === "string") {
+            if(/^(http(s)?:\/\/)/.test(attachment)) {
+                attachment = await fetch(attachment)
+                return await this.getBuffer(await attachment.arrayBuffer())
+            }
+            if(/^[\.]{1,2}\//.test(attachment)) { 
+                if(fs.statSync(attachment).isFile()) return fs.readFileSync(attachment)
+            }
 
-        if(fs.statSync(attachment).isFile()) {
-            return fs.readFileSync(attachment)
+            return Util.base64ToBuffer(attachment)
         }
-
-        if(attachment.startsWith("data") || typeof attachment === "string") return Util.base64ToBuffer(attachment)
+        if(attachment instanceof ArrayBuffer) return Buffer.from(attachment)
+        if(attachment instanceof Stream) return await this.getStreamData(attachment)
         throw new TypeError(`Invalid Attachment Type`)
     }
 
-    static async generateDataURI(buffer, mimeType) {
-        if(!buffer) return;
+    static async getStreamData(stream) {
+        const buffers = []
+        for await (const chunk of stream) buffers.push(chunk)
+        return Buffer.concat(buffers)
+    }
+
+    static async generateDataURI(buffer, mediaType = ".png") {
+        if(!buffer) throw new RangeError(`No Buffer resolvable specified`);
         if(typeof buffer === "string") {
             if(buffer.startsWith("data")) return buffer
         }
         if(!(buffer instanceof Buffer)) buffer = await this.getBuffer(buffer)
-        switch(mimeType) {
+        let mimeType
+        switch(mediaType) {
             case ".png":
             case ".webp":
-            default:
-                mimeType = "png"
-                break;
+                mimeType = "image/png"
             case ".jpg":
             case ".jpeg":
-                mimeType = "jpeg"
+                mimeType = "image/jpeg"
                 break;
             case ".gif":
-                mimeType = "gif"
+                mimeType = "image/gif"
+                break;
+            case ".html":
+                mimeType = "text/html"
+                break;
+            default:
+                mimeType = "text/plain"
                 break;
 
         }
-        return `data:image/${mimeType};base64,${buffer.toString("base64")}`
+        return `data:${mimeType};base64,${buffer.toString("base64")}`
     }
 
     static base64ToBuffer(base64) {
         if(base64 instanceof Buffer) return base64
-        if(base64.startsWith("data")) base64 = base64.replace(/^(data\:image\/\w{1,5};base64,)/, "")
+        if(base64.startsWith("data")) base64 = base64.replace(/^(data:[A-Za-z]+\/[A-Za-z]+;base64,)/, "")
         return Buffer.from(base64, "base64")
     }
 

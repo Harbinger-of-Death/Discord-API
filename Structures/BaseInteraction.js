@@ -10,19 +10,19 @@ class BaseInteraction extends Interaction {
     }
 
     async editReply(options = {}) {
-        return await this.webhook.editMessage("@original", options)
+        return await this.webhook.editMessage(options.message ?? "@original", options)
     }
 
-    async deleteReply() {
-        return await this.webhook.deleteMessage("@original")
+    async deleteReply(message) {
+        return await this.webhook.deleteMessage(message ?? "@original")
     }
 
     async followUp(options = {}) {
         return await this.webhook.sendMessage(options)
     }
 
-    async fetchReply() {
-        return await this.webhook.fetchMessage("@original")
+    async fetchReply(message) {
+        return await this.webhook.fetchMessage(message ?? "@original")
     }
 
     async showModal(options = {}) {
