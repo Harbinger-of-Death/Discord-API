@@ -18,6 +18,10 @@ class ForumChannel extends GuildChannel {
         this.defaultAutoArchiveDuration = data.default_auto_archive_duration ?? null
     }
 
+    async setDefaultForumLayout(defaultForumLayout, reason) {
+        return await this.edit({ defaultForumLayout, reason })
+    }
+
     async setAvailableTags(availableTags, reason) {
         return await this.edit({ availableTags, reason })
     }
