@@ -8,7 +8,7 @@ export class RoleConnectionsMetadata extends Base {
     /**
      * The type of this metadata
      */
-    public type: string
+    public type: number
     /**
      * Dictionary key for the metadata
      */
