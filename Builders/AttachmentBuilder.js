@@ -1,13 +1,13 @@
 class AttachmentBuilder {
     constructor(data = {}) {
         this.filename = data.filename
-        this.url = data.url
+        this.attachment = data.attachment
         this.spoiler = data.spoiler
         this.description = data.description
     }
 
-    setURL(url) {
-        this.url = url
+    setAttachment(attachment) {
+        this.attachment = attachment
         return this;
     }
 
@@ -28,7 +28,7 @@ class AttachmentBuilder {
 
     parse() {
         return {
-            url: this.url,
+            attachment: this.attachment,
             filename: this.filename,
             spoiler: this.spoiler,
             description: this.description
