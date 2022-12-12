@@ -45,11 +45,8 @@ class Util {
 
     static async getStreamData(stream) {
         const buffers = []
-        return new Promise((res, rej) => {
-            stream.on("data", (d) => buffers.push(d))
-            stream.on("end", () => res(Buffer.concat(buffers)))
-            stream.on("error", (err) => rej(new Error(err)))
-        })
+        for await (const chunk of stream) buffers.push(chunk)
+        return Buffer.concat(buffers)
     }
 
     static async generateDataURI(buffer, mediaType = ".png") {
