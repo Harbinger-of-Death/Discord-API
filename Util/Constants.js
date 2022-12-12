@@ -459,8 +459,6 @@ module.exports.ActivityTypesEnums = {
     Competing: 5
 }
 
-
-
 module.exports.MessageActivityTypesEnums = {
     Join: 1,
     Spectate: 2,

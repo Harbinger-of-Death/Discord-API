@@ -542,6 +542,10 @@ export interface CreateChannelData extends BaseOptions {
      * Sets the applied tags for this Thread Channel in a Forum Channel
      */
     appliedTags?: ForumTagResolvable[]
+    /**
+     * The default forum layout of this Forum Channel
+     */
+    defaultForumLayout?: number
 }
 
 export interface CreateThreadData extends BaseOptions {
