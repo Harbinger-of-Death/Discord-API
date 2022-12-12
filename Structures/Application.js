@@ -45,7 +45,6 @@ class Application extends Base {
         return this.client.cdn.ApplicationCover(this.coverImage, options.extension, options.size, this.id)
     }
 
-    
     async fetchRoleConnectionsMetadata() {
         const metadata = await this.client.api.get(`${this.client.root}/applications/${this.id}/role-connections/metadata`)
         if(!metadata.length) return null;
