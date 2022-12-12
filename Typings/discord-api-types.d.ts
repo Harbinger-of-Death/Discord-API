@@ -2003,34 +2003,6 @@ export interface RateLimitData {
     bucket: string
 }
 
-export interface RoleConnectionMetadata {
-    /**
-     * The type of the metadata
-     */
-    type: number
-    /**
-     * The key of the metadata
-     */
-    key: string
-    /**
-     * The name of the Role Connection metadata
-     */
-    name: string
-    /**
-     * Translations of the name
-     */
-    nameLocalizations: Record<Locales, string>
-    /**
-     * The description of this metadata
-     */
-    description: string
-    /**
-     * The translations of the description
-     */
-    descriptionLocalizations: Record<Locales, string>
-
-}
-
 export interface Oauth2ClientOptions {
     /**
      * The id of the Client
