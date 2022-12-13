@@ -5354,7 +5354,7 @@ export class ForumChannel extends GuildChannel {
      */
     public defaultAutoArchiveDuration: number
     /**
-     * The default layout of this Forum. null if not set
+     * The default layout of this Forum. 0 if not set
      */
     public defaultForumLayout: number
     /**
@@ -8191,7 +8191,7 @@ export enum WebsocketStatus {
 }
 
 export enum ForumLayoutTypesEnums {
-    Default = 0,
-    List = 1,
-    Grid = 2
+    NotSet = 0,
+    ListView = 1,
+    GalleryView = 2
 }
