@@ -642,9 +642,9 @@ module.exports.WebsocketStatus = {
 }
 
 module.exports.ForumLayoutTypesEnums = {
-    Default: 0,
-    List: 1,
-    Grid: 2
+    NotSet: 0,
+    ListView: 1,
+    GalleryView: 2
 }
 
 module.exports.ApplicationRoleConnectionMetadataTypeEnums = {
