@@ -4,6 +4,7 @@ const Snowflake = require("../Util/Snowflake");
 class AutoModeration extends Base {
     constructor(data = {}, client, extras) {
         super(client)
+        Object.defineProperty(this, "_data", { value: data })
         this.partial = data.partial ?? false
         this.id = data.id ?? null
         this.guildId = data.guild_id ?? extras?.guildId ?? null
@@ -16,12 +17,31 @@ class AutoModeration extends Base {
         this.allowList = data.trigger_metadata?.allow_list ?? null
         this.mentionTotalLimit = data.trigger_metadata?.mention_total_limit ?? null
         this.regexPatterns = data.trigger_metadata?.regex_patterns ?? null
+        this.mentionRaidProtectionEnabled = data.trigger_metadata?.mention_raid_protection_enabled ?? null
         this.enabled = data.enabled ?? null
-        this.exemptRoles = new Collection(data.exempt_roles?.map(o => [o, this.guild?.roles.cache.get(o)]).filter(item => item))
-        this.exemptChannels = new Collection(data.exempt_channels?.map(o => [o, this.guild?.channels.cache.get(o)]).filter(item => item))
         this.actions = data.actions?.map(o => { return { type: o.type, metadata: { channelId: o.metadata?.channel_id, durationSeconds: o.metadata?.duration_seconds } } }) ?? []
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
+    }
+
+    get exemptChannels() {
+        const collection = new Collection()
+        for(const snowflake of this._data.exempt_channels) {
+            if(!this.client.channels.cache.has(snowflake)) continue;
+            collection.set(snowflake, this.client.channels.cache.get(snowflake))
+        }
+
+        return collection
+    }
+
+    get exemptRoles() {
+        const collection = new Collection()
+        for(const snowflake of this._data.exempt_roles) {
+            if(!this.guild?.roles.cache.has(snowflake)) continue;
+            collection.set(snowflake, this.guild?.roles.cache.get(snowflake))
+        }
+
+        return collection
     }
 
     get creator() {
@@ -54,6 +74,30 @@ class AutoModeration extends Base {
 
     async setTriggerMetadata(triggerMetadata, reason) {
         return await this.edit({ triggerMetadata, reason })
+    }
+
+    async setKeywordFilter(keywordFilter, reason) {
+        return await this.edit({ triggerMetadata: { keywordFilter }, reason })
+    }
+
+    async setRegexPatterns(regexPatterns, reason) {
+        return await this.edit({ triggerMetadata: { regexPatterns }, reason })
+    }
+
+    async setPresets(presets, reason) {
+        return await this.edit({ triggerMetadata: { presets }, reason })
+    }
+
+    async setAllowList(allowList, reason) {
+        return await this.edit({ triggerMetadata: { allowList }, reason })
+    }
+
+    async setMentionTotalLimit(mentionTotalLimit, reason) {
+        return await this.edit({ triggerMetadata: { mentionTotalLimit }, reason })
+    }
+
+    async setMentionRaidProtectionEnabled(mentionRaidProtectionEnabled, reason) {
+        return await this.edit({ triggerMetadata: { mentionRaidProtectionEnabled }, reason })
     }
 
     async setActions(actions, reason) {
