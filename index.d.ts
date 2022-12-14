@@ -635,23 +635,23 @@ export class AutoModeration extends Base {
      */
     public triggerType: number
     /**
-     * Array of strings which would be used to search for in the Message content.
+     * Array of strings which would be used to search for in the Message content. For Keyword trigger types
      */
     public keywordFilter: string[]
     /**
-     * Array of Regexes which would be used against Message content
+     * Array of Regexes which would be used against Message content. For Keyword trigger types
      */
     public regexPatterns: string[]
     /**
-     * The pre-defined wordsets which will be searched for in the Message content
+     * The pre-defined wordsets which will be searched for in the Message content. For KeywordPreset trigger types
      */
     public presets: number[]
     /**
-     * List of allowed text which will be exempt from being checked in the Message content
+     * List of allowed text which will be exempt from being checked in the Message content. For Keyword and KeywordPreset trigger types
      */
     public allowList: string[]
     /**
-     * Total number of unique Roles and User mentions allowed per Message
+     * Total number of unique Roles and User mentions allowed per Message. For MentionSpam trigger type
      */
     public mentionTotalLimit: number
     /**
