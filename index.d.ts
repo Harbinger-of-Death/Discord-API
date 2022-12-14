@@ -655,6 +655,10 @@ export class AutoModeration extends Base {
      */
     public mentionTotalLimit: number
     /**
+     * Whether or not this Automod has mention protection enabled against raid. For MentionSpam trigger type
+     */
+    public mentionRaidProtectionEnabled: boolean
+    /**
      * Collection of exempt Roles that should not be affected by this Auto Moderation Rule
      */
     public exemptRoles: Collection<string, Role>
@@ -702,6 +706,30 @@ export class AutoModeration extends Base {
      * Sets the Trigger Metadata of this Auto Moderation Rule
      */
     public setTriggerMetadata(triggerMetadata: AutoModerationTriggerMetadata, reason?: string): Promise<this>
+    /**
+     * Sets the keyword to check against for in User's Message content
+     */
+    public setKeywordFilter(keywordFilter: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the regex pattern to check against for in User's Message content
+     */
+    public setRegexPatterns(regexPatterns: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the word presets for this Auto Moderation Rule
+     */
+    public setPresets(presets: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the allowed keywords for this Auto Moderation Rule
+     */
+    public setAllowList(allowList: Array<string>, reason?: string): Promise<this>
+    /** 
+     * Sets the total limit of mention that is allowed in the Message before considering as a MentionSpam
+     */
+    public setMentionTotalLimit(mentionTotalLimit: number, reason?: string): Promise<this>
+    /**
+     * Sets whether or not to enable Mention Raid Protection
+     */
+    public setMentionRaidProtectionEnabled(mentionRaidProtectionEnabled: boolean, reason?: string): Promise<this>
     /**
      * Sets the Actions which will be executed when this Auto Moderation Rule is triggered
      */
