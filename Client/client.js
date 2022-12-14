@@ -31,6 +31,7 @@ class Client extends EventEmitter {
         this.version = options.version ?? 9
         this.encoding = options.encoding ?? "json"
         this.presence = options.presence
+        this.websocketOptions = options.websocketOptions ?? { properties: { os: "windows" } }
         //URL
         this.root = `https://discord.com/api/v${this.version}`
         this.wssURL = `wss://gateway.discord.gg/?v=${this.version}&encoding=${this.encoding}`
