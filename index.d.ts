@@ -4348,7 +4348,11 @@ export class Util {
     /**
      * Generates a Buffer from received Stream data
      */
-    public getStreamData(stream: Stream): Promise<Buffer>
+    public static getStreamData(stream: Stream): Promise<Buffer>
+    /**
+     * Downloads a Buffer
+     */
+    public static downloadFile(file: BufferResolvable, directory?: string): Promise<void>
 }
 
 export class ClientUser extends User {

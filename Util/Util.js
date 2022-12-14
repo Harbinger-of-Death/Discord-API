@@ -84,6 +84,11 @@ class Util {
         return Buffer.from(base64, "base64")
     }
 
+    static async downloadFile(file, directory = "./index.txt") {
+        if(!(file instanceof Buffer)) file = await this.getBuffer(file)
+        return fs.writeFileSync(directory, file)
+    }
+
     static codeBlock(text, language = "js") {
         return `\`\`\`${language}\n${text}\`\`\``
     }
