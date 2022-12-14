@@ -26,9 +26,9 @@ class AutoModeration extends Base {
 
     get exemptChannels() {
         const collection = new Collection()
-        for(const snowflake of this._data.exempt_channels) {
-            if(!this.client.channels.cache.has(snowflake)) continue;
-            collection.set(snowflake, this.client.channels.cache.get(snowflake))
+        for(const channel of this._data.exempt_channels) {
+            if(!this.client.channels.cache.has(channel)) continue;
+            collection.set(channel, this.client.channels.cache.get(channel))
         }
 
         return collection
@@ -36,9 +36,9 @@ class AutoModeration extends Base {
 
     get exemptRoles() {
         const collection = new Collection()
-        for(const snowflake of this._data.exempt_roles) {
-            if(!this.guild?.roles.cache.has(snowflake)) continue;
-            collection.set(snowflake, this.guild?.roles.cache.get(snowflake))
+        for(const role of this._data.exempt_roles) {
+            if(!this.guild?.roles.cache.has(role)) continue;
+            collection.set(role, this.guild?.roles.cache.get(role))
         }
 
         return collection
