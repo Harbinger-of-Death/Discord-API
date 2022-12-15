@@ -33,14 +33,14 @@ class Webhook extends Base {
         if(!SnowflakeRegex.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId) && messageId !== "@original") throw new RangeError(`Invalid Message`)
         const query = { thread_id: typeof options.thread === "string" ? options.thread : options.thread?.id }
         message = await this.client.api.get(`${this.client.root}/webhooks/${this.id}/${this.token}/messages/${messageId}`, { query })
-        return this.client.channels.cache.get(message.channel_id)?.messages._add(message)
+        return this.client.channels.cache.get(message?.channel_id)?.messages._add(message)
     }
 
     async sendMessage(options = {}) {
         const body = await DataPayload.create(options)
         const query = { wait: options.wait, thread_id: typeof options.thread === "string" ? options.thread : options.thread?.id }
         const message = await this.client.api.post(`${this.client.root}/webhooks/${this.id}/${this.token}`, { body, query })
-        return this.client.channels.cache.get(message.channel_id)?.messages._add(message)
+        return this.client.channels.cache.get(message?.channel_id)?.messages._add(message)
     }
 
     async editMessage(message, options = {}) {
@@ -49,7 +49,7 @@ class Webhook extends Base {
         const query = { thread_id: typeof options.thread === "string" ? options.thread : options.thread?.id }
         const body = await DataPayload.create(options)
         message = await this.client.api.patch(`${this.client.root}/webhooks/${this.id}/${this.token}/messages/${messageId}`, { query, body })
-        return this.client.channels.cache.get(message.channel_id)?.messages._add(message)
+        return this.client.channels.cache.get(message?.channel_id)?.messages._add(message)
     }
 
     async deleteMessage(message, thread) {
