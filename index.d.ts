@@ -4141,6 +4141,7 @@ export class GuildBanManager extends Base {
      */
     public cache: Collection<string, GuildBan>
 }
+
 export class Role extends Base {
     public constructor(data: {}, guildId: string, client: Client)
     /**
