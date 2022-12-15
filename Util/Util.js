@@ -60,6 +60,7 @@ class Util {
             case ".png":
             case ".webp":
                 mimeType = "image/png"
+                break;
             case ".jpg":
             case ".jpeg":
                 mimeType = "image/jpeg"
