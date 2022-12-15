@@ -4319,9 +4319,13 @@ export class GuildMemberRoleManager extends CachedManager {
      */
     public everyone: Readonly<Role>
     /**
-     * Gets the Premium Subscriber Role of a Guild
+     * Gets the Premium Subscriber Role of a GuildMember's Role
      */
     public premiumSubscriberRole: Readonly<Role>
+    /**
+     * Returns a Collection of Linked Roles in the GuildMember's Roles
+     */
+    public linkedRoles: Readonly<Collection<string, Role>>
     /**
      * Returns the highest Role
      */
@@ -4342,6 +4346,10 @@ export class RoleManager extends CachedManager {
      * Gets the Premium Subscriber Role of a Guild
      */
     public premiumSubscriberRole: Readonly<Role>
+    /**
+     * Returns a Collection of Linked Roles in the GuildMember's Roles
+     */
+    public linkedRoles: Readonly<Collection<string, Role>>
     /**
      * Returns the highest Role
      */
