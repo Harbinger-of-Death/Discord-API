@@ -4347,7 +4347,7 @@ export class RoleManager extends CachedManager {
      */
     public premiumSubscriberRole: Readonly<Role>
     /**
-     * Returns a Collection of Linked Roles in the GuildMember's Roles
+     * Returns a Collection of Linked Roles in the Guild
      */
     public linkedRoles: Readonly<Collection<string, Role>>
     /**
