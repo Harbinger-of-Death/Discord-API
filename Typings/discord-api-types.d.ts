@@ -2086,6 +2086,7 @@ export interface ModifyRoleConnection {
      */
     metadata?: ModifyRoleConnectionMetadata
 }
+
 export interface ModifyRoleConnectionMetadata {
     /**
      * The type of the metadata
