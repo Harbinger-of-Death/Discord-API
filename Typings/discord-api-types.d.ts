@@ -805,6 +805,10 @@ export interface RoleTags {
      * Whether this Role is available for purchase. If true returns null
      */
     availableForPurchase: null
+    /**
+     * Whether or not this Role is a linked role
+     */
+    guildConnections: null
 }
 
 export interface GuildBanFetchOption extends BaseFetchOptions {
