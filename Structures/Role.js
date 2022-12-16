@@ -30,7 +30,7 @@ class Role extends Base {
 
             if("subscription_listing_id" in data.tags) this.tags.subscriptionListingId = data.tags.subscription_listing_id
 
-            if("available_for_purchase" in data.tags) this.tags.availableForPurchase = data.tags.available_for_purchase
+            if("available_for_purchase" in data.tags) this.tags.availableForPurchase = true
 
             if("guild_connections" in data.tags) this.tags.guildConnections = true
         }
