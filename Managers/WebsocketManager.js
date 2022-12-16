@@ -101,6 +101,7 @@ class WebsocketManager extends WebSocket {
             if(this.readyState === this.CLOSED) this.client.debug(`[Websocket]: Websocket has been already closed. So this should be easy`)
             this.client.debug(`[Websocket]: Now connecting to resume gateway url: ${this.client.resumeGatewayURL}`)
             this.client.ws = new WebsocketManager(this.client, this.client.resumeGatewayURL)
+            this.client.closeSequence = this.client.seq
             this.client.ws.reconnected = true
         }, 5_000).unref()
     }
