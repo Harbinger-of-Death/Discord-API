@@ -3673,6 +3673,18 @@ export class VoiceState extends Base {
      */
     public requestToSpeakTimestamp: number
     /**
+     * The Channel this VoiceState belongs to
+     */
+    public channel: VoiceBasedChannels
+    /**
+     * The User this VoiceState belongs to
+     */
+    public user: User
+    /**
+     * The Guild this belongs to
+     */
+    public guild: Guild
+    /**
      * Modifies this Voice State
      */
     public edit(options?: ModifyVoiceStateData): Promise<this>
