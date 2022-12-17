@@ -10,7 +10,7 @@ class Hello extends Base {
         const packet = data.d
         this.client.debug(`[Websocket]: Received HELLO, now setting the HELLO timeout of 2000`)
         this.client.heartbeatInterval = packet?.heartbeat_interval
-        this.client.debug(`[Websocket]: Setting the heartbeat interval to ${this.client.heartbeatInterval}ms`)
+        this.client.debug(`[Heartbeat]: Setting the heartbeat interval to ${this.client.heartbeatInterval}ms`)
         setTimeout(() => {
             this.handleheartBeat()
         }, 2_000).unref()
