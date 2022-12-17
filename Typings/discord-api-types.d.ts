@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ApplicationCommand, ApplicationCommandPermission, Attachment, AttachmentBuilder, AuditLogEntry, AutoModeration, AutoModerationRuleAction, BaseGuildTextChannel, BaseInteraction, ButtonBuilder, Channel, ChannelTypesEnums, Collection, DMChannel, EmbedBuilder, Emoji, ForumTags, Guild, GuildBan, GuildChannel, GuildIntegration, GuildMember, GuildScheduledEvent, GuildScheduledEventUser, GuildTemplate, InputTextBuilder, Interaction, Invite, Message, MessageReaction, OpCodes, Permissions, Presence, Role, SelectMenuBuilder, StageInstance, Sticker, ThreadChannel, ThreadMember, User, VoiceChannel, VoiceState } from ".."
+import { ActionRowBuilder, ApplicationCommand, ApplicationCommandPermission, Attachment, AttachmentBuilder, AuditLogEntry, AutoModeration, AutoModerationRuleAction, BaseGuildTextChannel, BaseInteraction, ButtonBuilder, Channel, ChannelTypesEnums, Collection, DMChannel, EmbedBuilder, Emoji, ForumTags, Guild, GuildBan, GuildChannel, GuildIntegration, GuildMember, GuildScheduledEvent, GuildScheduledEventUser, GuildTemplate, InputTextBuilder, Interaction, Invite, Message, MessageReaction, OpCodes, Permissions, Presence, Role, SelectMenuBuilder, StageInstance, Sticker, ThreadChannel, ThreadMember, User, VoiceState, Webhook } from ".."
 import { Stream } from "node:stream"
 export interface Choices {
     /**
@@ -2114,13 +2114,7 @@ export interface ModifyRoleConnectionMetadata {
     descriptionLocalizations?: Record<Locales, string>
 }
 
-/**
- * Identifiers that can be resolved to an emoji
- * @example
- * <a:name:id>
- * a:name:id
- * ❌
- */
+export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
 export type GuildMemberFlagsStrings = "DidRejoin" | "CompletedOnboarding"

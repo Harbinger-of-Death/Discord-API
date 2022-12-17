@@ -60,6 +60,7 @@ class Util {
             case ".png":
             case ".webp":
                 mimeType = "image/png"
+                break;
             case ".jpg":
             case ".jpeg":
                 mimeType = "image/jpeg"
@@ -82,6 +83,11 @@ class Util {
         if(base64 instanceof Buffer) return base64
         if(base64.startsWith("data")) base64 = base64.replace(/^(data:[A-Za-z]+\/[A-Za-z]+;base64,)/, "")
         return Buffer.from(base64, "base64")
+    }
+
+    static async downloadFile(file, directory = "./index.txt") {
+        if(!(file instanceof Buffer)) file = await this.getBuffer(file)
+        return fs.writeFileSync(directory, file)
     }
 
     static codeBlock(text, language = "js") {

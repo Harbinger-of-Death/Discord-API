@@ -14,6 +14,7 @@ const Invite = require("../Structures/Invite");
 const Sticker = require("../Structures/Sticker");
 const StickerPack = require("../Structures/StickerPack");
 const VoiceRegion = require("../Structures/VoiceRegion");
+const Webhook = require("../Structures/Webhook");
 const Collection = require("../Util/Collection");
 const { CdnEndPoints, SnowflakeRegex, WebsocketEvents, EventTypes } = require("../Util/Constants");
 const Intents = require("../Util/Intents");
@@ -31,6 +32,7 @@ class Client extends EventEmitter {
         this.version = options.version ?? 9
         this.encoding = options.encoding ?? "json"
         this.presence = options.presence
+        this.websocketOptions = options.websocketOptions ?? { properties: { os: "windows" } }
         //URL
         this.root = `https://discord.com/api/v${this.version}`
         this.wssURL = `wss://gateway.discord.gg/?v=${this.version}&encoding=${this.encoding}`
@@ -64,6 +66,16 @@ class Client extends EventEmitter {
         return this.ws.status === WebsocketEvents.Ready
     }
 
+    async fetchWebhook(webhook, token) {
+        const match = webhook.match(/https?:\/\/(?:\w+.)\w+\.(?:com|io|org)\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)
+        if(match?.length) {
+            webhook = match[1]
+            token = match[2]
+        } else webhook = typeof webhook === "string" ? webhook : webhook.id
+        webhook = await this.api.get(`${this.root}/webhooks/${webhook}${token ? `/${token}` : ""}`)
+        return new Webhook(webhook, this)
+    }
+
     async fetchGuildPreview(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild.id ?? guild
         if(!SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
@@ -79,16 +91,23 @@ class Client extends EventEmitter {
     }
 
     async fetchGuildTemplate(code) {
-        if(typeof code === "string") code = code.slice(code.lastIndexOf("/")+1)
-        else code = code.code
+        const match = code.match(/https?:\/\/discord\.new\/([\w-]+)/)
+        if(match?.length) {
+            code = match[1]
+        } else typeof code === "string" ? code : code.code
+
         const template = await this.api.get(`${this.root}/guilds/templates/${code}`)
-        return new GuildTemplate(template, template.source_guild_id, this)
+        return new GuildTemplate(template, template.guild_id, this)
     }
 
     async fetchInvite(code, options = {}) {
-        if(typeof code === "string") code = code.slice(code.lastIndexOf("/")+1)
-        else code = code.code
+        const match = code.match(/https?:\/\/discord\.gg\/([\w-]+)/)
+        if(match?.length) {
+            code = match[1]
+        } else typeof code === "string" ? code : code.code
+
         const query = { with_counts: options.withCounts, with_expiration: options.withExpiration, guild_scheduled_event_id: typeof options.guildScheduledEvent === "string" ? options.guildScheduledEvent : options.guildScheduledEvent?.id }
+
         const invite = await this.api.get(`${this.root}/invites/${code}`, { query })
         return new Invite(invite, this)
     }
