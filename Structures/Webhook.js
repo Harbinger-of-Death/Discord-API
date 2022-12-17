@@ -19,12 +19,12 @@ class Webhook extends Base {
     }
 
     get url() {
-        if(this.id && this.url) return `https://canary.discord.com/api/webhooks/${this.id}/${this.token}`
+        if(this.id && this.url) return `https://canary.discord.com/api/webhooks/${this.id}${this.token ? `/${this.token}` : ""}`
         return null;
     }
 
     async fetch() {
-        const webhook = await this.client.api.get(`${this.client.root}/webhooks/${this.id}/${this.token}`)
+        const webhook = await this.client.api.get(`${this.client.root}/webhooks/${this.id}${this.token ? `/${this.token}` : ""}`)
         return new this.constructor(webhook, this.client)
     }
 
