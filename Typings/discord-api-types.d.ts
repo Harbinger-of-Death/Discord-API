@@ -2060,13 +2060,7 @@ export interface InteractionEditReplyOptions extends MessageOptionsData {
     message?: MessageResolvable
 }
 
-/**
- * Identifiers that can be resolved to an emoji
- * @example
- * <a:name:id>
- * a:name:id
- * ❌
- */
+export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
 export type GuildMemberFlagsStrings = "DidRejoin" | "CompletedOnboarding"

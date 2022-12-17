@@ -14,6 +14,7 @@ const Invite = require("../Structures/Invite");
 const Sticker = require("../Structures/Sticker");
 const StickerPack = require("../Structures/StickerPack");
 const VoiceRegion = require("../Structures/VoiceRegion");
+const Webhook = require("../Structures/Webhook");
 const Collection = require("../Util/Collection");
 const { CdnEndPoints, SnowflakeRegex, WebsocketEvents, EventTypes } = require("../Util/Constants");
 const Intents = require("../Util/Intents");
@@ -63,6 +64,16 @@ class Client extends EventEmitter {
 
     isReady() {
         return this.ws.status === WebsocketEvents.Ready
+    }
+
+    async fetchWebhook(webhook, token) {
+        const match = webhook.match(/https?:\/\/(?:\w+.)\w+\.(?:com|io|org)\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)
+        if(match?.length) {
+            webhook = match[1]
+            token = match[2]
+        } else webhook = typeof webhook === "string" ? webhook : webhook.id
+        webhook = await this.api.get(`${this.root}/webhooks/${webhook}${token ? `/${token}` : ""}`)
+        return new Webhook(webhook, this)
     }
 
     async fetchGuildPreview(guild) {
