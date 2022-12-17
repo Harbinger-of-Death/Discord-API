@@ -91,16 +91,23 @@ class Client extends EventEmitter {
     }
 
     async fetchGuildTemplate(code) {
-        if(typeof code === "string") code = code.slice(code.lastIndexOf("/")+1)
-        else code = code.code
+        const match = code.match(/https?:\/\/discord\.new\/([\w-]+)/)
+        if(match?.length) {
+            code = match[1]
+        } else typeof code === "string" ? code : code.code
+
         const template = await this.api.get(`${this.root}/guilds/templates/${code}`)
-        return new GuildTemplate(template, template.source_guild_id, this)
+        return new GuildTemplate(template, template.guild_id, this)
     }
 
     async fetchInvite(code, options = {}) {
-        if(typeof code === "string") code = code.slice(code.lastIndexOf("/")+1)
-        else code = code.code
+        const match = code.match(/https?:\/\/discord\.gg\/([\w-]+)/)
+        if(match?.length) {
+            code = match[1]
+        } else typeof code === "string" ? code : code.code
+
         const query = { with_counts: options.withCounts, with_expiration: options.withExpiration, guild_scheduled_event_id: typeof options.guildScheduledEvent === "string" ? options.guildScheduledEvent : options.guildScheduledEvent?.id }
+
         const invite = await this.api.get(`${this.root}/invites/${code}`, { query })
         return new Invite(invite, this)
     }
