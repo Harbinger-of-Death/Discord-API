@@ -253,7 +253,8 @@ module.exports.WsReadyStateCodes = {
 
 module.exports.InviteTargetTypesEnums = {
     Stream: 1,
-    EmbeddedApplication: 2
+    EmbeddedApplication: 2,
+    RoleSubscriptionsPurchase: 3
 }
 
 module.exports.GuildScheduledEventPrivacyEnums = {

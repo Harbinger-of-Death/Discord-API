@@ -7978,7 +7978,8 @@ export enum WsReadyStateCodes {
 
 export enum InviteTargetTypesEnums {
     Stream = 1,
-    EmbeddedApplication = 2
+    EmbeddedApplication = 2,
+    RoleSubscriptionsPurchase = 3
 }
 
 export enum GuildScheduledEventPrivacyEnums {
