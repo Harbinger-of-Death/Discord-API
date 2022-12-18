@@ -125,7 +125,7 @@ class SlashOptionBuilder {
         for(const [index, value] of this.choices.entries()) {
             if(!(value.name || value.value)) throw new RangeError(`Field[${index}]: name and value are required`)
             if(typeof value.value !== "string" && this.type === OptionTypesEnums.String) throw new TypeError(`Field[${index}]: value must be string`)
-            if(typeof value.value !== "number" && ![OptionTypesEnums.Number, OptionTypesEnums.Integer].includes(this.type)) throw new TypeError(`Field[${index}]: value must be number`)
+            if(typeof value.value !== "number" && [OptionTypesEnums.Number, OptionTypesEnums.Integer].includes(this.type)) throw new TypeError(`Field[${index}]: value must be number`)
         }
         return;
     }
