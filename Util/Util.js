@@ -32,7 +32,7 @@ class Util {
                 attachment = await fetch(attachment)
                 return await this.getBuffer(await attachment.arrayBuffer())
             }
-            if(/^[\.]{1,2}\//.test(attachment)) { 
+            if(/^(?:[\.]{1,2}\/|[a-zA-Z:]+\/[\w\/-]+\.\w+)/.test(attachment)) { 
                 if(fs.statSync(attachment).isFile()) return fs.readFileSync(attachment)
             }
 
