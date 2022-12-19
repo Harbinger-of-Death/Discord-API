@@ -3213,11 +3213,11 @@ export class PartialGuild extends Base {
     /**
      * A Collection of Roles this Guild holds
      */
-    public roles: Collection<number, PartialRole>
+    public roles: RaidenSet<PartialRole>
     /**
      * A Collection of Channels this Guild holds
      */
-    public channels: Collection<number, PartialChannel>
+    public channels: RaidenSet<PartialChannel>
     /**
      * The id of the Afk Channel of this Guild
      */
@@ -6550,7 +6550,7 @@ export class RaidenSet<V> extends Set<V> {
     /**
      * Maps the values in to an Array
      */
-    public map(fn: (value: V) => void): V[]
+    public map(fn: (value: V, index: number, set: this) => void): V[]
     /**
      * Filters the current Set and returns it
      */
@@ -6595,7 +6595,7 @@ export class RaidenSet<V> extends Set<V> {
     /**
      * Returns the value in this index
      */
-    public at(index: number): this
+    public at(index: number): V
 }
 
 export class Collection<K, V> extends Map<K, V> {

@@ -1,5 +1,5 @@
 const Base = require("../Base/base");
-const Collection = require("../Util/Collection");
+const RaidenSet = require("../Util/RaidenSet");
 const SystemChannelFlags = require("../Util/SystemChannelFlags");
 const PartialChannel = require("./PartialChannel");
 const PartialRole = require("./PartialRole");
@@ -13,8 +13,8 @@ class PartialGuild extends Base {
         this.explicitContentFilter = data.explicit_content_filter ?? null
         this.preferredLocale = data.preferred_locale ?? null
         this.afkTimeout = data.afk_timeout ?? null
-        this.roles = new Collection(data.roles?.map(o => [o.id, new PartialRole(o, this.client)]))
-        this.channels = new Collection(data.channels?.map(o => [o.id, new PartialChannel(o, this.client)]))
+        this.roles = new RaidenSet(data.roles?.map(o => new PartialRole(o, this.client)))
+        this.channels = new RaidenSet(data.channels?.map(o => new PartialChannel(o, this.client)))
         this.afkChannelId = data.afk_channel_id ?? null
         this.systemChannelId = data.system_channel_id ?? null
         this.systemChannelFlags = new SystemChannelFlags(data.system_channel_flags ? BigInt(data.system_channel_flags) : 0n)
