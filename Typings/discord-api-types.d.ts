@@ -2060,6 +2060,21 @@ export interface InteractionEditReplyOptions extends MessageOptionsData {
     message?: MessageResolvable
 }
 
+export interface ChatInputCommandInteractionOptionData {
+    /**
+     * The value of the selected option
+     */
+    value: string
+    /**
+     * The type of the selected option
+     */
+    type: number
+    /**
+     * The name of the selected option
+     */
+    name: string
+}
+
 export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
