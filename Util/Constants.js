@@ -388,11 +388,6 @@ module.exports.AuditLogEventEnums = {
     AutoModerationUserCommunicationDisabled: 145,
     CreatorMonetizationRequestCreated: 150,
     CreatorMonetizationTermsAccepted: 151,
-    RolePromptCreate: 160,
-    RolePromptUpdate: 161,
-    RolePromptDeletE: 162,
-    GuildHomeFeatureItem: 171,
-    GuildHomeRemoveItem: 172
 }
 
 module.exports.AutoModerationEventTypesEnums = {

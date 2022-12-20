@@ -2112,6 +2112,20 @@ export interface ModifyRoleConnectionMetadata {
      * The description localizations for this metadata
      */
     descriptionLocalizations?: Record<Locales, string>
+    
+export interface ChatInputCommandInteractionOptionData {
+    /**
+     * The value of the selected option
+     */
+    value: string
+    /**
+     * The type of the selected option
+     */
+    type: number
+    /**
+     * The name of the selected option
+     */
+    name: string
 }
 
 export type WebhookResolvable = string | Webhook

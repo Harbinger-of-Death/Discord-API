@@ -3,7 +3,7 @@ class DiscordAPIError extends Error {
         super(data.message)
         this.name = `DiscordAPIError[${data.code ?? data.httpError}]`
         this.method = data.method
-        this.code = data.code ?? null
+        this.code = data.code ?? 0
         this.httpError = data.httpError
         this.path = data.path
         this.requestBody = data.requestBody ?? {}

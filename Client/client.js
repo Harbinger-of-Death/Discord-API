@@ -67,11 +67,14 @@ class Client extends EventEmitter {
     }
 
     async fetchWebhook(webhook, token) {
-        const match = webhook.match(/https?:\/\/(?:\w+.)\w+\.(?:com|io|org)\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)
-        if(match?.length) {
-            webhook = match[1]
-            token = match[2]
-        } else webhook = typeof webhook === "string" ? webhook : webhook.id
+        if(typeof webhook === "string") {
+            const match = webhook.match(/https?:\/\/(?:\w+.)\w+\.(?:com|io|org)\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)
+            if(match?.length) {
+                webhook = match[1]
+                token = match[2]
+            }
+        }
+        if(webhook instanceof Webhook) webhook = webhook.id
         webhook = await this.api.get(`${this.root}/webhooks/${webhook}${token ? `/${token}` : ""}`)
         return new Webhook(webhook, this)
     }

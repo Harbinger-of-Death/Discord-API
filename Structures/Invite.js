@@ -11,7 +11,7 @@ class Invite extends Base {
         this.guild = this.client.guilds.cache.get(data.guild?.id) ?? new PartialInviteGuild(data.guild, this.client)
         this.channel = this.client.channels.cache.get(data.channel?.id) ?? new PartialInviteChannel(data.channel, this.client)
         this.inviter = this.client.users._add(data.inviter, { cache: false })
-        this.targetType = data.targetType ?? null
+        this.targetType = data.targetType ?? data.target_type ?? null
         this.targetUser = this.client.users._add(data.target_user, { cache: false })
         this.targetApplication = data.target_application ? new Application(data.target_application, this.client) : null
         this.approximatePresenceCount = data.approximate_presence_count ?? null
