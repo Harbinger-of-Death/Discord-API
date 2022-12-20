@@ -82,7 +82,7 @@ class WebsocketManager extends WebSocket {
             this.client.debug(`[Websocket]: Tried to reconnect but there's no resume gateway url found. Re-identifying`)
             return this.connect()
         }
-        if(this.status !== WebsocketStatus.Closed) {
+        if(this.status !== WebsocketStatus.Closed && this.reconnect) {
             this.client.debug(`[Websocket]: Discord requested for a Reconnect. Reconnecting`)
             this.client.debug(`[Websocket]: Making a close timeout of 5s for a clean reconnect`)
         }
