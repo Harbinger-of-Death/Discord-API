@@ -90,6 +90,7 @@ class REST {
                     return this.handleRatelimit(oldURL, options)
             }
         }
+
         if(!request.ok) throw new DiscordAPIError({
             message: response?.message ?? response.error_description ?? request.statusText,
             method: options.method,
