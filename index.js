@@ -11,6 +11,7 @@ const SlashSubCommandGroupBuilder = require("./Builders/SlashSubCommandGroupBuil
 const Client = require("./Client/client");
 const Oauth2Client = require("./Oauth/Oauth2Client");
 const REST = require("./REST/rest");
+const InteractionWebhook = require("./Structures/InteractionWebhook");
 const WebhookClient = require("./Structures/WebhookClient");
 const ActivityFlags = require("./Util/ActivityFlags");
 const ApplicationFlags = require("./Util/ApplicationFlags");
@@ -31,6 +32,7 @@ const Util = require("./Util/Util");
 module.exports.Client = Client;
 module.exports.WebhookClient = WebhookClient;
 module.exports.Oauth2Client = Oauth2Client;
+module.exports.InteractionWebhook = InteractionWebhook;
 //Builders
 module.exports.SlashCommandBuilder = SlashCommandBuilder;
 module.exports.SlashOptionBuilder = SlashOptionBuilder;

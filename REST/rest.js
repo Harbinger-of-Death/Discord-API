@@ -3,12 +3,13 @@ const FormData = require("form-data");
 const fetch = require("node-fetch");
 const DiscordAPIError = require("../Errors/DiscordAPIError");
 const { EventTypes } = require("../Util/Constants");
-const collection = new (require("../Util/Collection"));
+const Collection = require("../Util/Collection");
 const { setTimeout: wait } = require("timers/promises")
 class REST {
     constructor(client) {
         this.client = client
         this.ratelimitBucket = null
+        this.hashCollection = new Collection()
     }
 
     setToken(token) {
@@ -66,8 +67,8 @@ class REST {
             if([...urlSearchParams.values()].length) url = url.concat(`?${decodeURIComponent(urlSearchParams)}`)
         }
 
-        if(collection.has(`${this.ratelimitBucket}:${oldURL}`)) {
-            const ratelimitData = collection.get(`${this.ratelimitBucket}:${oldURL}`)
+        if(this.hashCollection.has(`${this.ratelimitBucket}:${oldURL}`)) {
+            const ratelimitData = this.hashCollection.get(`${this.ratelimitBucket}:${oldURL}`)
             if(ratelimitData.ratelimited) return this.handleRatelimit(oldURL, options)
         }
         const request = await fetch(url, { method: options.method, agent, signal: controller.signal, headers, body }).finally(() => clearTimeout(timeout))
@@ -77,19 +78,19 @@ class REST {
         const reset = Math.floor((request.headers.get("X-RateLimit-Reset") * 1000) - Date.now())
         const response = request.headers.get("content-type")?.includes("application/json") ? await request.json() : null
         const scope = request.headers.get("x-ratelimit-scope")
-        if(!collection.has(`${this.ratelimitBucket}:${oldURL}`)) {
-            if(remaining <= 1) collection.set(`${this.ratelimitBucket}:${oldURL}`, { limit, remaining, reset, bucket: this.ratelimitBucket, method: options.method, route: oldURL, ratelimited: true })
+        if(!this.hashCollection.has(`${this.ratelimitBucket}:${oldURL}`)) {
+            if(remaining <= 1) this.hashCollection.set(`${this.ratelimitBucket}:${oldURL}`, { limit, remaining, reset, bucket: this.ratelimitBucket, method: options.method, route: oldURL, ratelimited: true })
         }
-        
         if(request.status === 429) {
             switch(scope) {
                 case "shared":
-                    collection.set(`${this.ratelimitBucket}:${oldURL}`, { retryAfter: Math.floor(response.retry_after * 1000), global: response.global, ratelimited: true })
+                    this.hashCollection.set(`${this.ratelimitBucket}:${oldURL}`, { retryAfter: Math.floor(response.retry_after * 1000), global: response.global, ratelimited: true })
                     return this.handleRatelimit(oldURL, options)
                 case "user":
                     return this.handleRatelimit(oldURL, options)
             }
         }
+
         if(!request.ok) throw new DiscordAPIError({
             message: response?.message ?? response.error_description ?? request.statusText,
             method: options.method,
@@ -100,7 +101,7 @@ class REST {
             requestBody: options.auth ?? options.body,
         })
 
-        if(collection.size) this.clearCollection(reset)
+        if(this.hashCollection.size) this.hashSweeper(reset)
 
         return response
     }
@@ -141,7 +142,7 @@ class REST {
     }
     
     async handleRatelimit(oldUrl, options) {
-        const ratelimitData = collection.get(`${this.ratelimitBucket}:${oldUrl}`)
+        const ratelimitData = this.hashCollection.get(`${this.ratelimitBucket}:${oldUrl}`)
         if(ratelimitData) {
             this.client.emit(EventTypes.Ratelimit, ratelimitData)
             await wait(ratelimitData.reset ?? ratelimitData.retryAfter)
@@ -151,8 +152,8 @@ class REST {
         return;
     }
 
-    clearCollection(resetAfter) {
-        return setTimeout(() => collection.clear(), resetAfter)
+    hashSweeper(resetAfter) {
+        return setTimeout(() => this.hashCollection.clear(), resetAfter)
     }
 }
 

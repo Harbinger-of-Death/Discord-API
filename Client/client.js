@@ -16,7 +16,7 @@ const StickerPack = require("../Structures/StickerPack");
 const VoiceRegion = require("../Structures/VoiceRegion");
 const Webhook = require("../Structures/Webhook");
 const Collection = require("../Util/Collection");
-const { CdnEndPoints, SnowflakeRegex, WebsocketEvents, EventTypes } = require("../Util/Constants");
+const { CdnEndPoints, SnowflakeRegex, EventTypes, WebsocketStatus } = require("../Util/Constants");
 const Intents = require("../Util/Intents");
 class Client extends EventEmitter {
     constructor(options = {}) {
@@ -63,12 +63,12 @@ class Client extends EventEmitter {
     }
 
     isReady() {
-        return this.ws.status === WebsocketEvents.Ready
+        return this.ws.status === WebsocketStatus.Ready
     }
 
     async fetchWebhook(webhook, token) {
         if(typeof webhook === "string") {
-            const match = webhook.match(/https?:\/\/(?:\w+.)\w+\.(?:com|io|org)\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)
+            const match = webhook.match(/https?:\/\/(?:\w+.)\w+\.com\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)
             if(match?.length) {
                 webhook = match[1]
                 token = match[2]
