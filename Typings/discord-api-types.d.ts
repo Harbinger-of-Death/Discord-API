@@ -2005,6 +2005,14 @@ export interface RateLimitData {
      * The bucket this request belongs to. [Docs](https://discord.com/developers/docs/topics/rate-limits#header-format-rate-limit-header-examples)
      */
     bucket: string
+    /**
+     * If this ratelimit is shared. This is the time it's going to retry
+     */
+    retryAfter: number
+    /**
+     * Whether or not this is a Global ratelimit
+     */
+    global: boolean
 }
 
 export interface Oauth2ClientOptions {
