@@ -718,6 +718,10 @@ export class AutoModeration extends Base {
      * Sets the Exempt Channels of this Auto Moderation Rule
      */
     public setExemptChannels(exemptChannels: ChannelResolvable[], reason?: string): Promise<this>
+    /**
+     * Whether or not this Automoderation Rule is equal another
+     */
+    public equals(rule: AutoModeration): boolean
 }
 
 export class GuildAutomoderationManager extends CachedManager {
