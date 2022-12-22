@@ -22,6 +22,7 @@ class ActionsManager extends Base {
             case OpCodes.HeartbeatAck:
                 return new HeartbeatAck(this.client)
             case OpCodes.Reconnect:
+                this.client.ws.reconnect = true
                 return this.client.ws.handleReconnect()
             case OpCodes.Hello:
                 return new Hello(data, this.client)

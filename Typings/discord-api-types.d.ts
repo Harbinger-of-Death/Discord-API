@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ApplicationCommand, ApplicationCommandPermission, Attachment, AttachmentBuilder, AuditLogEntry, AutoModeration, AutoModerationRuleAction, BaseGuildTextChannel, BaseInteraction, ButtonBuilder, Channel, ChannelTypesEnums, Collection, DMChannel, EmbedBuilder, Emoji, ForumTags, Guild, GuildBan, GuildChannel, GuildIntegration, GuildMember, GuildScheduledEvent, GuildScheduledEventUser, GuildTemplate, InputTextBuilder, Interaction, Invite, Message, MessageReaction, OpCodes, Permissions, Presence, Role, SelectMenuBuilder, StageInstance, Sticker, ThreadChannel, ThreadMember, User, VoiceChannel, VoiceState } from ".."
+import { ActionRowBuilder, ApplicationCommand, ApplicationCommandPermission, Attachment, AttachmentBuilder, AuditLogEntry, AutoModeration, AutoModerationRuleAction, BaseGuildTextChannel, BaseInteraction, ButtonBuilder, Channel, ChannelTypesEnums, Collection, DMChannel, EmbedBuilder, Emoji, ForumTags, Guild, GuildBan, GuildChannel, GuildIntegration, GuildMember, GuildScheduledEvent, GuildScheduledEventUser, GuildTemplate, InputTextBuilder, Interaction, Invite, Message, MessageReaction, OpCodes, Permissions, Presence, Role, SelectMenuBuilder, StageInstance, Sticker, ThreadChannel, ThreadMember, User, VoiceState, Webhook } from ".."
 import { Stream } from "node:stream"
 export interface Choices {
     /**
@@ -2009,6 +2009,14 @@ export interface RateLimitData {
      * The bucket this request belongs to. [Docs](https://discord.com/developers/docs/topics/rate-limits#header-format-rate-limit-header-examples)
      */
     bucket: string
+    /**
+     * If this ratelimit is shared. This is the time it's going to retry
+     */
+    retryAfter: number
+    /**
+     * Whether or not this is a Global ratelimit
+     */
+    global: boolean
 }
 
 export interface Oauth2ClientOptions {
@@ -2064,13 +2072,22 @@ export interface InteractionEditReplyOptions extends MessageOptionsData {
     message?: MessageResolvable
 }
 
-/**
- * Identifiers that can be resolved to an emoji
- * @example
- * <a:name:id>
- * a:name:id
- * ❌
- */
+export interface ChatInputCommandInteractionOptionData {
+    /**
+     * The value of the selected option
+     */
+    value: string
+    /**
+     * The type of the selected option
+     */
+    type: number
+    /**
+     * The name of the selected option
+     */
+    name: string
+}
+
+export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
 export type GuildMemberFlagsStrings = "DidRejoin" | "CompletedOnboarding"

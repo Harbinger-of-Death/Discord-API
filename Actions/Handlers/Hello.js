@@ -10,7 +10,7 @@ class Hello extends Base {
         const packet = data.d
         this.client.debug(`[Websocket]: Received HELLO, now setting the HELLO timeout of 2000`)
         this.client.heartbeatInterval = packet?.heartbeat_interval
-        this.client.debug(`[Websocket]: Setting the heartbeat interval to ${this.client.heartbeatInterval}ms`)
+        this.client.debug(`[Heartbeat]: Setting the heartbeat interval to ${this.client.heartbeatInterval}ms`)
         setTimeout(() => {
             this.handleheartBeat()
         }, 2_000).unref()
@@ -22,12 +22,17 @@ class Hello extends Base {
     }
 
     handleheartBeat() {
+        if(this.client.ws.isHeartbeatAcked === false) {
+            this.client.debug(`[Websocket]: Zombified connection. Reconnecting`)
+            return this.client.ws.handleReconnect()
+        }
         this.client.ws.interval = setInterval(() => {
             this.client.heartbeatInterval = Math.floor(Math.random() * (40_250 - 28_523 + 1) + 28_523)
             this.client.ws.send({ op: OpCodes.Hearbeat, d: this.client.seq ?? null })
             this.client.debug(`[Heartbeat]: Successfully sent a heartbeat`)
             clearInterval(this.client.ws.interval)
             this.handleheartBeat()
+            this.client.ws.isHeartbeatAcked = false
         }, this.client.heartbeatInterval).unref()
     }
 }

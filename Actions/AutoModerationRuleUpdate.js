@@ -12,6 +12,7 @@ class AutoModerationRuleUpdate extends BaseAction {
         const guild = this.client.guilds.cache.get(packet.guild_id)
         const oldRule = guild?.automoderations.cache.get(packet.id)
         const newRule = guild?.automoderations._add(packet, { cache: true, force: true }, { id: packet.id })
+        if(oldRule?.equals(newRule)) return;
         return this.client.emit(EventTypes.AutoModerationRuleUpdate, oldRule, newRule)
     }
 }

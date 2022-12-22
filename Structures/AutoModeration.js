@@ -23,7 +23,7 @@ class AutoModeration extends Base {
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
     }
-
+    
     get exemptChannels() {
         const collection = new Collection()
         for(const channel of this._data.exempt_channels) {
@@ -114,6 +114,25 @@ class AutoModeration extends Base {
 
     async setExemptChannels(exemptChannels, reason) {
         return await this.edit({ exemptChannels, reason })
+    }
+
+    equals(rule) {
+        return this.name === rule.name &&
+        this.eventType === rule.eventType &&
+        this.keywordFilter?.length === rule.keywordFilter?.length &&
+        this.keywordFilter?.every(o => rule.keywordFilter?.includes(o)) &&
+        this.regexPatterns?.length === rule.regexPatterns?.length &&
+        this.regexPatterns?.every(o => rule.regexPatterns?.includes(o)) &&
+        this.presets?.length === rule.presets?.length &&
+        this.presets?.every(o => rule.presets?.includes(o)) &&
+        this.allowList?.length === rule.allowList?.length &&
+        this.allowList?.every(o => rule.allowList?.includes(o)) &&
+        this.mentionTotalLimit === rule.mentionTotalLimit &&
+        this.enabled === rule.enabled &&
+        this.exemptRoles.size === rule.exemptRoles.size &&
+        this.exemptRoles.every(o => rule.exemptRoles.has(o)) &&
+        this.exemptChannels.size === rule.exemptChannels.size &&
+        this.exemptChannels.every(o => rule.exemptChannels.has(o))
     }
 }
 
