@@ -23,21 +23,12 @@ class AutoModeration extends Base {
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
     }
-<<<<<<< Updated upstream
-    
-    get exemptChannels() {
-        const collection = new Collection()
-        for(const channel of this._data.exempt_channels) {
-            if(!this.client.channels.cache.has(channel)) continue;
-            collection.set(channel, this.client.channels.cache.get(channel))
-=======
 
     get exemptRoles() {
         const roles = new Collection()
         for(const role of this._data.exempt_roles) {
             if(!this.guild?.roles.cache.has(role)) continue;
             roles.set(role, this.guild?.roles.cache.get(role))
->>>>>>> Stashed changes
         }
 
         return roles
@@ -125,7 +116,6 @@ class AutoModeration extends Base {
         return await this.edit({ exemptChannels, reason })
     }
 
-<<<<<<< Updated upstream
     equals(rule) {
         return this.name === rule.name &&
         this.eventType === rule.eventType &&
@@ -144,9 +134,6 @@ class AutoModeration extends Base {
         this.exemptChannels.size === rule.exemptChannels.size &&
         this.exemptChannels.every(o => rule.exemptChannels.has(o))
     }
-=======
-
->>>>>>> Stashed changes
 }
 
 module.exports = AutoModeration
