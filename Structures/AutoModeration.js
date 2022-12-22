@@ -128,6 +128,7 @@ class AutoModeration extends Base {
         this.allowList?.length === rule.allowList?.length &&
         this.allowList?.every(o => rule.allowList?.includes(o)) &&
         this.mentionTotalLimit === rule.mentionTotalLimit &&
+        this.mentionRaidProtectionEnabled === rule.mentionRaidProtectionEnabled &&
         this.enabled === rule.enabled &&
         this.exemptRoles.size === rule.exemptRoles.size &&
         this.exemptRoles.every(o => rule.exemptRoles.has(o)) &&
