@@ -23,25 +23,34 @@ class AutoModeration extends Base {
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
     }
+<<<<<<< Updated upstream
     
     get exemptChannels() {
         const collection = new Collection()
         for(const channel of this._data.exempt_channels) {
             if(!this.client.channels.cache.has(channel)) continue;
             collection.set(channel, this.client.channels.cache.get(channel))
-        }
-
-        return collection
-    }
+=======
 
     get exemptRoles() {
-        const collection = new Collection()
+        const roles = new Collection()
         for(const role of this._data.exempt_roles) {
             if(!this.guild?.roles.cache.has(role)) continue;
-            collection.set(role, this.guild?.roles.cache.get(role))
+            roles.set(role, this.guild?.roles.cache.get(role))
+>>>>>>> Stashed changes
         }
 
-        return collection
+        return roles
+    }
+
+    get exemptChannels() {
+        const channels = new Collection()
+        for(const channel of this._data.exempt_channels) {
+            if(!this.client.channels.cache.has(channel)) continue;
+            channels.set(channel, this.client.channels.cache.get(channel))
+        }
+
+        return channels
     }
 
     get creator() {
@@ -101,7 +110,7 @@ class AutoModeration extends Base {
     }
 
     async setActions(actions, reason) {
-        return await this.edit({ actions, reason })
+        return await this.edit({ actions, reason }) 
     }
 
     async setEnabled(enabled, reason) {
@@ -116,6 +125,7 @@ class AutoModeration extends Base {
         return await this.edit({ exemptChannels, reason })
     }
 
+<<<<<<< Updated upstream
     equals(rule) {
         return this.name === rule.name &&
         this.eventType === rule.eventType &&
@@ -134,6 +144,9 @@ class AutoModeration extends Base {
         this.exemptChannels.size === rule.exemptChannels.size &&
         this.exemptChannels.every(o => rule.exemptChannels.has(o))
     }
+=======
+
+>>>>>>> Stashed changes
 }
 
 module.exports = AutoModeration
