@@ -638,3 +638,10 @@ module.exports.ForumLayoutTypesEnums = {
     ListView: 1,
     GalleryView: 2
 }
+
+module.exports.CollectorEvents = {
+    Collect: "collect",
+    End: "end",
+    Dispose: "dispose",
+    Remove: "remove"
+}

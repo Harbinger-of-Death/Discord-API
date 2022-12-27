@@ -174,6 +174,10 @@ class ThreadChannel extends Channel {
     get permissionOverwrites() {
         return this.parent?.permissionOverwrites ?? null
     }
+
+    createMessageCollector(options = {}) {
+        return new MessageCollector(options.filter, { type: "Message", ...options }, { channelId: this.id, guildId: this.guildId }, this.client)
+    }
 }
 
 module.exports = ThreadChannel

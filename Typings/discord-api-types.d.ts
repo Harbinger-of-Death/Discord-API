@@ -2083,6 +2083,32 @@ export interface ChatInputCommandInteractionOptionData {
     name: string
 }
 
+export interface CollectorOptions<T> {
+    /**
+     * The time this collector ends
+     */
+    time?: number
+    /**
+     * The time of when to end the collector when no objects has been received during this time
+     */
+    idleTimer?: number
+    /**
+     * The filter for this Collector
+     */
+    filter?: T extends "Reaction" ? (reaction: MessageReaction, user: User) => boolean : (...args: ClientEvents[T]) => boolean
+    /**
+     * The type of the object to Collect from
+     */
+    type: number
+}
+
+export interface CollectorEvents<T> {
+    collect: T extends MessageReaction ? [reaction: MessageReaction, user: User] : T extends Message ? [message: Message] : [interaction: T]
+    end: [collected: Collection<string, T>, reason: string]
+    remove: [reaction: MessageReaction, user: User]
+    dispose: [disposed: Message | Channel | Guild]
+}
+
 export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"

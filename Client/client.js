@@ -66,6 +66,24 @@ class Client extends EventEmitter {
         return this.ws.status === WebsocketStatus.Ready
     }
 
+    increaseMaxListeners() {
+        const maxListeners = this.getMaxListeners()
+        if(maxListeners !== 0) {
+            this.setMaxListeners(maxListeners + 1)
+        }
+
+        return this;
+    }
+
+    decrementMaxListeners() {
+        const maxListeners = this.getMaxListeners()
+        if(maxListeners !== 0) {
+            this.setMaxListeners(maxListeners - 1)
+        }
+
+        return this;
+    }
+
     async fetchWebhook(webhook, token) {
         if(typeof webhook === "string") {
             const match = webhook.match(/https?:\/\/(?:\w+.)\w+\.com\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)

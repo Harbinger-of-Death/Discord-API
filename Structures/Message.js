@@ -8,11 +8,13 @@ const Application = require("./Application");
 const Attachment = require("./Attachment");
 const Component = require("./Component");
 const Embed = require("./Embed");
+const MessageComponentCollector = require("./MessageComponentCollector");
 const MessageActivity = require("./MessageActivity");
 const MessageInteraction = require("./MessageInteraction");
 const MessageMentions = require("./MessageMentions");
 const MessageReference = require("./MessageReference");
 const Webhook = require("./Webhook");
+const ReactionCollector = require("./ReactionCollector");
 class Message extends Base {
     constructor(data = {}, client, extras) {
         super(client)
@@ -167,6 +169,13 @@ class Message extends Base {
         }, ...options })
     }
 
+    createMessageComponentCollector(options = {}) {
+        return new MessageComponentCollector(options.filter, options, { messageId: this.id }, this.client)
+    }
+
+    createReactionCollector(options = {}) {
+        return new ReactionCollector(options.filter, options, { messageId: this.id }, this.client)
+    }
 }
 
 module.exports = Message
