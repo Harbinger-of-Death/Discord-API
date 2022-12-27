@@ -53,6 +53,10 @@ class VoiceChannel extends VoiceBasedChannels {
         this.userLimit === channel.userLimit
     }
 
+    createMessageCollector(options = {}) {
+        return new MessageCollector(options.filter, { type: "Message", ...options }, { channelId: this.id, guildId: this.guildId }, this.client)
+    }
+
 }
 
 module.exports = VoiceChannel

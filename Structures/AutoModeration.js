@@ -4,6 +4,7 @@ const Snowflake = require("../Util/Snowflake");
 class AutoModeration extends Base {
     constructor(data = {}, client, extras) {
         super(client)
+        Object.defineProperty(this, "_data", { value: data })
         this.partial = data.partial ?? false
         this.id = data.id ?? null
         this.guildId = data.guild_id ?? extras?.guildId ?? null
@@ -17,11 +18,29 @@ class AutoModeration extends Base {
         this.mentionTotalLimit = data.trigger_metadata?.mention_total_limit ?? null
         this.regexPatterns = data.trigger_metadata?.regex_patterns ?? null
         this.enabled = data.enabled ?? null
-        this.exemptRoles = new Collection(data.exempt_roles?.map(o => [o, this.guild?.roles.cache.get(o)]).filter(item => item))
-        this.exemptChannels = new Collection(data.exempt_channels?.map(o => [o, this.guild?.channels.cache.get(o)]).filter(item => item))
         this.actions = data.actions?.map(o => { return { type: o.type, metadata: { channelId: o.metadata?.channel_id, durationSeconds: o.metadata?.duration_seconds } } }) ?? []
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
+    }
+
+    get exemptRoles() {
+        const roles = new Collection()
+        for(const role of this._data.exempt_roles) {
+            if(!this.guild?.roles.cache.has(role)) continue;
+            roles.set(role, this.guild?.roles.cache.get(role))
+        }
+
+        return roles
+    }
+
+    get exemptChannels() {
+        const channels = new Collection()
+        for(const channel of this._data.exempt_channels) {
+            if(!this.client.channels.cache.has(channel)) continue;
+            channels.set(channel, this.client.channels.cache.get(channel))
+        }
+
+        return channels
     }
 
     get creator() {
@@ -70,6 +89,25 @@ class AutoModeration extends Base {
 
     async setExemptChannels(exemptChannels, reason) {
         return await this.edit({ exemptChannels, reason })
+    }
+
+    equals(rule) {
+        return this.name === rule.name &&
+        this.eventType === rule.eventType &&
+        this.keywordFilter?.length === rule.keywordFilter?.length &&
+        this.keywordFilter?.every(o => rule.keywordFilter?.includes(o)) &&
+        this.regexPatterns?.length === rule.regexPatterns?.length &&
+        this.regexPatterns?.every(o => rule.regexPatterns?.includes(o)) &&
+        this.presets?.length === rule.presets?.length &&
+        this.presets?.every(o => rule.presets?.includes(o)) &&
+        this.allowList?.length === rule.allowList?.length &&
+        this.allowList?.every(o => rule.allowList?.includes(o)) &&
+        this.mentionTotalLimit === rule.mentionTotalLimit &&
+        this.enabled === rule.enabled &&
+        this.exemptRoles.size === rule.exemptRoles.size &&
+        this.exemptRoles.every(o => rule.exemptRoles.has(o)) &&
+        this.exemptChannels.size === rule.exemptChannels.size &&
+        this.exemptChannels.every(o => rule.exemptChannels.has(o))
     }
 }
 

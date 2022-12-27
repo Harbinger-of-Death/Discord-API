@@ -1,6 +1,6 @@
 const Interaction = require("./Interaction");
-
 class BaseInteraction extends Interaction {
+
     async reply(options = {}) {
         return await this.webhook.reply(options, 4)
     }

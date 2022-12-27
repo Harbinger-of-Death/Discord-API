@@ -2,6 +2,7 @@ const MessageManager = require("../Managers/MessageManager");
 const ThreadManager = require("../Managers/ThreadManager");
 const Util = require("../Util/Util");
 const GuildChannel = require("./GuildChannel");
+const MessageCollector = require("./MessageCollector");
 const Webhook = require("./Webhook");
 class BaseGuildTextChannel extends GuildChannel {
     constructor(data = {}, client, extras) {
@@ -53,6 +54,10 @@ class BaseGuildTextChannel extends GuildChannel {
         const { reason } = options
         const webhook = await this.client.api.post(`${this.client.root}/channels/${this.id}/webhooks`, { body, reason })
         return new Webhook(webhook, this.client)
+    }
+
+    createMessageCollector(options = {}) {
+        return new MessageCollector(options.filter, { type: "Message", ...options }, { channelId: this.id, guildId: this.guildId }, this.client)
     }
 
     equals(channel) {

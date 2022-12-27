@@ -1,4 +1,4 @@
-import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable, InteractionEditReplyOptions, WebhookResolvable, ChatInputCommandInteractionOptionData, RateLimitData, ModifyRoleConnection, ModifyRoleConnectionMetadata } from "./Typings/discord-api-types";
+import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable, InteractionEditReplyOptions, WebhookResolvable, ChatInputCommandInteractionOptionData, RateLimitData, CollectorOptions, CollectorEvents, ModifyRoleConnection, ModifyRoleConnectionMetadata } from "./Typings/discord-api-types";
 import { EventEmitter } from "node:events"
 import { WebSocket } from "ws";
 import { Stream } from "stream"
@@ -46,6 +46,76 @@ export class RoleConnections extends Base {
      * The metadata of this Role Connection
      */
     public metadata: RoleConnectionsMetadata
+}
+
+export class ReactionCollector extends Collector {
+    public constructor(filter: (reaction: MessageReaction, user: User) => boolean, extras: { messageId: string }, options?: CollectorOptions)
+    public on<K extends keyof CollectorEvents>(event: K, listener: (...args: CollectorEvents<MessageReaction>[K]) => void): this
+    /**
+     * The collected objects of this Collector
+     */
+    public collected: Collection<string, MessageReaction>
+}
+
+export class MessageCollector extends Collector {
+    public constructor(filter: (message: Message) => boolean, extras: { channelId: string, guildId: string }, options?: CollectorOptions)
+    public on<K extends keyof CollectorEvents>(event: K, listener: (...args: CollectorEvents<Message>[K]) => void): this
+    /**
+     * The collected objects of this Collector
+     */
+    public collected: Collection<string, Message>
+}
+
+export class MessageComponentCollector extends Collector {
+    public constructor(filter: (interaction: BaseInteraction | Interaction) => boolean, extras: { messageId: string, guildId: string }, options?: CollectorOptions<EventTypes.InteractionCreate>)
+    public on<K extends keyof CollectorEvents>(event: K, listener: (...args: CollectorEvents<BaseInteraction | Interaction>[K]) => void): this
+    /**
+     * The type of this Component Collector
+     */
+    public type: number
+    /**
+     * The collected objects of this Collector
+     */
+    public collected: Collection<string, ButtonInteraction | SelectMenuInteraction>
+}
+
+export class Collector extends EventEmitter {
+    /**
+     * The Client that instatiated this
+     */
+    public client: Client
+    /**
+     * The filter of this Collector
+     */
+    public filter: Function
+    /**
+     * The time this Collector ends at
+     */
+    public time: number
+    /**
+     * The time this Collector ends at when idle
+     */
+    public idleTimer: number
+    /**
+     * If this is a Message or MessageComponent Collector, the Message id this is collecting from
+     */
+    public messageId: string
+    /**
+     * The id of the Guild this belongs to
+     */
+    public guildId: string
+    /**
+     * The id of the Channel this belongs to
+     */
+    public channelId: string
+    /**
+     * Resets the timer of this Collector
+     */
+    public resetTimer(): this
+    /**
+     * Manually ends the Collector
+     */
+    public stop(reason?: string): this
 }
 
 export class ReactionEmoji extends Base {
@@ -763,6 +833,10 @@ export class AutoModeration extends Base {
      * Sets the Exempt Channels of this Auto Moderation Rule
      */
     public setExemptChannels(exemptChannels: ChannelResolvable[], reason?: string): Promise<this>
+    /**
+     * Whether or not this Automoderation Rule is equal another
+     */
+    public equals(rule: AutoModeration): boolean
 }
 
 export class GuildAutomoderationManager extends CachedManager {
@@ -2425,7 +2499,7 @@ export class Embed extends Base {
     public footer: EmbedFooter
     /**
      * The Embed Image
-     */
+     */Provider
     public image: EmbedImage
     /**
      * The Embed Thumbnail
@@ -2731,6 +2805,14 @@ export class Message extends Base {
      * Reply to this Message
      */
     public reply(options: MessageOptionsData): Promise<this>
+    /**
+     * Creates a Message Component Collector on this Message
+     */
+    public createMessageComponentCollector(options?: CollectorOptions<EventTypes.InteractionCreate>): MessageComponentCollector
+    /**
+     * Creates a Reaction Collector on this Message
+     */
+    public createReactionCollector(options?: CollectorOptions<"Reaction">): ReactionCollector
 }
 
 export class MessageManager extends Base {
@@ -5304,6 +5386,10 @@ export class ThreadChannel extends Channel {
      */
     public permissionOverwrites: PermissionOverwritesManager
     /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
+    /**
      * Triggers a typing indicator in this Thread
      */
     public sendTyping(): Promise<this>
@@ -5496,6 +5582,10 @@ export class VoiceChannel extends VoiceBasedChannels {
      */
     public rateLimitPerUser: number
     /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
+    /**
      * Sets the NSFW state of this Voice Channel
      */
     public setNsfw(nsfw: boolean, reason?: string): Promise<this>
@@ -5546,6 +5636,10 @@ export class DMChannel extends DMBasedChannels {
      * The id of the Recipient of this DM Channel
      */
     public recipientId: string
+    /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
 }
 
 export class TextChannel extends BaseGuildTextChannel {
@@ -5622,6 +5716,10 @@ export class BaseGuildTextChannel extends GuildChannel {
      * The Thread Manager of this Channel
      */
     public threads: ThreadManager
+    /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
     /**
      * Creates a Webhook in this Channel
      */
@@ -8317,4 +8415,11 @@ export enum ApplicationRoleConnectionMetadataTypeEnums {
     DatetimeGreaterThanOrEqual = 6,
     BooleanEqual = 7,
     BooleanNotEqual = 8
+}
+
+export enum CollectorEvents {
+    Collect = "collect",
+    End = "end",
+    Dispose = "dispose",
+    Remove = "remove"
 }
