@@ -1,28 +1,49 @@
 const { ComponentTypesEnums, EventTypes, CollectorEvents } = require("../Util/Constants");
 const Collector = require("./Collector");
+
 class MessageComponentCollector extends Collector {
-    constructor(filter, options = {}, extras, client) {
+    constructor(filter, options = {}, extras = {}, client) {
         super(filter, options, extras, client)
         this.type = options.type ?? ComponentTypesEnums.Button
+
         this.client.on(EventTypes.InteractionCreate, this.handleCollect)
         this.client.on(EventTypes.MessageDelete, this._handleMessageDeletion)
+        this.client.on(EventTypes.ChannelDelete, this._handleChannelDeletion)
+        this.client.on(EventTypes.GuildDelete, this._handleGuildDeletion)
+        this.client.on(EventTypes.MessageDeleteBulk, messages => this._handleDeleteBulk(messages))
         this.once(CollectorEvents.End, () => {
             this.client.removeListener(EventTypes.InteractionCreate, this.handleCollect)
             this.client.removeListener(EventTypes.MessageDelete, this._handleMessageDeletion)
+            this.client.removeListener(EventTypes.ChannelDelete, this._handleChannelDeletion)
+            this.client.removeListener(EventTypes.GuildDelete, this._handleGuildDeletion)
+            this.client.removeListener(EventTypes.MessageDeleteBulk, messages => this._handleDeleteBulk(messages))
         })
     }
 
-    handleDispose(...args) {
-        if(this.channelId !== args[0]?.id) return;
-        if(this.guildId !== (args[0]?.guildId ?? args[0]?.id)) return;
-        return this.dispose(...args)
+    _handleDeleteBulk(messages) {
+        if(messages.has(this.messageId)) {
+            for(const values of this.collected.values()) {
+                this.collected.delete(values.id)
+                this.dispose(values)
+            }
+
+            return this.stop("messageDeleted")
+        }
+
+        return this;
     }
 
-    collect(interaction) {
-        if(!interaction.isComponent()) return;
-        if(interaction.componentType !== this.type) return;
-        if(interaction.message?.id !== this.messageId) return;
-        return interaction
+    messageDeleted(args) {
+        if(args.id !== this.messageId) return;
+        return args
+    }
+
+    collect(args) {
+        if(args.message?.id !== this.messageId) return;
+        if(args.channelId !== this.channelId) return;
+        if(this.type !== args.componentType) return;
+        return args
     }
 }
+
 module.exports = MessageComponentCollector

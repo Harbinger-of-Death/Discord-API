@@ -5,13 +5,15 @@ class MessageCollector extends Collector {
     constructor(filter, options = {}, extras, client) {
         super(filter, options, extras, client)
         this.client.on(EventTypes.MessageCreate, this.handleCollect)
-        this.client.on(EventTypes.ChannelDelete, this.handleDispose)
-        this.client.on(EventTypes.GuildDelete, this.handleDispose)
+        this.client.on(EventTypes.ChannelDelete, this._handleChannelDeletion)
+        this.client.on(EventTypes.GuildDelete, this._handleGuildDeletion)
         this.client.on(EventTypes.MessageDeleteBulk, collected => { for(const key of collected.keys()) if(this.collected.has(key)) this._handleDeleteBulk(key) })
+        this.client.on(EventTypes.MessageDelete, this._handleMessageDeletion)
         this.once(CollectorEvents.End, () => {
             this.client.removeListener(EventTypes.MessageCreate, this.handleCollect)
-            this.client.removeListener(EventTypes.ChannelDelete, this.handleDispose)
-            this.client.removeListener(EventTypes.GuildDelete, this.handleDispose)
+            this.client.removeListener(EventTypes.MessageDelete, this._handleMessageDeletion)
+            this.client.removeListener(EventTypes.ChannelDelete, this._handleChannelDeletion)
+            this.client.removeListener(EventTypes.GuildDelete, this._handleGuildDeletion)
             this.client.removeListener(EventTypes.MessageDeleteBulk, collected => { for(const key of collected.keys()) if(this.collected.has(key)) this._handleDeleteBulk(key) })
         })
     }
@@ -21,17 +23,21 @@ class MessageCollector extends Collector {
         return message
     }
 
-    handleDispose(...args) {
-        if(this.channelId !== args[0]?.id) return;
-        if(this.guildId !== (args[0]?.guildId ?? args[0]?.id)) return;
-        if(this.messageId !== args[0]?.id) return;
-        return this.dispose(...args)
+    messageDeleted(args) {
+        if(this.collected.has(args.id)) {
+            this.collected.delete(args.id)
+            return args
+        }
+
+        return;
     }
 
     _handleDeleteBulk(id) {
         this.dispose(this.collected.get(id))
-        return this.collected.delete(id)
+        this.collected.delete(id)
+        return;
     }
+
 }
 
 module.exports = MessageCollector

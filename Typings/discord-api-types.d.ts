@@ -1419,7 +1419,7 @@ export interface ApplicationCommandPermissions {
     permission: boolean
 }
 
-export interface InteractionReplyOptions extends MessageOptionsData {
+export interface InteractionReplyOptions<T> extends MessageOptionsData {
     /**
      * Whether or not to make this Interaction Response ephemeral
      */
@@ -2106,7 +2106,7 @@ export interface CollectorEvents<T> {
     collect: T extends MessageReaction ? [reaction: MessageReaction, user: User] : T extends Message ? [message: Message] : [interaction: T]
     end: [collected: Collection<string, T>, reason: string]
     remove: [reaction: MessageReaction, user: User]
-    dispose: [disposed: Message | Channel | Guild]
+    dispose: [disposed: Message | Channel | Guild | BaseInteraction | MessageReaction]
 }
 
 export type WebhookResolvable = string | Webhook
