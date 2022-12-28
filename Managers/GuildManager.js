@@ -204,8 +204,9 @@ class GuildManager extends CachedManager {
             preferred_locale: payload.preferredLocale ?? payload.preferred_locale,
             features: payload.features ? this.parseFeatures(payload.features) : undefined,
             description: payload.description,
-            premium_progress_bar_enabled: payload.premiumProgressBar
-        } 
+            premium_progress_bar_enabled: payload.premiumProgressBar,
+            home_header: payload.homeHeader ? await Util.generateDataURI(payload.homeHeader) : undefined
+        }
     }
 
     static parseFeatures(features = []) {

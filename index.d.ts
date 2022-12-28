@@ -6443,6 +6443,10 @@ export class Guild extends Base {
      */
     public safetyAlertsChannelId: string
     /**
+     * The home page banner background of this Guild
+     */
+    public homeHeader: string
+    /**
      * Fetches this Guild's owner
      */
     public fetchOwner(options?: BaseFetchOptions): Promise<GuildMember>
@@ -6543,6 +6547,10 @@ export class Guild extends Base {
      */
     public setPremiumProgressBar(premiumProgressBar: boolean, reason?: string): Promise<this>
     /**
+     * Sets the home page banner background of this Guild
+     */
+    public setHomeHeader(homeHeader: BufferResolvable, reason?: string): Promise<this>
+    /**
      * Fetches this Guild's Preview
      */
     public fetchPreview(): Promise<GuildPreview>
@@ -6607,6 +6615,10 @@ export class Guild extends Base {
      * Gets this Guild's banner url
      */
     public bannerURL(options?: ImageURLOptions<ImageFormatWithoutLottie>): string | void
+    /**
+     * Gets this Guild's home page banner background url
+     */
+    public homeHeaderURL(options?: ImageURLOptions<ImageFormatWithoutLottieAnimate>): string | void
     /**
      * Whether or not this Guild is equals another
      */

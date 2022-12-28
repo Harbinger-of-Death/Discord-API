@@ -9,6 +9,7 @@ class GuildPreview extends Base {
         this.icon = data.icon ?? null
         this.splash = data.splash ?? null
         this.discoverySplash = data.discovery_splash ?? null
+        this.homeHeader = data.home_header ?? null
         this.emojis = new Collection(data.emojis?.map(o => [o.id, o]))
         this.features = data.features ?? null
         this.approximatePresenceCount = data.approximate_presence_count ?? null
@@ -19,6 +20,11 @@ class GuildPreview extends Base {
 
     get guild() {
         return this.client.guilds.cache.get(this.id) ?? null
+    }
+
+    homeHeaderURL(options = {}) {
+        if(!this.homeHeader) return null;
+        return this.client.cdn.GuildHomeHeader(this.homeHeader, options.extension, options.size, this.id)
     }
 
     iconURL(options = {}) {
