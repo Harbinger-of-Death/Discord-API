@@ -1419,7 +1419,7 @@ export interface ApplicationCommandPermissions {
     permission: boolean
 }
 
-export interface InteractionReplyOptions<T> extends MessageOptionsData {
+export interface InteractionReplyOptions extends MessageOptionsData {
     /**
      * Whether or not to make this Interaction Response ephemeral
      */

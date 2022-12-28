@@ -22,8 +22,8 @@ export class MessageCollector extends Collector {
 }
 
 export class MessageComponentCollector extends Collector {
-    public constructor(filter: (interaction: BaseInteraction | Interaction) => boolean, extras: { messageId: string, guildId: string }, options?: CollectorOptions<EventTypes.InteractionCreate>)
-    public on<K extends keyof CollectorEvents>(event: K, listener: (...args: CollectorEvents<BaseInteraction | Interaction>[K]) => void): this
+    public constructor(filter: (interaction: BaseInteraction) => boolean, extras: { messageId: string, guildId: string }, options?: CollectorOptions<EventTypes.InteractionCreate>)
+    public on<K extends keyof CollectorEvents>(event: K, listener: (...args: CollectorEvents<BaseInteraction>[K]) => void): this
     /**
      * The type of this Component Collector
      */
