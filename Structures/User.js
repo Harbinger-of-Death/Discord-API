@@ -11,6 +11,7 @@ class User extends Base {
         this.discriminator = data.discriminator ?? null
         this.avatar = data.avatar ?? null
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
+        this.avatarDecoration = data.avatar_decoration ?? null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
         this.bot = data.bot ?? null
         this.banner = data.banner ?? null
@@ -68,6 +69,11 @@ class User extends Base {
         const guildId = typeof guild === "string" ? guild : guild.id
         if(this.client.guilds.cache.has(guildId)) return await this.client.guilds.cache.get(guildId).members.fetch(this.id)
         return await this.client.fetchOauthGuildMember(accessToken, guildId)
+    }
+
+    avatarDecorationURL(options = {}) {
+        if(!this.avatarDecoration) return null;
+        return this.client.cdn.UserAvatarDecoration(this.avatarDecoration, options.extension, options.size, this.id)
     }
 
     toString() {

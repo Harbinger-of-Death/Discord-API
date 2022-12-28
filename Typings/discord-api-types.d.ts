@@ -1,5 +1,6 @@
 import { ActionRowBuilder, ApplicationCommand, ApplicationCommandPermission, Attachment, AttachmentBuilder, AuditLogEntry, AutoModeration, AutoModerationRuleAction, BaseGuildTextChannel, BaseInteraction, ButtonBuilder, Channel, ChannelTypesEnums, Collection, DMChannel, EmbedBuilder, Emoji, ForumTags, Guild, GuildBan, GuildChannel, GuildIntegration, GuildMember, GuildScheduledEvent, GuildScheduledEventUser, GuildTemplate, InputTextBuilder, Interaction, Invite, Message, MessageReaction, OpCodes, Permissions, Presence, Role, SelectMenuBuilder, StageInstance, Sticker, ThreadChannel, ThreadMember, User, VoiceState, Webhook } from ".."
 import { Stream } from "node:stream"
+
 export interface Choices {
     /**
      * The name of this choice
@@ -717,6 +718,10 @@ export interface CdnEndpoints {
      * Forms a Guild Member Banner url
      */
     GuildMemberBanner: (banner: string, extension: ImageFormatWithoutLottie, size: number, forceStatic: boolean, guildId: string, userId: string) => string
+    /**
+     * Forms a User Avatar Decoration url
+     */
+    UserAvatarDecoration: (avatarDecoration: string, extension: ImageFormatWithoutLottieAnimate, size: number, userId: string) => string
 }
 
 export interface ImageURLOptions<T = undefined> {

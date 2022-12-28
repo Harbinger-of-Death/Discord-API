@@ -4522,6 +4522,10 @@ export class User extends Base {
      */
     public tag: string
     /**
+     * The avatar deocration of this User
+     */
+    public avatarDecoration: string
+    /**
      * The GuildMember of this User in the specified Guild
      */
     public memberOf(guild: GuildResolvable, accessToken?: string): Promise<GuildMember>
@@ -4565,6 +4569,10 @@ export class User extends Base {
      * Shows this User's default avatar
      */
     public defaultUserAvatarURL(options?: Omit<ImageURLOptions<".png">, "size" | "forceStatic">): string
+    /**
+     * Forms an Avatar Decoration url from this User
+     */
+    public avatarDecorationURL(options?: Omit<ImageURLOptions<ImageFormatWithoutLottieAnimate>, "forceStatic">): string
     /**
      * Returns this User's banner
      */
