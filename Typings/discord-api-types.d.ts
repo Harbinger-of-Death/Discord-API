@@ -1736,6 +1736,10 @@ export interface AutoModerationTriggerMetadata {
      */
     mentionTotalLimit: number
     /**
+     * Whether or not to enable protection against raids
+     */
+    mentionRaidProtectionEnabled?: boolean
+    /**
      * Array of Regex Patterns to run against Message content
      */
     regexPatterns?: Array<string>
