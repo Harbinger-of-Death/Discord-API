@@ -1,17 +1,19 @@
-const { EventTypes, CollectorEvents } = require("../Util/Constants");
+const { EventTypes, CollectorEventTypes } = require("../Util/Constants");
 const Collector = require("./Collector");
 
 class ReactionCollector extends Collector {
-    constructor(filter, options = {}, extras = {}, client) {
-        super(filter, options, extras, client)
+    constructor(options = {}, extras = {}, client) {
+        super(options, extras, client)
+        this._handleReactionRemove = this._handleReactionRemove.bind(this)
         this.client.on(EventTypes.MessageReactionAdd, this.handleCollect)
-        this.client.on(EventTypes.MessageReactionRemove, this.handleRemove)
+        this.client.on(EventTypes.MessageReactionRemove, this._handleReactionRemove)
         this.client.on(EventTypes.MessageDelete, this._handleMessageDeletion)
         this.client.on(EventTypes.ChannelDelete, this._handleChannelDeletion)
         this.client.on(EventTypes.GuildDelete, this._handleGuildDeletion)
         this.client.on(EventTypes.MessageDeleteBulk, messages => this._handleDeleteBulk(messages))
-        this.once(CollectorEvents.End, () => {
+        this.once(CollectorEventTypes.End, () => {
             this.client.removeListener(EventTypes.MessageReactionAdd, this.handleCollect)
+            this.client.removeListener(EventTypes.MessageReactionRemove, this._handleReactionRemove)
             this.client.removeListener(EventTypes.MessageDelete, this._handleMessageDeletion)
             this.client.removeListener(EventTypes.ChannelDelete, this._handleChannelDeletion)
             this.client.removeListener(EventTypes.GuildDelete, this._handleGuildDeletion)
@@ -30,6 +32,17 @@ class ReactionCollector extends Collector {
             return this.stop("messageDeleted")
         }
 
+        return this;
+    }
+
+    reactionRemoved(args) {
+        if(this.collected.has(args.id)) this.collected.delete(args.id)
+        return args
+    }
+
+    _handleReactionRemove(...args) {
+        const reactionRemoved = this.reactionRemoved(...args)
+        if(reactionRemoved) return this.dispose(reactionRemoved)
         return this;
     }
 

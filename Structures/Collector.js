@@ -1,13 +1,13 @@
 const EventEmitter = require("node:events")
 const Collection = require("../Util/Collection")
-const { CollectorEvents } = require("../Util/Constants")
+const { CollectorEventTypes } = require("../Util/Constants")
 const MessageReaction = require("./MessageReaction")
 class Collector extends EventEmitter {
-    constructor(filter, options = {}, extras = {}, client) {
+    constructor(options = {}, extras = {}, client) {
         super()
         Object.defineProperty(this, "client", { value: client })
         //Filter
-        this.filter = filter ?? (() => true)
+        this.filter = options.filter ?? (() => true)
         //Options
         this.time = options.time ?? 15_000
         this.idleTimer = options.idleTimer ?? 10_000
@@ -44,10 +44,7 @@ class Collector extends EventEmitter {
         if(typeof this.messageDeleted === "undefined") return;
         const deletedMessage = this.messageDeleted(...args)
         if(deletedMessage) {
-            for(const values of this.collected.values()) {
-                this.collected.delete(values.id)
-                this.dispose(values)
-            }
+            this.dispose(deletedMessage)
             if(this instanceof ReactionCollector || this instanceof MessageComponentCollector) return this.stop("messageDeleted")
         }
     }
@@ -63,7 +60,7 @@ class Collector extends EventEmitter {
                 if(!this.idleTimeout?._destroyed) clearTimeout(this.idleTimeout)
                 if(collected instanceof MessageReaction) snowflake = collected.emoji?.id ?? collected.emoji?.name
                 this.collected.set(snowflake, collected)
-                this.emit(CollectorEvents.Collect, collected)
+                this.emit(CollectorEventTypes.Collect, collected)
                 if(this.max === this.received) return this.stop("maxReached")
             }
         }
@@ -76,7 +73,7 @@ class Collector extends EventEmitter {
         if(!this.idleTimeout?._destroyed) clearTimeout(this.idleTimeout)
         if(!this.closeTimeout?._destroyed) clearTimeout(this.closeTimeout)
         this.ended = true
-        this.emit(CollectorEvents.End, this.collected, reason)
+        this.emit(CollectorEventTypes.End, this.collected, reason)
         this.cleanup()
         return this;
     }
@@ -115,7 +112,7 @@ class Collector extends EventEmitter {
 
     dispose(args) {
         if(!args) return;
-        return this.emit(CollectorEvents.Dispose, args)
+        return this.emit(CollectorEventTypes.Dispose, args)
     }
 
 }

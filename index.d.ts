@@ -4,8 +4,10 @@ import { WebSocket } from "ws";
 import { Stream } from "stream"
 
 export class ReactionCollector extends Collector {
-    public constructor(filter: (reaction: MessageReaction, user: User) => boolean, extras: { messageId: string }, options?: CollectorOptions)
-    public on<K extends keyof CollectorEvents>(event: K, listener: (...args: CollectorEvents<MessageReaction>[K]) => void): this
+    public constructor(options: CollectorOptions<EventTypes.MessageReactionAdd>, extras: { messageId: string }, client: Client)
+    public on<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<MessageReaction>[K]) => void): this
+    public once<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<MessageReaction>[K]) => void): this
+    public off<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<MessageReaction>[K]) => void): this
     /**
      * The collected objects of this Collector
      */
@@ -13,8 +15,10 @@ export class ReactionCollector extends Collector {
 }
 
 export class MessageCollector extends Collector {
-    public constructor(filter: (message: Message) => boolean, extras: { channelId: string, guildId: string }, options?: CollectorOptions)
-    public on<K extends keyof CollectorEvents>(event: K, listener: (...args: CollectorEvents<Message>[K]) => void): this
+    public constructor(options: CollectorOptions<EventTypes.MessageCreate>, extras: { channelId: string, guildId: string }, client: Client)
+    public on<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<Message>[K]) => void): this
+    public once<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<Message>[K]) => void): this
+    public off<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<Message>[K]) => void): this
     /**
      * The collected objects of this Collector
      */
@@ -22,8 +26,10 @@ export class MessageCollector extends Collector {
 }
 
 export class MessageComponentCollector extends Collector {
-    public constructor(filter: (interaction: BaseInteraction) => boolean, extras: { messageId: string, guildId: string }, options?: CollectorOptions<EventTypes.InteractionCreate>)
-    public on<K extends keyof CollectorEvents>(event: K, listener: (...args: CollectorEvents<BaseInteraction>[K]) => void): this
+    public constructor(options: CollectorOptions<EventTypes.InteractionCreate>, extras: { messageId: string, guildId: string }, client: Client)
+    public on<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<BaseInteraction>[K]) => void): this
+    public once<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<BaseInteraction>[K]) => void): this
+    public off<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<BaseInteraction>[K]) => void): this
     /**
      * The type of this Component Collector
      */
@@ -2755,7 +2761,7 @@ export class Message extends Base {
     /**
      * Creates a Reaction Collector on this Message
      */
-    public createReactionCollector(options?: CollectorOptions<"Reaction">): ReactionCollector
+    public createReactionCollector(options?: CollectorOptions<EventTypes.MessageReactionAdd>): ReactionCollector
 }
 
 export class MessageManager extends Base {
@@ -8329,7 +8335,7 @@ export enum ForumLayoutTypesEnums {
     GalleryView = 2
 }
 
-export enum CollectorEvents {
+export enum CollectorEventTypes {
     Collect = "collect",
     End = "end",
     Dispose = "dispose",
