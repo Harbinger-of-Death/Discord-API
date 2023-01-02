@@ -83,7 +83,7 @@ class WebsocketManager extends WebSocket {
             return this.connect()
         }
         if(this.status !== WebsocketStatus.Closed && this.reconnect) {
-            this.client.debug(`[Websocket]: Discord requested for a Reconnect. Reconnecting`)
+            this.client.debug(`[Websocket]: Received a request for a Reconnect. Reconnecting`)
             this.client.debug(`[Websocket]: Making a close timeout of 5s for a clean reconnect`)
         }
         if(this.interval && !this.interval?._destroyed) {
