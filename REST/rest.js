@@ -147,6 +147,7 @@ class REST {
             this.client.emit(EventTypes.Ratelimit, ratelimitData)
             await wait(ratelimitData.reset ?? ratelimitData.retryAfter)
             ratelimitData.ratelimited = false
+            this.hashCollection.delete(`${this.ratelimitBucket}:${oldUrl}`)
             return await this._make(oldUrl, options)
         }
         return;
