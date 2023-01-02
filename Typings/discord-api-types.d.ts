@@ -2120,7 +2120,8 @@ export interface ModifyRoleConnectionMetadata {
      * The description localizations for this metadata
      */
     descriptionLocalizations?: Record<Locales, string>
-    
+}
+
 export interface ChatInputCommandInteractionOptionData {
     /**
      * The value of the selected option
