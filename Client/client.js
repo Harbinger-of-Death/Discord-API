@@ -36,8 +36,6 @@ class Client extends EventEmitter {
         //URL
         this.root = `https://discord.com/api/v${this.version}`
         this.wssURL = `wss://gateway.discord.gg/?v=${this.version}&encoding=${this.encoding}`
-        
-
         //Managers
         this.ws = new WebsocketManager(this, this.wssURL)
         this.guilds = new GuildManager(this)
@@ -56,7 +54,7 @@ class Client extends EventEmitter {
     }
 
     validationOptions(options) {
-        if(!options.token) throw new RangeError(`No Token Specified`);
+        if(!/[\w]{24}\.[\w]{6}\.[\w-]{38}/.test(options.token) && options.token || !options.token) throw new RangeError(`Invalid Token Specified`)
         if(!options.intents) throw new RangeError(`Valid Intents not specified`);
         if(typeof options.token !== "string") throw new TypeError(`Token must be string`);
         return;

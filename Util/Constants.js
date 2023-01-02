@@ -654,7 +654,7 @@ module.exports.ApplicationRoleConnectionMetadataTypeEnums = {
     BooleanNotEqual: 8
 }
 
-module.exports.CollectorEvents = {
+module.exports.CollectorEventTypes = {
     Collect: "collect",
     End: "end",
     Dispose: "dispose",

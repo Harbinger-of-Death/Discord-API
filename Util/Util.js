@@ -1,18 +1,14 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
-const AttachmentBuilder = require("../Builders/AttachmentBuilder");
 const { Stream } = require("node:stream");
+const AttachmentBuilder = require("../Builders/AttachmentBuilder");
 class Util {
     static resolveColor(color) {
         if(typeof color === "string") {
             if(color === "Random") color = Math.floor(Math.random() * (0xffffff + 1))
             else color = parseInt(color.replace("#", ""), 16)
         }
-
-        if(Array.isArray(color)) {
-            color = (color[0] << 16) + (color[1] << 8) + color[2]
-        }
-
+        if(Array.isArray(color)) color = (color[0] << 16) + (color[1] << 8) + color[2]
         if(color > 0xffffff || color < 0) throw new RangeError(`Color must be between 0-255 in range`)
         else if(isNaN(color)) throw new RangeError(`Invalid Color type`)
         return color

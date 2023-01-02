@@ -1,52 +1,60 @@
-const { EventTypes, CollectorEvents } = require("../Util/Constants");
+const { EventTypes, CollectorEventTypes } = require("../Util/Constants");
 const Collector = require("./Collector");
 
 class ReactionCollector extends Collector {
-    constructor(filter, options, extras = {}, client) {
-        super(filter, options, extras, client)
-        this.handleReactionRemove = this.handleReactionRemove.bind(this)
+    constructor(options = {}, extras = {}, client) {
+        super(options, extras, client)
+        this._handleReactionRemove = this._handleReactionRemove.bind(this)
         this.client.on(EventTypes.MessageReactionAdd, this.handleCollect)
-        this.client.on(EventTypes.MessageReactionRemove, this.handleReactionRemove)
+        this.client.on(EventTypes.MessageReactionRemove, this._handleReactionRemove)
         this.client.on(EventTypes.MessageDelete, this._handleMessageDeletion)
-        this.client.on(EventTypes.MessageDeleteBulk, this._handleMessageDeletion)
-        this.once(CollectorEvents.End, () => {
+        this.client.on(EventTypes.ChannelDelete, this._handleChannelDeletion)
+        this.client.on(EventTypes.GuildDelete, this._handleGuildDeletion)
+        this.client.on(EventTypes.MessageDeleteBulk, messages => this._handleDeleteBulk(messages))
+        this.once(CollectorEventTypes.End, () => {
             this.client.removeListener(EventTypes.MessageReactionAdd, this.handleCollect)
-            this.client.removeListener(EventTypes.MessageReactionRemove, this.handleReactionRemove)
+            this.client.removeListener(EventTypes.MessageReactionRemove, this._handleReactionRemove)
             this.client.removeListener(EventTypes.MessageDelete, this._handleMessageDeletion)
-            this.client.removeListener(EventTypes.MessageDeleteBulk, this._handleMessageDeletion)
+            this.client.removeListener(EventTypes.ChannelDelete, this._handleChannelDeletion)
+            this.client.removeListener(EventTypes.GuildDelete, this._handleGuildDeletion)
+            this.client.removeListener(EventTypes.MessageDeleteBulk, messages => this._handleDeleteBulk(messages))
         })
     }
 
-    handleReactionRemove(...args) {
-        if(this.ended) return;
-        const removedReaction = this.remove(...args)
-        const emojiId = removedReaction.emoji?.id ?? removedReaction.emoji?.name
-        if(removedReaction) {
-            if(this.filter(...args)) {
-                this.received--
-                if(this.collected.has(emojiId)) this.collected.delete(emojiId)
-                if(!this.idleTimeout?._destroyed) clearTimeout(this.idleTimeout)
-                this.emit(CollectorEvents.Remove, ...args)
+    _handleDeleteBulk(messages) {
+        if(messages.has(this.messageId)) {
+            for(const collected of this.collected.values()) {
+            const reactionId = collected.emoji?.id ?? collected.emoji?.name
+                this.dispose(collected)
+                this.collected.delete(reactionId)
             }
+
+            return this.stop("messageDeleted")
         }
 
         return this;
     }
 
-    handleDispose(...args) {
-        if(this.channelId !== args[0]?.id) return;
-        if(this.guildId !== (args[0]?.guildId ?? args[0]?.id)) return;
-        return this.dispose(...args)
+    reactionRemoved(args) {
+        if(this.collected.has(args.id)) this.collected.delete(args.id)
+        return args
     }
 
-    collect(reaction) {
-        if(this.messageId !== reaction.message?.id) return;
-        return reaction
+    _handleReactionRemove(...args) {
+        const reactionRemoved = this.reactionRemoved(...args)
+        if(reactionRemoved) return this.dispose(reactionRemoved)
+        return this;
     }
 
-    remove(reaction) {
-        if(this.messageId !== reaction.message?.id) return;
-        return reaction
+    messageDeleted(args) {
+        if(args.id !== this.messageId) return;
+        return args
+    }
+
+    collect(args) {
+        if(this.messageId !== args.message?.id) return;
+        if(this.channelId !== args.channelId) return;
+        return args
     }
 }
 

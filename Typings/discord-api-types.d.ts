@@ -2136,7 +2136,7 @@ export interface ChatInputCommandInteractionOptionData {
     name: string
 }
 
-export interface CollectorOptions<T> {
+export interface CollectorOptions<T extends keyof ClientEvents> {
     /**
      * The time this collector ends
      */
@@ -2148,7 +2148,7 @@ export interface CollectorOptions<T> {
     /**
      * The filter for this Collector
      */
-    filter?: T extends "Reaction" ? (reaction: MessageReaction, user: User) => boolean : (...args: ClientEvents[T]) => boolean
+    filter?: (...args: ClientEvents[T]) => boolean
     /**
      * The type of the object to Collect from
      */
@@ -2156,10 +2156,10 @@ export interface CollectorOptions<T> {
 }
 
 export interface CollectorEvents<T> {
-    collect: T extends MessageReaction ? [reaction: MessageReaction, user: User] : T extends Message ? [message: Message] : [interaction: T]
+    collect: T extends MessageReaction ? [reaction: MessageReaction, user: User] : [...args: T[]]
     end: [collected: Collection<string, T>, reason: string]
     remove: [reaction: MessageReaction, user: User]
-    dispose: [disposed: Message | Channel | Guild]
+    dispose: [...args: T[]]
 }
 
 export type WebhookResolvable = string | Webhook
