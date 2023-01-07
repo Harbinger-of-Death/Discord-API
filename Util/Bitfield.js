@@ -66,25 +66,23 @@ class Bitfield {
 
     static resolve(bit) {
         const { defaultBit } = this
-        if(!bit) return defaultBit
-        if(bit instanceof Bitfield) return bit.bitfield
-        if(typeof bit === "bigint") return bit
-        if(typeof bit === "number") return BigInt(bit)
-        if(Array.isArray(bit)) return bit.map(o => this.resolve(o)).reduce((a, b) => a | b, defaultBit)
+        if(typeof bit === "undefined") return;
+        if(bit instanceof Bitfield) bit = bit.bitfield
+        if(typeof bit === "number") bit = BigInt(bit)
         if(typeof bit === "string") {
-            if(typeof this.Flags[bit] !== "undefined") return this.Flags[bit]
-            for(const val of Object.values(this.Flags)) {
-                if(!isNaN(bit)) {
-                    if(BigInt(bit) === val) return val
-                }
-            }
+            if(typeof this.Flags[bit] !== "undefined") bit = this.Flags[bit]
+            else if(isNaN(bit)) bit = BigInt(bit)
         }
+        if(Array.isArray(bit)) return bit.map(o => this.resolve(o)).reduce((a, b) => a | b, defaultBit)
+        const filter = Object.values(this.Flags)
+        for(const flags of filter) if(flags === bit) return bit
 
         throw new BitfieldInvalidError({
-            message: "Specified an invalid Bitfield",
+            message: `Invalid Bitfield`,
             bit
         })
     }
+
 
     static get All() {
         if(!this.Flags) return 0n
