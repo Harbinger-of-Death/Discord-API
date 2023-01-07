@@ -85,6 +85,10 @@ class RoleManager extends CachedManager {
         return this.cache.find(o => o.tags?.premiumSubscriber) ?? null
     }
 
+    get linkedRoles() {
+        return this.cache.filter(o => o.tags?.guildConnections) ?? null
+    }
+
     get everyone() {
         return this.client.guilds.cache.get(this.guildId)?.roles.cache.get(this.guildId) ?? null
     }

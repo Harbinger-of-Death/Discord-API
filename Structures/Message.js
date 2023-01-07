@@ -62,6 +62,12 @@ class Message extends Base {
             everyone: data.mention_everyone
         }, this.guildId, this.client)
         this.url = data.id ? `https://discord.com/channels/${!this.guildId ? `@me` : this.guildId}/${this.channelId}/${this.id}` : null
+        this.roleSubscriptionData = data.role_subscription_data ? {
+            roleSubscriptionListingId: data.role_subscription_data.role_subscription_listing_id,
+            tierName: data.role_subscription_data.tier_name,
+            totalMonthsSubscribed: data.role_subscription_data.total_months_subscribed,
+            renewal: data.role_subscription_data.is_renewal
+        } : null
     }
 
     inGuild() {
