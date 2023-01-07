@@ -1,5 +1,25 @@
 import { ActionRowBuilder, ApplicationCommand, ApplicationCommandPermission, Attachment, AttachmentBuilder, AuditLogEntry, AutoModeration, AutoModerationRuleAction, BaseGuildTextChannel, BaseInteraction, ButtonBuilder, Channel, ChannelTypesEnums, Collection, DMChannel, EmbedBuilder, Emoji, ForumTags, Guild, GuildBan, GuildChannel, GuildIntegration, GuildMember, GuildScheduledEvent, GuildScheduledEventUser, GuildTemplate, InputTextBuilder, Interaction, Invite, Message, MessageReaction, OpCodes, Permissions, Presence, Role, SelectMenuBuilder, StageInstance, Sticker, ThreadChannel, ThreadMember, User, VoiceState, Webhook } from ".."
 import { Stream } from "node:stream"
+
+export interface RoleSubscriptionData {
+    /**
+     * The id of the sku and listing that the User is subscribed to 
+     */
+    roleSubscriptionListingId: string
+    /**
+     * The name of the tier that the User is subscribed to
+     */
+    tierName: string
+    /**
+     * The number of months that the User has been subscribed for
+     */
+    totalMonthsSubscribed: number
+    /**
+     * Whether this notification is for a renewal rather than a new purchase
+     */
+    renewal: boolean
+}
+
 export interface Choices {
     /**
      * The name of this choice
@@ -2202,7 +2222,7 @@ export type ChannelFlagsString = "Pinned" | "RequireTag"
 export type BufferResolvable = string | Buffer | AttachmentBuilder | Stream | ArrayBuffer
 export type GuildResolvable = Guild | string
 export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
-export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies"
+export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies" | "SuppressRoleSubscriptionPurchaseNotifications" | "SuppressRoleSubscriptionPurchaseNotificationReplies"
 export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2" | "RoleSubscriptionsAvailableForPurchase" | "RoleSubscriptionsEnabled"
 export type IntentsResolvable = bigint | IntentStrings
 export type IntentStrings = "Guilds" | "GuildMembers" | "GuildBans" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
