@@ -19,7 +19,4 @@ ActivityFlags.Flags = {
     Embedded: 1n << 8n
 }
 
-ActivityFlags.All = Object.values(ActivityFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
-
 module.exports = ActivityFlags

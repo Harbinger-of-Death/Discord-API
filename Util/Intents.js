@@ -28,6 +28,4 @@ Intents.Flags = {
     AutoModerationExecution: 1n << 21n
 }
 
-Intents.All = Object.values(Intents.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = Intents

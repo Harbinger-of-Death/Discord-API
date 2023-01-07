@@ -85,6 +85,11 @@ class Bitfield {
             bit
         })
     }
+
+    static get All() {
+        if(!this.Flags) return 0n
+        return Object.values(this.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
+    }
 }
 
 Bitfield.defaultBit = 0n

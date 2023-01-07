@@ -12,6 +12,4 @@ GuildMemberFlags.Flags = {
     CompletedOnboarding: 1n << 1n
 }
 
-GuildMemberFlags.All = Object.values(GuildMemberFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = GuildMemberFlags

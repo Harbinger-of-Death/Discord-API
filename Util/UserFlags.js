@@ -25,6 +25,4 @@ UserFlags.Flags = {
     Spammer: 1n << 20n
 }
 
-UserFlags.All = Object.values(UserFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = UserFlags

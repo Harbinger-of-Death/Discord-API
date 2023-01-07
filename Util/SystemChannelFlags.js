@@ -13,6 +13,4 @@ SystemChannelFlags.Flags = {
     SuppressJoinNotificationReplies: 1n << 3n
 }
 
-SystemChannelFlags.All = Object.values(SystemChannelFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = SystemChannelFlags
