@@ -2109,6 +2109,21 @@ export interface CollectorEvents<T> {
     dispose: [...args: T[]]
 }
 
+export interface ThreadMemberFetchOptions extends BaseFetchOptions {
+    /**
+     * Whether or not to incldue a GuildMember object for the Thread Member
+     */
+    withMember?: boolean
+    /**
+     * Get Thread Members after this User id
+     */
+    after?: UserResolvable
+    /**
+     * The limit of results to fetch
+     */
+    limit?: number
+}
+
 export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"

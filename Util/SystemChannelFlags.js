@@ -1,7 +1,7 @@
 const Bitfield = require("./Bitfield");
 
 class SystemChannelFlags extends Bitfield {
-    constructor(...bits) {
+    constructor(...bits) {  
         super(bits)
     }
 }
