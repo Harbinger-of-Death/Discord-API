@@ -2522,6 +2522,14 @@ export class Attachment extends Base {
      * Whether or not this Attachment is spoilered
      */
     public spoiler: Readonly<boolean>
+    /**
+     * The duration of this audio file
+     */
+    public durationSecs: Readonly<number>
+    /**
+     * The base64 encoded bytearray representing a sampled waveform
+     */
+    public waveForm: Readonly<string>
 }
 
 export class MessageMentions extends Base {
