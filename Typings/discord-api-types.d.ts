@@ -272,6 +272,7 @@ export interface ClientEvents {
     messageReactionRemoveEmoji: [reaction: MessageReaction]
     ratelimit: [ratelimit: RateLimitData]
     guildMembersChunk: [data: {}]
+    guildAuditLogEntryCreate: [entry: AuditLogEntry]
 }
 
 
@@ -2166,7 +2167,7 @@ export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
 export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies"
 export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2"
 export type IntentsResolvable = bigint | IntentStrings
-export type IntentStrings = "Guilds" | "GuildMembers" | "GuildBans" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
+export type IntentStrings = "Guilds" | "GuildMembers" | "GuildModeration" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
 export type RESTMethod = "GET" | "POST" | "DELETE" | "PUT" | "PATCH" 
 export type ContentType = "application/json" | "text/html" | "application/javascript"
 export type DateResolvable = Date | number

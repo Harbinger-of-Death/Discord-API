@@ -212,7 +212,8 @@ module.exports.EventTypes = {
     EmojiCreate : "emojiCreate",
     EmojiUpdate : "emojiUpdate",
     EmojiDelete : "emojiDelete",
-    Ratelimit: "ratelimit"
+    Ratelimit: "ratelimit",
+    GuildAuditLogEntryCreate: "guildAuditLogEntryCreate"
 }
 
 module.exports.WsCloseCodes = {
@@ -387,6 +388,26 @@ module.exports.AuditLogEventEnums = {
     CreatorMonetizationRequestCreated: 150,
     CreatorMonetizationTermsAccepted: 151,
 }
+
+module.exports.AuditLogEventUpdate = [
+    this.AuditLogEventEnums.ApplicationCommandPermissionUpdate,
+    this.AuditLogEventEnums.AutoModerationRuleUpdate,
+    this.AuditLogEventEnums.GuildUpdate,
+    this.AuditLogEventEnums.ChannelUpdate,
+    this.AuditLogEventEnums.ChannelOverwriteUpdate,
+    this.AuditLogEventEnums.MemberUpdate,
+    this.AuditLogEventEnums.MemberRoleUpdate,
+    this.AuditLogEventEnums.RoleUpdate,
+    this.AuditLogEventEnums.InviteUpdate,
+    this.AuditLogEventEnums.WebhookUpdate,
+    this.AuditLogEventEnums.EmojiUpdate,
+    this.AuditLogEventEnums.IntegrationUpdate,
+    this.AuditLogEventEnums.StageInstanceUpdate,
+    this.AuditLogEventEnums.GuildScheduledEventUpdate,
+    this.AuditLogEventEnums.StickerUpdate,
+    this.AuditLogEventEnums.ThreadUpdate,
+    this.AuditLogEventEnums.AutoModerationRuleUpdate
+]
 
 module.exports.AutoModerationEventTypesEnums = {
     MessageSend: 1
@@ -623,7 +644,8 @@ module.exports.WebsocketEvents = {
     ThreadMemberRemove: 'THREAD_MEMBER_REMOVE',
     EmojiCreate: 'EMOJI_CREATE',
     EmojiUpdate: 'EMOJI_UPDATE',
-    EmojiDelete: 'EMOJI_DELETE'
+    EmojiDelete: 'EMOJI_DELETE',
+    GuildAuditLogEntryCreate: "GUILD_AUDIT_LOG_ENTRY_CREATE"
 }
 
 module.exports.WebsocketStatus = {

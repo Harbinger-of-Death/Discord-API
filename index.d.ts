@@ -871,6 +871,10 @@ export class AuditLogEntry extends Base {
      * The User that made the changes
      */
     public executor: User
+    /**
+     * Whether or not this is an update change
+     */
+    public isUpdate(): boolean
 }
 
 export class GuildAuditLog extends Base {
@@ -7927,7 +7931,7 @@ export enum InputTextStyleEnums {
     Paragraph = 2
 }
 
-export enum EventTypes {
+export enum     EventTypes {
     Ready = "ready",
     ApplicationCommandPermissionsUpdate = "applicationCommandPermissionsUpdate",
     AutoModerationRuleCreate = "autoModerationRuleCreate",
@@ -7997,7 +8001,8 @@ export enum EventTypes {
     EmojiCreate = "emojiCreate",
     EmojiUpdate = "emojiUpdate",
     EmojiDelete = "emojiDelete",
-    Ratelimit = "ratelimit"
+    Ratelimit = "ratelimit",
+    GuildAuditLogEntryCreate = "guildAuditLogEntryCreate"
 }
 
 export enum WSEventCodes {
@@ -8319,7 +8324,8 @@ export enum WebsocketEvents {
     ThreadMemberRemove = "THREAD_MEMBER_REMOVE",
     EmojiCreate = "EMOJI_CREATE",
     EmojiUpdate = "EMOJI_UPDATE",
-    EmojiDelete = "EMOJI_DELETE"
+    EmojiDelete = "EMOJI_DELETE",
+    GuildAuditLogEntryCreate = "GUILD_AUDIT_LOG_ENTRY_CREATE"
 }
 
 export enum WebsocketStatus {
