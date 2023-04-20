@@ -1,6 +1,8 @@
 const ClientUser = require("../Structures/ClientUser");
 const OauthUser = require("../Structures/OauthUser");
 const OauthUserConnections = require("../Structures/OauthUserConnections");
+const RoleConnectionsMetadata = require("../Structures/RoleConnectionsMetadata");
+const RoleConnections = require("../Structures/RoleConnections");
 const User = require("../Structures/User");
 const { SnowflakeRegex, ChannelTypesEnums } = require("../Util/Constants");
 const Util = require("../Util/Util");
@@ -78,6 +80,19 @@ class UserManager extends CachedManager {
         const userId = user instanceof User ? user.id : user
         if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
         return this.client.channels.cache.find(o => o.type === ChannelTypesEnums.Dm && o.recipientId === userId)
+    }
+
+    async fetchRoleConnection(accessToken) {
+        if(!accessToken) throw new RangeError(`Missing Access Token`)
+        const roleConnection = await this.client.api.get(`${this.client.root}/users/@me/applications/${this.client.user.id}/role-connection`, { authorization: accessToken, tokenType: `Bearer` })
+        return new RoleConnections(roleConnection, this.client)
+    }
+
+    async modifyRoleConnection(accessToken, options = {}) {
+        if(!accessToken) throw new RangeError(`Missing Access Token`)
+        const body = { platform_name: options.platformName, platform_username: options.platformUsername, metadata: options.metadata ? new RoleConnectionsMetadata(options.metadata).toJSON() : undefined }
+        const roleConnection = await this.client.api.put(`${this.client.root}/users/@me/applications/${this.client.user.id}/role-connection`, { authorization: accessToken, tokenType: `Bearer`, body })
+        return new RoleConnections(roleConnection, this.client)
     }
 }
 
