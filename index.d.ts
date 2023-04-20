@@ -1,7 +1,52 @@
-import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable, InteractionEditReplyOptions, WebhookResolvable, ChatInputCommandInteractionOptionData, RateLimitData, CollectorOptions, CollectorEvents, ThreadMemberFetchOptions } from "./Typings/discord-api-types";
+import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable, InteractionEditReplyOptions, WebhookResolvable, ChatInputCommandInteractionOptionData, RateLimitData, CollectorOptions, CollectorEvents, ThreadMemberFetchOptions, ModifyRoleConnection, ModifyRoleConnectionMetadata, RoleSubscriptionData } from "./Typings/discord-api-types";
 import { EventEmitter } from "node:events"
 import { WebSocket } from "ws";
 import { Stream } from "stream"
+
+export class RoleConnectionsMetadata extends Base {
+    public constructor(data: {}, client: Client)
+    /**
+     * The type of this metadata
+     */
+    public type: number
+    /**
+     * Dictionary key for the metadata
+     */
+    public key: string 
+    /**
+     * The name of the metadata field
+     */
+    public name: string
+    /**
+     * The name localizations of this metadata
+     */
+    public nameLocalizations: Record<Locales, string>
+    /**
+     * The description of this metadata
+     */
+    public description: string
+    /**
+     * The description localization of this metadata
+     */
+    public descriptionLocalizations: Record<Locales, string>
+    public toJSON(): {}
+}
+
+export class RoleConnections extends Base {
+    public constructor(data: {}, client: Client)
+    /**
+     * The name of the platform this Role Connection is on
+     */
+    public platformName: string
+    /**
+     * The username on the platform a bot has connected
+     */
+    public platformUsername: string
+    /**
+     * The metadata of this Role Connection
+     */
+    public metadata: RoleConnectionsMetadata
+}
 
 export class ReactionCollector extends Collector {
     public constructor(options: CollectorOptions<EventTypes.MessageReactionAdd>, extras: { messageId: string }, client: Client)
@@ -2383,6 +2428,10 @@ export class Application extends Base {
      */
     public customInstallURL: string
     /**
+     * The Application's Role Connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration
+     */
+    public roleConnectionsVerificationURL: string
+    /**
      * The Icon url of this Application
      */
     public iconURL(options?: Omit<ImageURLOptions<ImageFormatWithoutLottieAnimate>, "forceStatic">): string | void
@@ -2390,6 +2439,14 @@ export class Application extends Base {
      * The Cover Image url of this Application
      */
     public coverImageURL(options?: Omit<ImageURLOptions<ImageFormatWithoutLottieAnimate>, "forceStatic">): string | void
+    /**
+     * Fetches this Application Role Connection metadata
+     */
+    public fetchRoleConnectionsMetadata(): Promise<Array<RoleConnectionsMetadata>>
+    /**
+     * Modifies this Application Role Connection metadata
+     */
+    public modifyRoleConnectionsMetadata(options: ModifyRoleConnectionMetadata): Promise<Array<RoleConnectionsMetadata>>
 }
 
 export class MessageActivity extends Base {
@@ -2702,6 +2759,10 @@ export class Message extends Base {
      * Whether or not this Message is repliable
      */
     public repliable: boolean
+    /**
+     * Data of the role subscription purchase or renewal that prompted this RoleSubscriptionMessage Message
+     */
+    public roleSubscriptionData: RoleSubscriptionData
     /**
      * Fetches this Message
      */
@@ -4118,6 +4179,16 @@ export class UserManager extends CachedManager {
      * Fetches a User's Connections
      */
     public fetchOauthUserConnections(accessToken: string): Promise<Collection<string, OauthUserConnections>>
+    /*
+     * Gets the DMChannel between the User and the Client
+     * Fetches a User's Role Connection
+     */
+    public fetchRoleConnection(accessToken: string): Promise<RoleConnections>
+    /**
+     * Gets the current User's Role Connection data
+     * Modifies a User's Role Connection
+     */
+    public modifyRoleConnection(accessToken: string, options?: ModifyRoleConnection): Promise<RoleConnections>
     /**
      * Gets the DMChannel between the User and the Client
      */
@@ -4184,6 +4255,7 @@ export class GuildBanManager extends Base {
      */
     public cache: Collection<string, GuildBan>
 }
+
 export class Role extends Base {
     public constructor(data: {}, guildId: string, client: Client)
     /**
@@ -4361,9 +4433,13 @@ export class GuildMemberRoleManager extends CachedManager {
      */
     public everyone: Readonly<Role>
     /**
-     * Gets the Premium Subscriber Role of a Guild
+     * Gets the Premium Subscriber Role of a GuildMember's Role
      */
     public premiumSubscriberRole: Readonly<Role>
+    /**
+     * Returns a Collection of Linked Roles in the GuildMember's Roles
+     */
+    public linkedRoles: Readonly<Collection<string, Role>>
     /**
      * Returns the highest Role
      */
@@ -4384,6 +4460,10 @@ export class RoleManager extends CachedManager {
      * Gets the Premium Subscriber Role of a Guild
      */
     public premiumSubscriberRole: Readonly<Role>
+    /**
+     * Returns a Collection of Linked Roles in the Guild
+     */
+    public linkedRoles: Readonly<Collection<string, Role>>
     /**
      * Returns the highest Role
      */
@@ -8025,7 +8105,8 @@ export enum WsReadyStateCodes {
 
 export enum InviteTargetTypesEnums {
     Stream = 1,
-    EmbeddedApplication = 2
+    EmbeddedApplication = 2,
+    RoleSubscriptionsPurchase = 3
 }
 
 export enum GuildScheduledEventPrivacyEnums {
@@ -8339,6 +8420,17 @@ export enum ForumLayoutTypesEnums {
     NotSet = 0,
     ListView = 1,
     GalleryView = 2
+}
+
+export enum ApplicationRoleConnectionMetadataTypeEnums {
+    IntegerLessThanOrEqual = 1,
+    IntegerGreaterThanOrEqual = 2,
+    IntegerEqual = 3,
+    IntegerNotEqual = 4,
+    DatetimeLessThanOrEqual = 5,
+    DatetimeGreaterThanOrEqual = 6,
+    BooleanEqual = 7,
+    BooleanNotEqual = 8
 }
 
 export enum CollectorEventTypes {

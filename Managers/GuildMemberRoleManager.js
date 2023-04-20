@@ -83,6 +83,10 @@ class GuildMemberRoleManager extends CachedManager {
         return this.cache.find(o => o.tags?.premiumSubscriber) ?? null
     }
 
+    get linkedRoles() {
+        return this.cache.find(o => o.tags?.guildConnections) ?? null
+    }
+
     botRoleFor(user = this.client.user.id) {
         const userId = typeof user === "string" ? user : user.id
         if(!this.client.users.cache.get(userId)?.bot) throw new RangeError(`This isn't a Discord Bot`)

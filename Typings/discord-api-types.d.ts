@@ -1,5 +1,25 @@
 import { ActionRowBuilder, ApplicationCommand, ApplicationCommandPermission, Attachment, AttachmentBuilder, AuditLogEntry, AutoModeration, AutoModerationRuleAction, BaseGuildTextChannel, BaseInteraction, ButtonBuilder, Channel, ChannelTypesEnums, Collection, DMChannel, EmbedBuilder, Emoji, ForumTags, Guild, GuildBan, GuildChannel, GuildIntegration, GuildMember, GuildScheduledEvent, GuildScheduledEventUser, GuildTemplate, InputTextBuilder, Interaction, Invite, Message, MessageReaction, OpCodes, Permissions, Presence, Role, SelectMenuBuilder, StageInstance, Sticker, ThreadChannel, ThreadMember, User, VoiceState, Webhook } from ".."
 import { Stream } from "node:stream"
+
+export interface RoleSubscriptionData {
+    /**
+     * The id of the sku and listing that the User is subscribed to 
+     */
+    roleSubscriptionListingId: string
+    /**
+     * The name of the tier that the User is subscribed to
+     */
+    tierName: string
+    /**
+     * The number of months that the User has been subscribed for
+     */
+    totalMonthsSubscribed: number
+    /**
+     * Whether this notification is for a renewal rather than a new purchase
+     */
+    renewal: boolean
+}
+
 export interface Choices {
     /**
      * The name of this choice
@@ -795,9 +815,21 @@ export interface RoleTags {
      */
     integrationId: string
     /**
-     * Whether or not this Role is the Guild's premium subscriber Role
+     * Whether or not this Role is the Guild's premium subscriber Role. If true returns null
      */
-    premiumSubscriber: boolean
+    premiumSubscriber: null
+    /**
+     * The id of this Role's subscription sku and listing
+     */
+    subscriptionListingId: string
+    /**
+     * Whether this Role is available for purchase. If true returns null
+     */
+    availableForPurchase: null
+    /**
+     * Whether or not this Role is a linked role
+     */
+    guildConnections: null
 }
 
 export interface GuildBanFetchOption extends BaseFetchOptions {
@@ -2069,6 +2101,48 @@ export interface InteractionEditReplyOptions extends MessageOptionsData {
     message?: MessageResolvable
 }
 
+export interface ModifyRoleConnection {
+    /**
+     * The name of the platform
+     */
+    platformName?: string
+    /**
+     * The username on the platform a bot has connected
+     */
+    platformUsername?: string
+    /**
+     * The metadata of this Role Connection
+     */
+    metadata?: ModifyRoleConnectionMetadata
+}
+
+export interface ModifyRoleConnectionMetadata {
+    /**
+     * The type of the metadata
+     */
+    type: number
+    /**
+     * The dictionary key for the metadata
+     */
+    key: string
+    /**
+     * The name of the metadata
+     */
+    name: string
+    /**
+     * The name localizations for this metadata
+     */
+    nameLocalizations?: Record<Locales, string>
+    /**
+     * The description of this metadata
+     */
+    description: string
+    /**
+     * The description localizations for this metadata
+     */
+    descriptionLocalizations?: Record<Locales, string>
+}
+
 export interface ChatInputCommandInteractionOptionData {
     /**
      * The value of the selected option
@@ -2149,7 +2223,7 @@ export type StickerResolvable = string | Sticker
 export type InviteResolvable = string | Invite
 export type GuildTemplateResolvable = string | GuildTemplate
 export type GuildScheduledEventResolvable = string | GuildScheduledEvent
-export type Scopes = "activities.read" | "activities.write" | "applications.builds.read" | "applications.builds.upload" | "applications.commands" | "applications.commands.update" | "applications.commands.permissions.update" | "applications.entitlements" | "applications.store.update" | "bot" | "connections" | "dm_channels.read" | "email" | "gdm.join" | "guilds" | "guilds.join" | "guilds.members.read" | "identify" | "messages.read" | "relationships.read" | "rpc" | "rpc.activities.write" | "rpc.notifications.read" | "rpc.voice.read" | "rpc.voice.write" | "voice" | "webhook.incoming"
+export type Scopes = "activities.read" | "activities.write" | "applications.builds.read" | "applications.builds.upload" | "applications.commands" | "applications.commands.update" | "applications.commands.permissions.update" | "applications.entitlements" | "applications.store.update" | "bot" | "connections" | "dm_channels.read" | "email" | "gdm.join" | "guilds" | "guilds.join" | "guilds.members.read" | "identify" | "messages.read" | "relationships.read" | "rpc" | "rpc.activities.write" | "rpc.notifications.read" | "rpc.voice.read" | "rpc.voice.write" | "voice" | "webhook.incoming" | "role_connections.write"
 export type MultiRoleResolvable = Collection<string, Role> | Array<Role>
 export type RoleResolvable = Role | string
 export type Languages = "js" | "html" | "css" | "diff" | "cpp"
@@ -2164,8 +2238,8 @@ export type ChannelFlagsString = "Pinned" | "RequireTag"
 export type BufferResolvable = string | Buffer | AttachmentBuilder | Stream | ArrayBuffer
 export type GuildResolvable = Guild | string
 export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
-export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies"
-export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2"
+export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies" | "SuppressRoleSubscriptionPurchaseNotifications" | "SuppressRoleSubscriptionPurchaseNotificationReplies"
+export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2" | "RoleSubscriptionsAvailableForPurchase" | "RoleSubscriptionsEnabled"
 export type IntentsResolvable = bigint | IntentStrings
 export type IntentStrings = "Guilds" | "GuildMembers" | "GuildModeration" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
 export type RESTMethod = "GET" | "POST" | "DELETE" | "PUT" | "PATCH" 
