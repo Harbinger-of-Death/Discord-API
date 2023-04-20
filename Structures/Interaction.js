@@ -11,7 +11,7 @@ class Interaction extends Base {
         this.applicationId = data.application_id ?? null
         this.type = data.type ?? null
         this.guildId = data.guild_id ?? guildId ?? null
-        this.channelId = data.channel_id ?? null
+        this.channelId = data.channel_id ?? data.channel?.id ?? null
         this.member = this.guild?.members._add(data.member, this.guildId, { cache: true, force: true }, { id: data.user?.id })
         this.user = this.client.users._add(data.user, { cache: true, force: true })
         this.token = data.token ?? null

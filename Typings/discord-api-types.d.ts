@@ -1717,6 +1717,10 @@ export interface AutoModerationActionMetadata {
      * Timeout duration in seconds
      */
     durationSeconds: number
+    /**
+     * Additional explanation that will be shown to members whenever their message is blocked
+     */
+    customMessage: string
 }
 
 export interface AutoModerationTriggerMetadata {

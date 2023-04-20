@@ -18,7 +18,7 @@ class AutoModeration extends Base {
         this.mentionTotalLimit = data.trigger_metadata?.mention_total_limit ?? null
         this.regexPatterns = data.trigger_metadata?.regex_patterns ?? null
         this.enabled = data.enabled ?? null
-        this.actions = data.actions?.map(o => { return { type: o.type, metadata: { channelId: o.metadata?.channel_id, durationSeconds: o.metadata?.duration_seconds } } }) ?? []
+        this.actions = data.actions?.map(action => AutoModeration.resolveActionsArray(action)) ?? []
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
     }
@@ -104,10 +104,22 @@ class AutoModeration extends Base {
         this.allowList?.every(o => rule.allowList?.includes(o)) &&
         this.mentionTotalLimit === rule.mentionTotalLimit &&
         this.enabled === rule.enabled &&
+        this.actions.length === rule.actions.length &&
         this.exemptRoles.size === rule.exemptRoles.size &&
         this.exemptRoles.every(o => rule.exemptRoles.has(o)) &&
         this.exemptChannels.size === rule.exemptChannels.size &&
         this.exemptChannels.every(o => rule.exemptChannels.has(o))
+    }
+
+    static resolveActionsArray(actions = {}) {
+        return {
+            type: actions.type,
+            metadata: Object.keys(actions.metadata).length ? {
+                channelId: actions.metadata?.channel_id,
+                durationSeconds: actions.metadata?.duration_seconds,
+                customMessage: actions.metadata?.custom_message
+            } : null
+        }
     }
 }
 
