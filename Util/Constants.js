@@ -23,7 +23,13 @@ module.exports.MessageTypeEnums = {
     GuildInviteReminder: 22,
     ContextMenuCommand: 23,
     AutoModerationAction: 24,
-    RoleSubscriptionPurchase: 25
+    RoleSubscriptionPurchase: 25,
+    InteractionPremiumUpsell: 26,
+    StageStart: 27,
+    StageEnd: 28,
+    StageSpeaker: 29,
+    StageTopic: 31,
+    GuildApplicationPremiumSubscription: 32
 }
 
 module.exports.ApplicationCommandTypesEnums = {

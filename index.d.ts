@@ -8242,6 +8242,12 @@ export enum MessageTypeEnums {
     GuildInviteReminder = 22,
     ContextMenuCommand = 23,
     AutoModerationAction = 24,
+    InteractionPremiumUpsell = 26,
+    StageStart = 27,
+    StageEnd = 28,
+    StageSpeaker = 29,
+    StageTopic = 31,
+    GuildApplicationPremiumSubscription = 32
 }
 
 export enum ActivityTypesEnums {
