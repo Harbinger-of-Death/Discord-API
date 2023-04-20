@@ -1,7 +1,7 @@
 const Bitfield = require("./Bitfield");
 
 class SystemChannelFlags extends Bitfield {
-    constructor(...bits) {
+    constructor(...bits) {  
         super(bits)
     }
 }
@@ -14,7 +14,5 @@ SystemChannelFlags.Flags = {
     SuppressRoleSubscriptionPurchaseNotifications: 1n << 4n,
     SuppressRoleSubscriptionPurchaseNotificationReplies: 1n << 5n
 }
-
-SystemChannelFlags.All = Object.values(SystemChannelFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
 
 module.exports = SystemChannelFlags

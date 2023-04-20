@@ -292,6 +292,7 @@ export interface ClientEvents {
     messageReactionRemoveEmoji: [reaction: MessageReaction]
     ratelimit: [ratelimit: RateLimitData]
     guildMembersChunk: [data: {}]
+    guildAuditLogEntryCreate: [entry: AuditLogEntry]
 }
 
 
@@ -2183,6 +2184,21 @@ export interface CollectorEvents<T> {
     dispose: [...args: T[]]
 }
 
+export interface ThreadMemberFetchOptions extends BaseFetchOptions {
+    /**
+     * Whether or not to incldue a GuildMember object for the Thread Member
+     */
+    withMember?: boolean
+    /**
+     * Get Thread Members after this User id
+     */
+    after?: UserResolvable
+    /**
+     * The limit of results to fetch
+     */
+    limit?: number
+}
+
 export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
@@ -2225,7 +2241,7 @@ export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
 export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies" | "SuppressRoleSubscriptionPurchaseNotifications" | "SuppressRoleSubscriptionPurchaseNotificationReplies"
 export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2" | "RoleSubscriptionsAvailableForPurchase" | "RoleSubscriptionsEnabled"
 export type IntentsResolvable = bigint | IntentStrings
-export type IntentStrings = "Guilds" | "GuildMembers" | "GuildBans" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
+export type IntentStrings = "Guilds" | "GuildMembers" | "GuildModeration" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
 export type RESTMethod = "GET" | "POST" | "DELETE" | "PUT" | "PATCH" 
 export type ContentType = "application/json" | "text/html" | "application/javascript"
 export type DateResolvable = Date | number

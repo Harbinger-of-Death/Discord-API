@@ -18,6 +18,4 @@ MessageFlags.Flags = {
     FailedToMentionSomeRolesInThread: 1n << 8n
 }
 
-MessageFlags.All = Object.values(MessageFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = MessageFlags;

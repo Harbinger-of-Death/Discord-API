@@ -82,6 +82,4 @@ Permissions.Flags = {
     ViewCreatorMonetizationAnalytics: 1n << 41n
 }
 
-Permissions.All = Object.values(Permissions.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = Permissions
