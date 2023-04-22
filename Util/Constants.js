@@ -418,14 +418,16 @@ module.exports.AuditLogEventUpdate = [
 ]
 
 module.exports.AutoModerationEventTypesEnums = {
-    MessageSend: 1
+    MessageSend: 1,
+    MemberUpdate: 2
 }
 
 module.exports.AutoModerationTriggerTypesEnums = {
     Keyword: 1,
     Spam: 3,
     KeywordPreset: 4,
-    MentionSpam: 5
+    MentionSpam: 5,
+    MemberProfile: 6
 }
 
 module.exports.AutoModerationKeywordPresetTypesEnums = {
@@ -437,7 +439,8 @@ module.exports.AutoModerationKeywordPresetTypesEnums = {
 module.exports.AutoModerationActionTypesEnums = {
     BlockMessage: 1,
     SendAlertMessage: 2,
-    Timeout: 3
+    Timeout: 3,
+    BlockMemberInteraction: 4
 }
 
 module.exports.GuildFeaturesEnums = {
