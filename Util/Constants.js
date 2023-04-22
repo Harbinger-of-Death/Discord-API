@@ -23,6 +23,13 @@ module.exports.MessageTypeEnums = {
     GuildInviteReminder: 22,
     ContextMenuCommand: 23,
     AutoModerationAction: 24,
+    RoleSubscriptionPurchase: 25,
+    InteractionPremiumUpsell: 26,
+    StageStart: 27,
+    StageEnd: 28,
+    StageSpeaker: 29,
+    StageTopic: 31,
+    GuildApplicationPremiumSubscription: 32
 }
 
 module.exports.ApplicationCommandTypesEnums = {
@@ -253,7 +260,8 @@ module.exports.WsReadyStateCodes = {
 
 module.exports.InviteTargetTypesEnums = {
     Stream: 1,
-    EmbeddedApplication: 2
+    EmbeddedApplication: 2,
+    RoleSubscriptionsPurchase: 3
 }
 
 module.exports.GuildScheduledEventPrivacyEnums = {
@@ -455,7 +463,9 @@ module.exports.GuildFeaturesEnums = {
     Verified: "VERIFIED",
     VipRegions: "VIP_REGIONS",
     WelcomeScreenEnabled: "WELCOME_SCREEN_ENABLED",
-    ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2"
+    ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2",
+    RoleSubscriptionsAvailableForPurchase: "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+    RoleSubscriptionsEnabled: "ROLE_SUBSCRIPTIONS_ENABLED"
 }
 
 module.exports.ImageFileTypes = {
@@ -659,6 +669,17 @@ module.exports.ForumLayoutTypesEnums = {
     NotSet: 0,
     ListView: 1,
     GalleryView: 2
+}
+
+module.exports.ApplicationRoleConnectionMetadataTypeEnums = {
+    IntegerLessThanOrEqual: 1,
+    IntegerGreaterThanOrEqual: 2,
+    IntegerEqual: 3,
+    IntegerNotEqual: 4,
+    DatetimeLessThanOrEqual: 5,
+    DatetimeGreaterThanOrEqual: 6,
+    BooleanEqual: 7,
+    BooleanNotEqual: 8
 }
 
 module.exports.CollectorEventTypes = {

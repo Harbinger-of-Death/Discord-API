@@ -17,6 +17,7 @@ MessageFlags.Flags = {
     Loading: 1n << 7n,
     FailedToMentionSomeRolesInThread: 1n << 8n,
     IsVoiceMessage: 1n << 13n
+    SuppressNotifications: 1n << 12n
 }
 
 module.exports = MessageFlags;
