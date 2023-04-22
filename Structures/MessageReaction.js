@@ -16,7 +16,6 @@ class MessageReaction extends Base {
         this.me = data.me ?? null
         this.emoji = new ReactionEmoji(data.emoji, this.guildId, this, this.client)
         this.users = new ReactionUserManager(this.channelId, this.messageId, this.emoji, this.client)
-        this.burst = data.burst ?? null
     }
 
     async remove() {
