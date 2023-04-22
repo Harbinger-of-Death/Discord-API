@@ -2006,19 +2006,19 @@ export class MessageReaction extends Base {
     /**
      * The Guild this belongs to
      */
-    public guild: Guild
+    public guild: Readonly<Guild>
     /**
      * The Channel this belongs to
      */
-    public channel: BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel
+    public channel: Readonly<BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel>
     /**
      * The Message this belongs to
      */
-    public message: Message
+    public message: Readonly<Message>
     /**
      * The User this belongs to
      */
-    public user: User
+    public user: Readonly<User>
     /**
      * The Reaction User Manager
      */
