@@ -2754,7 +2754,7 @@ export class Message extends Base {
     /**
      * The Channel this belongs to
      */
-    public channel: BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel
+    public channel: BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceBasedChannels
     /**
      * Whether or not this Message is repliable
      */
@@ -5580,10 +5580,6 @@ export class ForumChannel extends GuildChannel {
 export class VoiceChannel extends VoiceBasedChannels {
     public constructor(data: {}, client: Client, extras: { guildId: string })
     /**
-     * Whether or not this Voice Channel is nsfw
-     */
-    public nsfw: boolean
-    /**
      * The Video Quality Mode of this Voice Channel
      */
     public videoQualityMode: number
@@ -5592,22 +5588,6 @@ export class VoiceChannel extends VoiceBasedChannels {
      */
     public userLimit: number
     /**
-     * The Rate Limit Per User of this Channel
-     */
-    public rateLimitPerUser: number
-    /**
-     * Creates a Message Collector in this Channel
-     */
-    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
-    /**
-     * Sets the NSFW state of this Voice Channel
-     */
-    public setNsfw(nsfw: boolean, reason?: string): Promise<this>
-    /**
-     * Sets the Rate Limit Per User of this Channel
-     */
-    public setRateLimitPerUser(rateLimitPerUser: number, reason?: string): Promise<this>
-    /**
      * Sets the user limit of this Voice Channel
      */
     public setUserLimit(userLimit: number, reason?: string): Promise<this>
@@ -5615,22 +5595,6 @@ export class VoiceChannel extends VoiceBasedChannels {
      * Sets the Video Quality Mode of this Voice Channel
      */
     public setVideoQualityMode(videoQualityMode: number, reason?: string): Promise<this>
-    /**
-     * The Message Manager of this Channel
-     */
-    public messages: Readonly<MessageManager>
-    /**
-     * Sends a Message to this Voice Channel
-     */
-    public send(options: MessageOptionsData): Promise<Message>
-    /**
-     * Bulk-Deletes Messages in this Voice Channel
-     */
-    public bulkDelete(messages: MessageBulkResolvable | number, options?: MessageDeleteBulkOptions): Promise<Collection<string, Message>>
-    /**
-     * Triggers a typing indicator in this Channel
-     */
-    public sendTyping(): Promise<this>
 }
 
 export class StageChannel extends VoiceBasedChannels {
@@ -5671,6 +5635,10 @@ export class NewsChannel extends BaseGuildTextChannel {
 export class VoiceBasedChannels extends GuildChannel {
     public constructor(data: {}, guildId: string, client: Client)
     /**
+     * Whether or not this Voice Channel is nsfw
+     */
+    public nsfw: boolean
+    /**
      * The bitrate of this Voice Channel
      */
     public bitrate: number
@@ -5694,6 +5662,38 @@ export class VoiceBasedChannels extends GuildChannel {
      * The Guild Members that are in this Voice Based Channel
      */
     public members: Collection<string, GuildMember>
+    /**
+     * The Rate Limit Per User of this Channel
+     */
+    public rateLimitPerUser: number
+    /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
+    /**
+     * Sets the NSFW state of this Voice Channel
+     */
+    public setNsfw(nsfw: boolean, reason?: string): Promise<this>
+    /**
+     * Sets the Rate Limit Per User of this Channel
+     */
+    public setRateLimitPerUser(rateLimitPerUser: number, reason?: string): Promise<this>
+    /**
+     * The Message Manager of this Channel
+     */
+    public messages: Readonly<MessageManager>
+    /**
+     * Sends a Message to this Voice Channel
+     */
+    public send(options: MessageOptionsData): Promise<Message>
+    /**
+     * Bulk-Deletes Messages in this Voice Channel
+     */
+    public bulkDelete(messages: MessageBulkResolvable | number, options?: MessageDeleteBulkOptions): Promise<Collection<string, Message>>
+    /**
+     * Triggers a typing indicator in this Channel
+     */
+    public sendTyping(): Promise<this>
 }
 
 export class BaseGuildTextChannel extends GuildChannel {
@@ -5913,7 +5913,7 @@ export class Channel extends Base {
     /**
      * Whether or not this Channel is a Text Based Channel
      */
-    public isText(): this is BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel
+    public isText(): this is BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceBasedChannels
     /**
      * Whether or not this Channel is a Voice Channel
      */
