@@ -212,7 +212,7 @@ class GuildManager extends CachedManager {
         let newFeatures = []
         for(const key of features) {
             if(![GuildFeaturesEnums.InvitesDisabled, GuildFeaturesEnums.Community, GuildFeaturesEnums.Discoverable].includes(GuildFeaturesEnums[key] ?? key)) throw new TypeError(`Invalid Guild Features. Received=${key}`)
-            if(/^(([A-Z]+_[A-Z]+){1,100}|[A-Z]+)$/g.test(key)) newFeatures.push(key)
+            if(/^([A-Z]+_)*[A-Z]+$/g.test(key)) newFeatures.push(key)
             else newFeatures.push(GuildFeaturesEnums[key])
         }
 
