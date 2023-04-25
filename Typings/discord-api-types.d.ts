@@ -2235,6 +2235,7 @@ export type UserResolvable = GuildMember | User | string
 export type UserFlagsResolvable = bigint | UserFlagsStrings
 export type UserFlagsStrings = "Staff" | "Partner" | "Hypesquad" | "BugHunterLevel1" | "HypeSquadOnlineHouse1" | "HypeSquadOnlineHouse2" | "HypeSquadOnlineHouse3" | "PremiumEarlySupporter" | "TeamPseudoUser" | "BugHunterLevel2" | "VerifiedBot" | "VerifiedDeveloper" | "CertifiedModerator" | "BotHttpInteractions" | "ActiveDeveloper" | "Spammer"
 export type ImageFormats = ".jpg" | ".jpeg" | ".png" | ".webp" | ".gif" | ".json"
+export type MediaFormats = ".mp3" | ".wav" | ".mp4" | ".webm" | ".pdf"
 export type Partials = "CHANNEL"
 export type ChannelResolvable = string | Channel | GuildChannel | ThreadChannel
 export type ChannelFlagsResolvable = ChannelFlagsString | bigint

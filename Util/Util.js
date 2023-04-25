@@ -64,13 +64,25 @@ class Util {
             case ".gif":
                 mimeType = "image/gif"
                 break;
-            case ".html":
-                mimeType = "text/html"
+            case ".pdf":
+                mimeType = "application/pdf"
+                break;
+            case ".mp3":
+                mimeType = "audio/mpeg"
+                break;
+            case ".wav":
+                mimeType = "audio/wav"
+                break;
+            case ".mp4":
+                mimeType = "video/mp4"
+                break;
+            case ".webm":
+                mimeType = "video/webm"
                 break;
             default:
                 mimeType = "text/plain"
                 break;
-
+        
         }
         return `data:${mimeType};base64,${buffer.toString("base64")}`
     }
