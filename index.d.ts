@@ -2835,6 +2835,26 @@ export class Message extends Base {
      * Creates a Reaction Collector on this Message
      */
     public createReactionCollector(options?: CollectorOptions<EventTypes.MessageReactionAdd>): ReactionCollector
+    /**
+     * Whether or not this Message is in Guild
+     */
+    public inGuild(): boolean
+    /**
+     * Whether or not this Message is a reply
+     */
+    public isReply(): boolean
+    /**
+     * Whether or not this Message is from a Message that has been crossposted
+     */
+    public isCrosspost(): boolean
+    /**
+     * Whether or not this Message has a Thread Channel associated with it. Meaning if it's the first Message in the Thread
+     */
+    public isThreadMessage(): boolean
+    /**
+     * Whether or not this Message is a Voice Message
+     */
+    public isVoiceMessage(): boolean
 }
 
 export class MessageManager extends Base {

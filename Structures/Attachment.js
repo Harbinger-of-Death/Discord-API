@@ -55,7 +55,7 @@ class Attachment extends Base {
     }
 
     get waveForm() {
-        return this.data?.waveForm ?? null
+        return this.data?.waveform ?? null
     }
 
 }
