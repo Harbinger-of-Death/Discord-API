@@ -80,6 +80,18 @@ class Message extends Base {
         return false;
     }
 
+    isCrosspost() {
+        return this.flags.has(MessageFlags.Flags.IsCrosspost)
+    }
+
+    isThreadMessage() {
+        return this.flags.has(MessageFlags.Flags.HasThread)
+    }
+
+    isVoiceMessage() {
+        return this.flags.has(MessageFlags.Flags.IsVoiceMessage)
+    }
+
     get repliable() {
         return RepliableMessageTypes.includes(this.type)
     }

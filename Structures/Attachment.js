@@ -48,7 +48,15 @@ class Attachment extends Base {
 
     get spoiler() {
         return this.filename?.startsWith("SPOILER_")
-    }   
+    }
+
+    get durationSecs() {
+        return this.data?.duration_secs ?? null
+    }
+
+    get waveForm() {
+        return this.data?.waveform ?? null
+    }
 
 }
 
