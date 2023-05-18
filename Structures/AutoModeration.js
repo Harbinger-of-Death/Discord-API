@@ -101,7 +101,7 @@ class AutoModeration extends Base {
     }
 
     async setActions(actions, reason) {
-        return await this.edit({ actions, reason }) 
+        return await this.edit({ actions, reason })
     }
 
     async setEnabled(enabled, reason) {
