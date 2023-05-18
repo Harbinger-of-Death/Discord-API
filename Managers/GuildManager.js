@@ -212,7 +212,7 @@ class GuildManager extends CachedManager {
     static parseFeatures(features = []) {
         const newFeatures = []
         for(const key of features) {
-            if(![GuildFeaturesEnums.InvitesDisabled, GuildFeaturesEnums.Community, GuildFeaturesEnums.Discoverable].includes(GuildFeaturesEnums[key] ?? key)) throw new TypeError(`Invalid Guild Features. Received=${key}`)
+            if(![GuildFeaturesEnums.InvitesDisabled, GuildFeaturesEnums.Community, GuildFeaturesEnums.Discoverable, GuildFeaturesEnums.RaidAlertsEnabled].includes(GuildFeaturesEnums[key] ?? key)) throw new TypeError(`Invalid Guild Features. Received=${key}`)
             if(/^([A-Z]+_)*[A-Z]+$/g.test(key)) newFeatures.push(key)
             else newFeatures.push(GuildFeaturesEnums[key])
         }
