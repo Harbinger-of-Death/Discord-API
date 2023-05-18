@@ -8340,7 +8340,9 @@ export enum GuildFeaturesEnums {
     VipRegions = "VIP_REGIONS",
     WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
     GuildOnboardingEverEnabled = "GUILD_ONBOARDING_EVER_ENABLED",
-    ApplicationCommandPermissionsV2 = "APPLICATION_COMMAND_PERMISSIONS_V2"
+    ApplicationCommandPermissionsV2 = "APPLICATION_COMMAND_PERMISSIONS_V2",
+    RoleSubscriptionsAvailableForPurchase = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+    RoleSubscriptionsEnabled = "ROLE_SUBSCRIPTIONS_ENABLED"
 }
 
 
