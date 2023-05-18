@@ -204,14 +204,15 @@ class GuildManager extends CachedManager {
             preferred_locale: payload.preferredLocale ?? payload.preferred_locale,
             features: payload.features ? this.parseFeatures(payload.features) : undefined,
             description: payload.description,
-            premium_progress_bar_enabled: payload.premiumProgressBar
+            premium_progress_bar_enabled: payload.premiumProgressBar,
+            safety_alerts_channel_id: typeof payload.safetyAlertsChannel === "string" ? payload.safetyAlertsChannel : payload.safetyAlertsChannel?.id
         } 
     }
 
     static parseFeatures(features = []) {
-        let newFeatures = []
+        const newFeatures = []
         for(const key of features) {
-            if(![GuildFeaturesEnums.InvitesDisabled, GuildFeaturesEnums.Community, GuildFeaturesEnums.Discoverable].includes(GuildFeaturesEnums[key] ?? key)) throw new TypeError(`Invalid Guild Features. Received=${key}`)
+            if(![GuildFeaturesEnums.InvitesDisabled, GuildFeaturesEnums.Community, GuildFeaturesEnums.Discoverable, GuildFeaturesEnums.RaidAlertsEnabled].includes(GuildFeaturesEnums[key] ?? key)) throw new TypeError(`Invalid Guild Features. Received=${key}`)
             if(/^([A-Z]+_)*[A-Z]+$/g.test(key)) newFeatures.push(key)
             else newFeatures.push(GuildFeaturesEnums[key])
         }

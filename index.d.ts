@@ -6589,6 +6589,10 @@ export class Guild extends Base {
      */
     public safetyAlertsChannelId: string
     /**
+     * The Channel the Raid Alerts will be send to
+     */
+    public safetyAlertsChannel: BaseGuildTextChannel
+    /**
      * Fetches this Guild's owner
      */
     public fetchOwner(options?: BaseFetchOptions): Promise<GuildMember>
@@ -6612,6 +6616,10 @@ export class Guild extends Base {
      * Deletes this Guild
      */
     public delete(reason?: string): Promise<this>
+    /**
+     * Sets the Channel where Raid Alerts will be send to
+     */
+    public setSafetyAlertsChannel(safetyAlertsChannel: ChannelResolvable, reason?: string): Promise<this>
     /**
      * Sets the name of this Guild
      */
@@ -8342,9 +8350,9 @@ export enum GuildFeaturesEnums {
     GuildOnboardingEverEnabled = "GUILD_ONBOARDING_EVER_ENABLED",
     ApplicationCommandPermissionsV2 = "APPLICATION_COMMAND_PERMISSIONS_V2",
     RoleSubscriptionsAvailableForPurchase = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
-    RoleSubscriptionsEnabled = "ROLE_SUBSCRIPTIONS_ENABLED"
+    RoleSubscriptionsEnabled = "ROLE_SUBSCRIPTIONS_ENABLED",
+    RaidAlertsEnabled = "RAID_ALERTS_ENABLED"
 }
-
 
 export enum AutoModerationEventTypesEnums {
     MessageSend = 1

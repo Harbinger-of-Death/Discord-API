@@ -465,7 +465,8 @@ module.exports.GuildFeaturesEnums = {
     WelcomeScreenEnabled: "WELCOME_SCREEN_ENABLED",
     ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2",
     RoleSubscriptionsAvailableForPurchase: "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
-    RoleSubscriptionsEnabled: "ROLE_SUBSCRIPTIONS_ENABLED"
+    RoleSubscriptionsEnabled: "ROLE_SUBSCRIPTIONS_ENABLED",
+    RaidAlertsEnabled: "RAID_ALERTS_ENABLED",
 }
 
 module.exports.ImageFileTypes = {
