@@ -17,6 +17,7 @@ class AutoModeration extends Base {
         this.allowList = data.trigger_metadata?.allow_list ?? null
         this.mentionTotalLimit = data.trigger_metadata?.mention_total_limit ?? null
         this.regexPatterns = data.trigger_metadata?.regex_patterns ?? null
+        this.mentionRaidProtectionEnabled = data.trigger_metadata?.mention_raid_protection_enabled ?? null
         this.enabled = data.enabled ?? null
         this.actions = data.actions?.map(action => AutoModeration.resolveActionsArray(action)) ?? []
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
@@ -75,6 +76,30 @@ class AutoModeration extends Base {
         return await this.edit({ triggerMetadata, reason })
     }
 
+    async setKeywordFilter(keywordFilter, reason) {
+        return await this.edit({ triggerMetadata: { keywordFilter }, reason })
+    }
+
+    async setRegexPatterns(regexPatterns, reason) {
+        return await this.edit({ triggerMetadata: { regexPatterns }, reason })
+    }
+
+    async setPresets(presets, reason) {
+        return await this.edit({ triggerMetadata: { presets }, reason })
+    }
+
+    async setAllowList(allowList, reason) {
+        return await this.edit({ triggerMetadata: { allowList }, reason })
+    }
+
+    async setMentionTotalLimit(mentionTotalLimit, reason) {
+        return await this.edit({ triggerMetadata: { mentionTotalLimit }, reason })
+    }
+
+    async setMentionRaidProtectionEnabled(mentionRaidProtectionEnabled, reason) {
+        return await this.edit({ triggerMetadata: { mentionRaidProtectionEnabled }, reason })
+    }
+
     async setActions(actions, reason) {
         return await this.edit({ actions, reason })
     }
@@ -103,6 +128,7 @@ class AutoModeration extends Base {
         this.allowList?.length === rule.allowList?.length &&
         this.allowList?.every(o => rule.allowList?.includes(o)) &&
         this.mentionTotalLimit === rule.mentionTotalLimit &&
+        this.mentionRaidProtectionEnabled === rule.mentionRaidProtectionEnabled &&
         this.enabled === rule.enabled &&
         this.actions.length === rule.actions.length &&
         this.exemptRoles.size === rule.exemptRoles.size &&

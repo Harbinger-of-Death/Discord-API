@@ -756,25 +756,29 @@ export class AutoModeration extends Base {
      */
     public triggerType: number
     /**
-     * Array of strings which would be used to search for in the Message content.
+     * Array of strings which would be used to search for in the Message content. For Keyword trigger types
      */
     public keywordFilter: string[]
     /**
-     * Array of Regexes which would be used against Message content
+     * Array of Regexes which would be used against Message content. For Keyword trigger types
      */
     public regexPatterns: string[]
     /**
-     * The pre-defined wordsets which will be searched for in the Message content
+     * The pre-defined wordsets which will be searched for in the Message content. For KeywordPreset trigger types
      */
     public presets: number[]
     /**
-     * List of allowed text which will be exempt from being checked in the Message content
+     * List of allowed text which will be exempt from being checked in the Message content. For Keyword and KeywordPreset trigger types
      */
     public allowList: string[]
     /**
-     * Total number of unique Roles and User mentions allowed per Message
+     * Total number of unique Roles and User mentions allowed per Message. For MentionSpam trigger type
      */
     public mentionTotalLimit: number
+    /**
+     * Whether or not this Automod has mention protection enabled against raid. For MentionSpam trigger type
+     */
+    public mentionRaidProtectionEnabled: boolean
     /**
      * Collection of exempt Roles that should not be affected by this Auto Moderation Rule
      */
@@ -823,6 +827,30 @@ export class AutoModeration extends Base {
      * Sets the Trigger Metadata of this Auto Moderation Rule
      */
     public setTriggerMetadata(triggerMetadata: AutoModerationTriggerMetadata, reason?: string): Promise<this>
+    /**
+     * Sets the keyword to check against for in User's Message content
+     */
+    public setKeywordFilter(keywordFilter: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the regex pattern to check against for in User's Message content
+     */
+    public setRegexPatterns(regexPatterns: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the word presets for this Auto Moderation Rule
+     */
+    public setPresets(presets: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the allowed keywords for this Auto Moderation Rule
+     */
+    public setAllowList(allowList: Array<string>, reason?: string): Promise<this>
+    /** 
+     * Sets the total limit of mention that is allowed in the Message before considering as a MentionSpam
+     */
+    public setMentionTotalLimit(mentionTotalLimit: number, reason?: string): Promise<this>
+    /**
+     * Sets whether or not to enable Mention Raid Protection
+     */
+    public setMentionRaidProtectionEnabled(mentionRaidProtectionEnabled: boolean, reason?: string): Promise<this>
     /**
      * Sets the Actions which will be executed when this Auto Moderation Rule is triggered
      */
