@@ -173,7 +173,7 @@ class GuildManager extends CachedManager {
     static async transformPayload(payload = {}) {
         return {
             name: payload.name,
-            icon: await Util.generateDataURI(payload.icon),
+            icon: payload.icon ? await Util.generateDataURI(payload.icon) : undefined,
             verification_level: payload.verificationlevel,
             default_message_notifications: payload.defaultMessageNotifications,
             explicit_content_filter: payload.explicitContentFilter,
@@ -196,9 +196,9 @@ class GuildManager extends CachedManager {
             system_channel_id: typeof payload.systemChannel === "string" ? payload.systemChannel : payload.systemChannel?.id,
             system_channel_flags: payload.systemChannelFlags ? SystemChannelFlags.resolve(BigInt(payload.systemChannelFlags)).toString() : undefined,
             owner_id: typeof payload.owner === "string" ? payload.owner : payload.owner?.id,
-            splash: await Util.generateDataURI(payload.splash),
-            discovery_splash: await Util.generateDataURI(payload.discoverySplash),
-            banner: await Util.generateDataURI(payload.banner),
+            splash: payload.splash ? await Util.generateDataURI(payload.splash) : undefined,
+            discovery_splash: payload.discoverySplash ? await Util.generateDataURI(payload.discoverySplash) : undefined,
+            banner: payload.banner ? await Util.generateDataURI(payload.banner) : undefined,
             rules_channel_id: typeof payload.rulesChannel === "string" ? payload.rulesChannel : payload.rulesChannel?.id,
             public_updates_channel_id: typeof payload.publicUpdatesChannel === "string" ? payload.publicUpdatesChannel : payload.publicUpdatesChannel?.id,
             preferred_locale: payload.preferredLocale ?? payload.preferred_locale,
@@ -212,8 +212,8 @@ class GuildManager extends CachedManager {
     static parseFeatures(features = []) {
         const newFeatures = []
         for(const key of features) {
-            if(![GuildFeaturesEnums.InvitesDisabled, GuildFeaturesEnums.Community, GuildFeaturesEnums.Discoverable, GuildFeaturesEnums.RaidAlertsEnabled].includes(GuildFeaturesEnums[key] ?? key)) throw new TypeError(`Invalid Guild Features. Received=${key}`)
-            if(/[A-Z]+_?/g.test(key)) newFeatures.push(key)
+            if(![GuildFeaturesEnums.InvitesDisabled, GuildFeaturesEnums.Community, GuildFeaturesEnums.Discoverable].includes(GuildFeaturesEnums[key] ?? key)) throw new TypeError(`Invalid Guild Features. Received=${key}`)
+            if(/^([A-Z]+_)*[A-Z]+$/g.test(key)) newFeatures.push(key)
             else newFeatures.push(GuildFeaturesEnums[key])
         }
 

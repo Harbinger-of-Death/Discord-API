@@ -23,10 +23,7 @@ class RaidenSet extends Set {
 
     map(fn) {
         if(typeof fn !== "function") throw new TypeError(`Fn must be a function`)
-        return Array.from({ length: this.size }, (_, index) => {
-            let value = this.values().next().value
-            return fn(value, index)
-        }).filter(item => item)
+        return [...this.values()].map((value, index) => fn(value, index, this))
     }
 
     filter(fn, thisArg) {

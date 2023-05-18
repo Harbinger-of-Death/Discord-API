@@ -6,6 +6,8 @@ class HeartbeatAck extends Base {
     }
 
     _patch() {
+        this.client.ws.lastHeartbeatAck = new Date()
+        this.client.ws.isHeartbeatAcked = true
         return this.client.debug(`[Heartbeat]: Heartbeat acknowledged. Sending next heartbeat in ${this.client.heartbeatInterval}ms`)
     }
 }

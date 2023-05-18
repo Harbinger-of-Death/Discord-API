@@ -103,6 +103,7 @@ class Channel extends Base {
     toString() {
         return `<#${this.id}>`
     }
+
 }
 
 module.exports = Channel

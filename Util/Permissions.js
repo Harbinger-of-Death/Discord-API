@@ -79,9 +79,8 @@ Permissions.Flags = {
     SendMessagesInThreads: 1n << 38n,
     UseEmbeddedActivities: 1n << 39n,
     ModerateMembers: 1n << 40n,
-    ViewCreatorMonetizationAnalytics: 1n << 41n
+    ViewCreatorMonetizationAnalytics: 1n << 41n,
+    SendVoiceMessages: 1n << 46n
 }
-
-Permissions.All = Object.values(Permissions.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
 
 module.exports = Permissions

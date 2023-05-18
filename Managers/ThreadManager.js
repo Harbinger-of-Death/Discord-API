@@ -37,8 +37,8 @@ class ThreadManager extends CachedManager {
         return new FetchedThreads(threads, this.client)
     }
 
-    async fetchJoinedThreads(options = {}) {
-        const query = { before: options.before ? Util.generateDateISOString(options.before) : undefined, limit: options.limit }
+    async fetchJoinedThreads({ before, limit } = {}) {
+        const query = before ? { before: Util.generateDateISOString(before), limit } : { limit }
         const threads = await this.client.api.get(`${this.client.root}/channels/${this.channelId}/users/@me/threads/archived/private`, { query })
         return new FetchedThreads(threads, this.client)
     }

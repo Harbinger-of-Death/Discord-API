@@ -23,6 +23,13 @@ module.exports.MessageTypeEnums = {
     GuildInviteReminder: 22,
     ContextMenuCommand: 23,
     AutoModerationAction: 24,
+    RoleSubscriptionPurchase: 25,
+    InteractionPremiumUpsell: 26,
+    StageStart: 27,
+    StageEnd: 28,
+    StageSpeaker: 29,
+    StageTopic: 31,
+    GuildApplicationPremiumSubscription: 32
 }
 
 module.exports.ApplicationCommandTypesEnums = {
@@ -212,7 +219,8 @@ module.exports.EventTypes = {
     EmojiCreate : "emojiCreate",
     EmojiUpdate : "emojiUpdate",
     EmojiDelete : "emojiDelete",
-    Ratelimit: "ratelimit"
+    Ratelimit: "ratelimit",
+    GuildAuditLogEntryCreate: "guildAuditLogEntryCreate"
 }
 
 module.exports.WsCloseCodes = {
@@ -252,7 +260,8 @@ module.exports.WsReadyStateCodes = {
 
 module.exports.InviteTargetTypesEnums = {
     Stream: 1,
-    EmbeddedApplication: 2
+    EmbeddedApplication: 2,
+    RoleSubscriptionsPurchase: 3
 }
 
 module.exports.GuildScheduledEventPrivacyEnums = {
@@ -386,12 +395,27 @@ module.exports.AuditLogEventEnums = {
     AutoModerationUserCommunicationDisabled: 145,
     CreatorMonetizationRequestCreated: 150,
     CreatorMonetizationTermsAccepted: 151,
-    RolePromptCreate: 160,
-    RolePromptUpdate: 161,
-    RolePromptDeletE: 162,
-    GuildHomeFeatureItem: 171,
-    GuildHomeRemoveItem: 172
 }
+
+module.exports.AuditLogEventUpdate = [
+    this.AuditLogEventEnums.ApplicationCommandPermissionUpdate,
+    this.AuditLogEventEnums.AutoModerationRuleUpdate,
+    this.AuditLogEventEnums.GuildUpdate,
+    this.AuditLogEventEnums.ChannelUpdate,
+    this.AuditLogEventEnums.ChannelOverwriteUpdate,
+    this.AuditLogEventEnums.MemberUpdate,
+    this.AuditLogEventEnums.MemberRoleUpdate,
+    this.AuditLogEventEnums.RoleUpdate,
+    this.AuditLogEventEnums.InviteUpdate,
+    this.AuditLogEventEnums.WebhookUpdate,
+    this.AuditLogEventEnums.EmojiUpdate,
+    this.AuditLogEventEnums.IntegrationUpdate,
+    this.AuditLogEventEnums.StageInstanceUpdate,
+    this.AuditLogEventEnums.GuildScheduledEventUpdate,
+    this.AuditLogEventEnums.StickerUpdate,
+    this.AuditLogEventEnums.ThreadUpdate,
+    this.AuditLogEventEnums.AutoModerationRuleUpdate
+]
 
 module.exports.AutoModerationEventTypesEnums = {
     MessageSend: 1
@@ -440,7 +464,9 @@ module.exports.GuildFeaturesEnums = {
     VipRegions: "VIP_REGIONS",
     WelcomeScreenEnabled: "WELCOME_SCREEN_ENABLED",
     ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2",
-    RaidAlertsEnabled: "RAID_ALERTS_ENABLED"
+    RaidAlertsEnabled: "RAID_ALERTS_ENABLED",
+    RoleSubscriptionsAvailableForPurchase: "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+    RoleSubscriptionsEnabled: "ROLE_SUBSCRIPTIONS_ENABLED"
 }
 
 module.exports.ImageFileTypes = {
@@ -459,8 +485,6 @@ module.exports.ActivityTypesEnums = {
     Custom: 4,
     Competing: 5
 }
-
-
 
 module.exports.MessageActivityTypesEnums = {
     Join: 1,
@@ -631,7 +655,21 @@ module.exports.WebsocketEvents = {
     ThreadMemberRemove: 'THREAD_MEMBER_REMOVE',
     EmojiCreate: 'EMOJI_CREATE',
     EmojiUpdate: 'EMOJI_UPDATE',
-    EmojiDelete: 'EMOJI_DELETE'
+    EmojiDelete: 'EMOJI_DELETE',
+    GuildAuditLogEntryCreate: "GUILD_AUDIT_LOG_ENTRY_CREATE"
+}
+
+module.exports.WebsocketStatus = {
+    Ready: "READY",
+    Closing: "CLOSING",
+    Closed: "CLOSED",
+    Reconnecting: "RECONNECTING"
+}
+
+module.exports.ForumLayoutTypesEnums = {
+    NotSet: 0,
+    ListView: 1,
+    GalleryView: 2
 }
 
 module.exports.ApplicationRoleConnectionMetadataTypeEnums = {
@@ -645,9 +683,9 @@ module.exports.ApplicationRoleConnectionMetadataTypeEnums = {
     BooleanNotEqual: 8
 }
 
-module.exports.WebsocketStatus = {
-    Ready: "READY",
-    Closing: "CLOSING",
-    Closed: "CLOSED",
-    Reconnecting: "RECONNECTING"
+module.exports.CollectorEventTypes = {
+    Collect: "collect",
+    End: "end",
+    Dispose: "dispose",
+    Remove: "remove"
 }

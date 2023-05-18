@@ -14,6 +14,4 @@ ChannelFlags.Flags = {
     IsSpam: 1n << 5n
 }
 
-ChannelFlags.All = Object.values(ChannelFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = ChannelFlags

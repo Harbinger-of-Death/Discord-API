@@ -1,4 +1,5 @@
 const Base = require("../Base/base");
+const { AuditLogEventEnums, AuditLogEventUpdate } = require("../Util/Constants");
 const Snowflake = require("../Util/Snowflake");
 
 class AuditLogEntry extends Base {
@@ -25,6 +26,10 @@ class AuditLogEntry extends Base {
         this.reason = data.reason ?? null
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
+    }
+
+    isUpdate() {
+        return AuditLogEventUpdate.includes(this.actionType)
     }
 
     get executor() {
