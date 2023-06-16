@@ -4636,10 +4636,6 @@ export class User extends Base {
      */
     public username: string
     /**
-     * The discriminator of this User
-     */
-    public discriminator: number
-    /**
      * The avatar hash of this User
      */
     public avatar: string
@@ -4664,9 +4660,9 @@ export class User extends Base {
      */
     public system: boolean
     /**
-     * The tag of this User. E.g: Discord#0000
+     * The display name of this User
      */
-    public tag: string
+    public globalName: string
     /**
      * The GuildMember of this User in the specified Guild
      */

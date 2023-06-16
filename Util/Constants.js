@@ -544,8 +544,9 @@ module.exports.CdnEndPoints = {
         if(avatar.startsWith("a_") && !forceStatic) extension = ".gif"
         return `${this.cdnRoot}/avatars/${userId}/${avatar}${extension}${size ? `?size=${size}` : ""}`
     },
-    DefaultUserAvatar: (discriminator, extension = ".png") => {
-        return `${this.cdnRoot}/embed/avatars/${discriminator % 5}${extension}`
+    DefaultUserAvatar: (userId, extension = ".png") => {
+        userId = BigInt(userId)
+        return `${this.cdnRoot}/embed/avatars/${(userId >> 22n) % 6n}${extension}`
     },
     UserBanner: (banner, extension = ".png", size = 64, forceStatic = false, userId) => {
         if(banner.startsWith("a_") && !forceStatic) extension = ".gif"
