@@ -709,7 +709,7 @@ export interface CdnEndpoints {
     /**
      * Forms a default User avatar url
      */
-    DefaultUserAvatar: (discriminator: number, extension: ".png", size: number) => string
+    DefaultUserAvatar: (userId: string, extension: ".png") => string
     /**
      * Forms a User banner url
      */
