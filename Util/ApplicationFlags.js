@@ -19,6 +19,4 @@ ApplicationFlags.Flags = {
     Active: 1n << 24n
 }
 
-ApplicationFlags.All = Object.values(ApplicationFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = ApplicationFlags;

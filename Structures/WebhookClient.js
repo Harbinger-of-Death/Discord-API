@@ -6,14 +6,17 @@ class WebhookClient extends Base {
     constructor(data = {}, client) {
         super(client)
         if(typeof data.url === "string") {
-            const urlMatch = data.url.match(/\d{17,19}\//gi)?.[0].replace("/", "")
-            this.id = urlMatch
-            this.token = data.url.slice(data.url.lastIndexOf("/")+1) ?? null
+            const match = data.url.match(/https?:\/\/(?:\w+.)\w+\.(?:com|io|org)\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)
+            if(match?.length) {
+                this.id = match[1]
+                this.token = match[2]
+            }
         } else {
-            this.id = data.id ?? null
             this.token = data.token ?? null
+            this.id = data.id ?? null
         }
-        this.url = `https://discord.com/api/webhooks/${this.id}/${this.token}`
+
+        this.url = `https://canary.discord.com/api/webhooks/${this.id}${this.token ? `/${this.token}` : ""}`
     }
 
     async fetchWebhook() {

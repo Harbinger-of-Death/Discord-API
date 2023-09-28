@@ -10,6 +10,4 @@ ThreadMemberFlags.Flags = {
     Null: 3n
 }
 
-ThreadMemberFlags.All = Object.values(ThreadMemberFlags.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
-
 module.exports = ThreadMemberFlags

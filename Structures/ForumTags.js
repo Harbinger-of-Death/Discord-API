@@ -20,10 +20,10 @@ class ForumTags extends Base {
     }
 
     equals(tags) {
-        return this.name === tags.name &&
-        this.emojiId === tags.emojiId &&
-        this.emojiName === tags.emojiName &&
-        this.moderated === tags.moderated
+        return this?.name === tags?.name &&
+        this?.emojiId === tags?.emojiId &&
+        this?.emojiName === tags?.emojiName &&
+        this?.moderated === tags?.moderated
     }
 }
 

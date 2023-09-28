@@ -8,7 +8,6 @@ class User extends Base {
         this.partial = data.partial ?? false
         this.id = data.id ?? null
         this.username = data.username ?? null
-        this.discriminator = data.discriminator ?? null
         this.avatar = data.avatar ?? null
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.avatarDecoration = data.avatar_decoration ?? null
@@ -19,9 +18,8 @@ class User extends Base {
         this.accentColor = data.accent_color ?? null
         this.flags = new UserFlags(data.flags).freeze()
         this.system = data.system ?? null
-        this.tag = data.username ? `${data.username}#${data.discriminator}` : null
+        this.globalName = data.global_name ?? null
         this.pronouns = data.pronouns ?? null
-        this.themeColors = data.theme_colors ?? null
     }
 
     async fetch(options = {}) {
@@ -30,6 +28,10 @@ class User extends Base {
 
     async createDm(options = {}) {
         return await this.client.users.createDm(this, options)
+    }
+
+    async send(options = {}) {
+        return await this.client.users.send(this, options)
     }
 
     dmChannel() {
@@ -47,7 +49,7 @@ class User extends Base {
     }
 
     defaultUserAvatarURL(options = {}) {
-        return this.client.cdn.DefaultUserAvatar(this.discriminator, options.extension, options.size)
+        return this.client.cdn.DefaultUserAvatar(this.id, options.extension, options.size)
     }
 
     displayAvatarURL(options = {}) {

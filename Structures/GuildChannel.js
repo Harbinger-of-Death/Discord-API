@@ -32,6 +32,10 @@ class GuildChannel extends Channel {
         return false;
     }
 
+    async lockPermissions(reason) {
+        return await this.guild?.channels.lockPermissions(this, reason)
+    }
+
     async clone(reason) {
         return await this.guild?.channels.clone(this, reason)
     }

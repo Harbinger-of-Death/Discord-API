@@ -22,17 +22,17 @@ class Role extends Base {
         this.guildId = data.guild_id ?? extras?.guildId ?? null
         this.tags = data.tags ? {} : null
         if(data.tags) {
-            if("bot_id" in data.tags) {
-                this.tags.botId = data.tags.bot_id
-            }
+            if("bot_id" in data.tags) this.tags.botId = data.tags.bot_id
 
-            if("integration_id" in data.tags) {
-                this.tags.integrationId = data.tags.integration_id
-            }
+            if("integration_id" in data.tags) this.tags.integrationId = data.tags.integration_id
 
-            if("premium_subscriber" in data.tags) {
-                this.tags.premiumSubscriber = true
-            }
+            if("premium_subscriber" in data.tags) this.tags.premiumSubscriber = true
+
+            if("subscription_listing_id" in data.tags) this.tags.subscriptionListingId = data.tags.subscription_listing_id
+
+            if("available_for_purchase" in data.tags) this.tags.availableForPurchase = true
+
+            if("guild_connections" in data.tags) this.tags.guildConnections = true
         }
     }
 

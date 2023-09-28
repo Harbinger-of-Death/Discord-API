@@ -99,10 +99,11 @@ class Channel extends Base {
         this.topic === channel.topic &&
         this.type === channel.type
     }
-
+    
     toString() {
         return `<#${this.id}>`
     }
+
 }
 
 module.exports = Channel

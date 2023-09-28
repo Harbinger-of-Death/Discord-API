@@ -1,21 +1,127 @@
-import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, RoleConnectionMetadata, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable, InteractionEditReplyOptions } from "./Typings/discord-api-types";
+import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, SlashCommandOption, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithoutAnimate, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, ImageFormats, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable, InteractionEditReplyOptions, WebhookResolvable, ChatInputCommandInteractionOptionData, RateLimitData, CollectorOptions, CollectorEvents, ThreadMemberFetchOptions, ModifyRoleConnection, ModifyRoleConnectionMetadata, RoleSubscriptionData, MediaFormats, MarkdownDiscordTimestamp, RestOptions } from "./Typings/discord-api-types";
 import { EventEmitter } from "node:events"
 import { WebSocket } from "ws";
 import { Stream } from "stream"
+
+export class RoleConnectionsMetadata extends Base {
+    public constructor(data: {}, client: Client)
+    /**
+     * The type of this metadata
+     */
+    public type: number
+    /**
+     * Dictionary key for the metadata
+     */
+    public key: string 
+    /**
+     * The name of the metadata field
+     */
+    public name: string
+    /**
+     * The name localizations of this metadata
+     */
+    public nameLocalizations: Record<Locales, string>
+    /**
+     * The description of this metadata
+     */
+    public description: string
+    /**
+     * The description localization of this metadata
+     */
+    public descriptionLocalizations: Record<Locales, string>
+    public toJSON(): {}
+}
+
 export class RoleConnections extends Base {
     public constructor(data: {}, client: Client)
     /**
-     * The vanity name of the platform a Client has connected
+     * The name of the platform this Role Connection is on
      */
     public platformName: string
     /**
-     * The username on the platform a Client has connected
+     * The username on the platform a bot has connected
      */
     public platformUsername: string
     /**
-     * Object mapping keys to their `string`-ified value (max 100 characters) for the user on the platform a Client has connected
+     * The metadata of this Role Connection
      */
-    public metadata: RoleConnectionMetadata
+    public metadata: RoleConnectionsMetadata
+}
+
+export class ReactionCollector extends Collector {
+    public constructor(options: CollectorOptions<EventTypes.MessageReactionAdd>, extras: { messageId: string }, client: Client)
+    public on<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<MessageReaction>[K]) => void): this
+    public once<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<MessageReaction>[K]) => void): this
+    public off<K extends keyof CollectorEvents<K>>(event: K, listener: (...args: CollectorEvents<MessageReaction>[K]) => void): this
+    /**
+     * The collected objects of this Collector
+     */
+    public collected: Collection<string, MessageReaction>
+}
+
+export class MessageCollector extends Collector {
+    public constructor(options: CollectorOptions<EventTypes.MessageCreate>, extras: { channelId: string, guildId: string }, client: Client)
+    public on<K extends keyof CollectorEvents<K>>(event: Exclude<K, "remove">, listener: (...args: CollectorEvents<Message>[K]) => void): this
+    public once<K extends keyof CollectorEvents<K>>(event: Exclude<K, "remove">, listener: (...args: CollectorEvents<Message>[K]) => void): this
+    public off<K extends keyof CollectorEvents<K>>(event: Exclude<K, "remove">, listener: (...args: CollectorEvents<Message>[K]) => void): this
+    /**
+     * The collected objects of this Collector
+     */
+    public collected: Collection<string, Message>
+}
+
+export class MessageComponentCollector extends Collector {
+    public constructor(options: CollectorOptions<EventTypes.InteractionCreate>, extras: { messageId: string, guildId: string }, client: Client)
+    public on<K extends keyof CollectorEvents<K>>(event: Exclude<K, "remove">, listener: (...args: CollectorEvents<BaseInteraction>[K]) => void): this
+    public once<K extends keyof CollectorEvents<K>>(event: Exclude<K, "remove">, listener: (...args: CollectorEvents<BaseInteraction>[K]) => void): this
+    public off<K extends keyof CollectorEvents<K>>(event: Exclude<K, "remove">, listener: (...args: CollectorEvents<BaseInteraction>[K]) => void): this
+    /**
+     * The type of this Component Collector
+     */
+    public type: number
+    /**
+     * The collected objects of this Collector
+     */
+    public collected: Collection<string, ButtonInteraction | SelectMenuInteraction>
+}
+
+export class Collector extends EventEmitter {
+    /**
+     * The Client that instatiated this
+     */
+    public client: Client
+    /**
+     * The filter of this Collector
+     */
+    public filter: Function
+    /**
+     * The time this Collector ends at
+     */
+    public time: number
+    /**
+     * The time this Collector ends at when idle
+     */
+    public idleTimer: number
+    /**
+     * If this is a Message or MessageComponent Collector, the Message id this is collecting from
+     */
+    public messageId: string
+    /**
+     * The id of the Guild this belongs to
+     */
+    public guildId: string
+    /**
+     * The id of the Channel this belongs to
+     */
+    public channelId: string
+    /**
+     * Resets the timer of this Collector
+     */
+    public resetTimer(): this
+    /**
+     * Manually ends the Collector
+     */
+    public stop(reason?: string): this
 }
 
 export class ReactionEmoji extends Base {
@@ -650,25 +756,29 @@ export class AutoModeration extends Base {
      */
     public triggerType: number
     /**
-     * Array of strings which would be used to search for in the Message content.
+     * Array of strings which would be used to search for in the Message content. For Keyword trigger types
      */
     public keywordFilter: string[]
     /**
-     * Array of Regexes which would be used against Message content
+     * Array of Regexes which would be used against Message content. For Keyword trigger types
      */
     public regexPatterns: string[]
     /**
-     * The pre-defined wordsets which will be searched for in the Message content
+     * The pre-defined wordsets which will be searched for in the Message content. For KeywordPreset trigger types
      */
     public presets: number[]
     /**
-     * List of allowed text which will be exempt from being checked in the Message content
+     * List of allowed text which will be exempt from being checked in the Message content. For Keyword and KeywordPreset trigger types
      */
     public allowList: string[]
     /**
-     * Total number of unique Roles and User mentions allowed per Message
+     * Total number of unique Roles and User mentions allowed per Message. For MentionSpam trigger type
      */
     public mentionTotalLimit: number
+    /**
+     * Whether or not this Automod has mention protection enabled against raid. For MentionSpam trigger type
+     */
+    public mentionRaidProtectionEnabled: boolean
     /**
      * Collection of exempt Roles that should not be affected by this Auto Moderation Rule
      */
@@ -718,6 +828,30 @@ export class AutoModeration extends Base {
      */
     public setTriggerMetadata(triggerMetadata: AutoModerationTriggerMetadata, reason?: string): Promise<this>
     /**
+     * Sets the keyword to check against for in User's Message content
+     */
+    public setKeywordFilter(keywordFilter: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the regex pattern to check against for in User's Message content
+     */
+    public setRegexPatterns(regexPatterns: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the word presets for this Auto Moderation Rule
+     */
+    public setPresets(presets: Array<string>, reason?: string): Promise<this>
+    /**
+     * Sets the allowed keywords for this Auto Moderation Rule
+     */
+    public setAllowList(allowList: Array<string>, reason?: string): Promise<this>
+    /** 
+     * Sets the total limit of mention that is allowed in the Message before considering as a MentionSpam
+     */
+    public setMentionTotalLimit(mentionTotalLimit: number, reason?: string): Promise<this>
+    /**
+     * Sets whether or not to enable Mention Raid Protection
+     */
+    public setMentionRaidProtectionEnabled(mentionRaidProtectionEnabled: boolean, reason?: string): Promise<this>
+    /**
      * Sets the Actions which will be executed when this Auto Moderation Rule is triggered
      */
     public setActions(actions: AutoModerationActionData[], reason?: string): Promise<this>
@@ -733,6 +867,10 @@ export class AutoModeration extends Base {
      * Sets the Exempt Channels of this Auto Moderation Rule
      */
     public setExemptChannels(exemptChannels: ChannelResolvable[], reason?: string): Promise<this>
+    /**
+     * Whether or not this Automoderation Rule is equal another
+     */
+    public equals(rule: AutoModeration): boolean
 }
 
 export class GuildAutomoderationManager extends CachedManager {
@@ -806,6 +944,10 @@ export class AuditLogEntry extends Base {
      * The User that made the changes
      */
     public executor: User
+    /**
+     * Whether or not this is an update change
+     */
+    public isUpdate(): boolean
 }
 
 export class GuildAuditLog extends Base {
@@ -966,8 +1108,8 @@ export class ThreadMemberManager extends CachedManager {
     /**
      * Fetches Thread Member(s) in a Thread
      */
-    public fetch(member: UserResolvable, options?: BaseFetchOptions): Promise<ThreadMember>
-    public fetch(options?: BaseFetchOptions): Promise<Collection<string, ThreadMember>>
+    public fetch<T>(member: T extends UserResolvable ? UserResolvable : T extends ThreadMemberFetchOptions ? ThreadMemberFetchOptions : T, options?: ThreadMemberFetchOptions): T extends UserResolvable ? Promise<ThreadMember> : Promise<Collection<string, ThreadMember>>
+    public fetch(): Promise<Collection<string, ThreadMember>>
     /**
      * Adds a Thread Member to a Thread
      */
@@ -1375,6 +1517,12 @@ export class ChatInputCommandInteractionOptionResolver extends Base {
      */
     public guildId: string
     /**
+     * Gets the option data of the specified name
+     * @param name - The name of the option
+     * @param required - Whether or not to throw an Error if not found
+     */
+    public get(name: string, required?: boolean): ChatInputCommandInteractionOptionData
+    /**
      * Gets the selected Attachment in the Option
      * @param name - The name of the option
      * @param required - Whether or not to throw an Error if not found
@@ -1616,6 +1764,10 @@ export class Interaction extends Base {
      * The Webhook of this Interaction
      */
     public webhook: InteractionWebhook
+    /**
+     * Whether or not this Interaction has been replied to
+     */
+    public replied: boolean
     /**
      * Whether or not this Interaction happened in a Guild
      */
@@ -1886,19 +2038,19 @@ export class MessageReaction extends Base {
     /**
      * The Guild this belongs to
      */
-    public guild: Guild
+    public guild: Readonly<Guild>
     /**
      * The Channel this belongs to
      */
-    public channel: BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel
+    public channel: Readonly<BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel>
     /**
      * The Message this belongs to
      */
-    public message: Message
+    public message: Readonly<Message>
     /**
      * The User this belongs to
      */
-    public user: User
+    public user: Readonly<User>
     /**
      * The Reaction User Manager
      */
@@ -2308,6 +2460,10 @@ export class Application extends Base {
      */
     public customInstallURL: string
     /**
+     * The Application's Role Connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration
+     */
+    public roleConnectionsVerificationURL: string
+    /**
      * The Icon url of this Application
      */
     public iconURL(options?: Omit<ImageURLOptions<ImageFormatWithoutLottieAnimate>, "forceStatic">): string | void
@@ -2315,6 +2471,14 @@ export class Application extends Base {
      * The Cover Image url of this Application
      */
     public coverImageURL(options?: Omit<ImageURLOptions<ImageFormatWithoutLottieAnimate>, "forceStatic">): string | void
+    /**
+     * Fetches this Application Role Connection metadata
+     */
+    public fetchRoleConnectionsMetadata(): Promise<Array<RoleConnectionsMetadata>>
+    /**
+     * Modifies this Application Role Connection metadata
+     */
+    public modifyRoleConnectionsMetadata(options: ModifyRoleConnectionMetadata): Promise<Array<RoleConnectionsMetadata>>
 }
 
 export class MessageActivity extends Base {
@@ -2377,7 +2541,7 @@ export class Embed extends Base {
     public footer: EmbedFooter
     /**
      * The Embed Image
-     */
+     */Provider
     public image: EmbedImage
     /**
      * The Embed Thumbnail
@@ -2447,6 +2611,14 @@ export class Attachment extends Base {
      * Whether or not this Attachment is spoilered
      */
     public spoiler: Readonly<boolean>
+    /**
+     * The duration of this audio file
+     */
+    public durationSecs: Readonly<number>
+    /**
+     * The base64 encoded bytearray representing a sampled waveform
+     */
+    public waveForm: Readonly<string>
 }
 
 export class MessageMentions extends Base {
@@ -2622,11 +2794,15 @@ export class Message extends Base {
     /**
      * The Channel this belongs to
      */
-    public channel: BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel
+    public channel: BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceBasedChannels
     /**
      * Whether or not this Message is repliable
      */
     public repliable: boolean
+    /**
+     * Data of the role subscription purchase or renewal that prompted this RoleSubscriptionMessage Message
+     */
+    public roleSubscriptionData: RoleSubscriptionData
     /**
      * Fetches this Message
      */
@@ -2683,6 +2859,34 @@ export class Message extends Base {
      * Reply to this Message
      */
     public reply(options: MessageOptionsData): Promise<this>
+    /**
+     * Creates a Message Component Collector on this Message
+     */
+    public createMessageComponentCollector(options?: CollectorOptions<EventTypes.InteractionCreate>): MessageComponentCollector
+    /**
+     * Creates a Reaction Collector on this Message
+     */
+    public createReactionCollector(options?: CollectorOptions<EventTypes.MessageReactionAdd>): ReactionCollector
+    /**
+     * Whether or not this Message is in Guild
+     */
+    public inGuild(): boolean
+    /**
+     * Whether or not this Message is a reply
+     */
+    public isReply(): boolean
+    /**
+     * Whether or not this Message is from a Message that has been crossposted
+     */
+    public isCrosspost(): boolean
+    /**
+     * Whether or not this Message has a Thread Channel associated with it. Meaning if it's the first Message in the Thread
+     */
+    public isThreadMessage(): boolean
+    /**
+     * Whether or not this Message is a Voice Message
+     */
+    public isVoiceMessage(): boolean
 }
 
 export class MessageManager extends Base {
@@ -3228,11 +3432,11 @@ export class PartialGuild extends Base {
     /**
      * A Collection of Roles this Guild holds
      */
-    public roles: Collection<number, PartialRole>
+    public roles: RaidenSet<PartialRole>
     /**
      * A Collection of Channels this Guild holds
      */
-    public channels: Collection<number, PartialChannel>
+    public channels: RaidenSet<PartialChannel>
     /**
      * The id of the Afk Channel of this Guild
      */
@@ -3688,6 +3892,18 @@ export class VoiceState extends Base {
      */
     public requestToSpeakTimestamp: number
     /**
+     * The Channel this VoiceState belongs to
+     */
+    public channel: VoiceBasedChannels
+    /**
+     * The User this VoiceState belongs to
+     */
+    public user: User
+    /**
+     * The Guild this belongs to
+     */
+    public guild: Guild
+    /**
      * Modifies this Voice State
      */
     public edit(options?: ModifyVoiceStateData): Promise<this>
@@ -4023,14 +4239,20 @@ export class UserManager extends CachedManager {
      * Fetches a User's Connections
      */
     public fetchOauthUserConnections(accessToken: string): Promise<Collection<string, OauthUserConnections>>
+    /*
+     * Gets the DMChannel between the User and the Client
+     * Fetches a User's Role Connection
+     */
+    public fetchRoleConnection(accessToken: string): Promise<RoleConnections>
+    /**
+     * Gets the current User's Role Connection data
+     * Modifies a User's Role Connection
+     */
+    public modifyRoleConnection(accessToken: string, options?: ModifyRoleConnection): Promise<RoleConnections>
     /**
      * Gets the DMChannel between the User and the Client
      */
     public dmChannel(user: UserResolvable): DMChannel
-    /**
-     * Gets the current User's Role Connection data
-     */
-    public getUserApplicationRoleConnections(accessToken: string): Promise<RoleConnections>
     /**
      * The cache of User this holds
      */
@@ -4093,6 +4315,7 @@ export class GuildBanManager extends Base {
      */
     public cache: Collection<string, GuildBan>
 }
+
 export class Role extends Base {
     public constructor(data: {}, guildId: string, client: Client)
     /**
@@ -4270,9 +4493,13 @@ export class GuildMemberRoleManager extends CachedManager {
      */
     public everyone: Readonly<Role>
     /**
-     * Gets the Premium Subscriber Role of a Guild
+     * Gets the Premium Subscriber Role of a GuildMember's Role
      */
     public premiumSubscriberRole: Readonly<Role>
+    /**
+     * Returns a Collection of Linked Roles in the GuildMember's Roles
+     */
+    public linkedRoles: Readonly<Collection<string, Role>>
     /**
      * Returns the highest Role
      */
@@ -4293,6 +4520,10 @@ export class RoleManager extends CachedManager {
      * Gets the Premium Subscriber Role of a Guild
      */
     public premiumSubscriberRole: Readonly<Role>
+    /**
+     * Returns a Collection of Linked Roles in the Guild
+     */
+    public linkedRoles: Readonly<Collection<string, Role>>
     /**
      * Returns the highest Role
      */
@@ -4355,7 +4586,7 @@ export class Util {
     /**
      * Generates a Data URI scheme from something
      */
-    public static generateDataURI(buffer: BufferResolvable, mediaType?: ImageFormatWithoutLottie | ".html"): Promise<string>
+    public static generateDataURI(buffer: BufferResolvable, mediaType?: ImageFormatWithoutLottie | ".html" | MediaFormats): Promise<string>
     /**
      * Transforms a Base 64 string to a Buffer
      */
@@ -4367,7 +4598,31 @@ export class Util {
     /**
      * Generates a Buffer from received Stream data
      */
-    public getStreamData(stream: Stream): Promise<Buffer>
+    public static getStreamData(stream: Stream): Promise<Buffer>
+    /**
+     * Downloads a Buffer
+     */
+    public static downloadFile(file: BufferResolvable, directory?: string): Promise<void>
+    /**
+     * Creaes a discord timestamp like <t:TIMESTAMP:style>
+     */
+    public static discordTimestamp(timestamp: Date | number, format?: MarkdownDiscordTimestamp): string
+    /**
+     * Creates an Array inside an Array for Pagination
+     */
+    public static createPaginationArrays(arr: Array<string>, length?: number): Array<string[]>
+    /**
+     * Creates a setTimeout func
+     */
+    public static setTimeout(ms?: number, callback?: Function): NodeJS.Timeout
+    /**
+     * Creates a setInterval func
+     */
+    public static setInterval(ms?: number, callback?: Function): NodeJS.Timer
+    /**
+     * Creates a Promisified setTimeout function
+     */
+    public static promisifiedTimeout(ms?: number): Promise<void>
 }
 
 export class ClientUser extends User {
@@ -4405,10 +4660,6 @@ export class User extends Base {
      */
     public username: string
     /**
-     * The discriminator of this User
-     */
-    public discriminator: number
-    /**
      * The avatar hash of this User
      */
     public avatar: string
@@ -4433,9 +4684,17 @@ export class User extends Base {
      */
     public system: boolean
     /**
-     * The tag of this User. E.g: Discord#0000
+     * The display name of this User
      */
-    public tag: string
+    public globalName: string
+    /**
+     * When was this User's account created
+     */
+    public createdAt: Date
+    /**
+     * The timestamp of when was this User's account created
+     */
+    public createdTimestamp: number
     /**
      * The avatar deocration of this User
      */
@@ -4576,6 +4835,10 @@ export class GuildMember extends Base {
      * The flags of this GuildMember
      */
     public flags: Readonly<GuildMemberFlags>
+    /**
+     * The Guild this GuildMember belongs to
+     */
+    public guild: Readonly<Guild>
     /**
      * When stringified mentions this Guild Member
      */
@@ -5233,6 +5496,10 @@ export class ThreadChannel extends Channel {
      */
     public permissionOverwrites: PermissionOverwritesManager
     /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
+    /**
      * Triggers a typing indicator in this Thread
      */
     public sendTyping(): Promise<this>
@@ -5381,9 +5648,13 @@ export class ForumChannel extends GuildChannel {
      */
     public defaultAutoArchiveDuration: number
     /**
-     * The default layout of this Forum. null if not set
+     * The default layout of this Forum. 0 if not set
      */
     public defaultForumLayout: number
+    /**
+     * Sets the default forum layout of this Forum Channel
+     */
+    public setDefaultForumLayout(defaultForumLayout: number, reason?: string): Promise<this>
     /**
      * Sets the available tags for this Forum Channel
      */
@@ -5405,10 +5676,6 @@ export class ForumChannel extends GuildChannel {
 export class VoiceChannel extends VoiceBasedChannels {
     public constructor(data: {}, client: Client, extras: { guildId: string })
     /**
-     * Whether or not this Voice Channel is nsfw
-     */
-    public nsfw: boolean
-    /**
      * The Video Quality Mode of this Voice Channel
      */
     public videoQualityMode: number
@@ -5417,18 +5684,6 @@ export class VoiceChannel extends VoiceBasedChannels {
      */
     public userLimit: number
     /**
-     * The Rate Limit Per User of this Channel
-     */
-    public rateLimitPerUser: number
-    /**
-     * Sets the NSFW state of this Voice Channel
-     */
-    public setNsfw(nsfw: boolean, reason?: string): Promise<this>
-    /**
-     * Sets the Rate Limit Per User of this Channel
-     */
-    public setRateLimitPerUser(rateLimitPerUser: number, reason?: string): Promise<this>
-    /**
      * Sets the user limit of this Voice Channel
      */
     public setUserLimit(userLimit: number, reason?: string): Promise<this>
@@ -5436,22 +5691,6 @@ export class VoiceChannel extends VoiceBasedChannels {
      * Sets the Video Quality Mode of this Voice Channel
      */
     public setVideoQualityMode(videoQualityMode: number, reason?: string): Promise<this>
-    /**
-     * The Message Manager of this Channel
-     */
-    public messages: Readonly<MessageManager>
-    /**
-     * Sends a Message to this Voice Channel
-     */
-    public send(options: MessageOptionsData): Promise<Message>
-    /**
-     * Bulk-Deletes Messages in this Voice Channel
-     */
-    public bulkDelete(messages: MessageBulkResolvable | number, options?: MessageDeleteBulkOptions): Promise<Collection<string, Message>>
-    /**
-     * Triggers a typing indicator in this Channel
-     */
-    public sendTyping(): Promise<this>
 }
 
 export class StageChannel extends VoiceBasedChannels {
@@ -5471,6 +5710,10 @@ export class DMChannel extends DMBasedChannels {
      * The id of the Recipient of this DM Channel
      */
     public recipientId: string
+    /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
 }
 
 export class TextChannel extends BaseGuildTextChannel {
@@ -5487,6 +5730,10 @@ export class NewsChannel extends BaseGuildTextChannel {
 
 export class VoiceBasedChannels extends GuildChannel {
     public constructor(data: {}, guildId: string, client: Client)
+    /**
+     * Whether or not this Voice Channel is nsfw
+     */
+    public nsfw: boolean
     /**
      * The bitrate of this Voice Channel
      */
@@ -5511,6 +5758,38 @@ export class VoiceBasedChannels extends GuildChannel {
      * The Guild Members that are in this Voice Based Channel
      */
     public members: Collection<string, GuildMember>
+    /**
+     * The Rate Limit Per User of this Channel
+     */
+    public rateLimitPerUser: number
+    /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
+    /**
+     * Sets the NSFW state of this Voice Channel
+     */
+    public setNsfw(nsfw: boolean, reason?: string): Promise<this>
+    /**
+     * Sets the Rate Limit Per User of this Channel
+     */
+    public setRateLimitPerUser(rateLimitPerUser: number, reason?: string): Promise<this>
+    /**
+     * The Message Manager of this Channel
+     */
+    public messages: Readonly<MessageManager>
+    /**
+     * Sends a Message to this Voice Channel
+     */
+    public send(options: MessageOptionsData): Promise<Message>
+    /**
+     * Bulk-Deletes Messages in this Voice Channel
+     */
+    public bulkDelete(messages: MessageBulkResolvable | number, options?: MessageDeleteBulkOptions): Promise<Collection<string, Message>>
+    /**
+     * Triggers a typing indicator in this Channel
+     */
+    public sendTyping(): Promise<this>
 }
 
 export class BaseGuildTextChannel extends GuildChannel {
@@ -5540,6 +5819,10 @@ export class BaseGuildTextChannel extends GuildChannel {
      */
     public defaultAutoArchiveDuration: number
     /**
+     * The initial rate limit per user for Threads in this Channel
+     */
+    public defaultThreadRateLimitPerUser: number
+    /**
      * The Message Manager of this Channel
      */
     public messages: Readonly<MessageManager>
@@ -5547,6 +5830,10 @@ export class BaseGuildTextChannel extends GuildChannel {
      * The Thread Manager of this Channel
      */
     public threads: ThreadManager
+    /**
+     * Creates a Message Collector in this Channel
+     */
+    public createMessageCollector(options?: CollectorOptions<EventTypes.MessageCreate>): MessageCollector
     /**
      * Creates a Webhook in this Channel
      */
@@ -5627,6 +5914,10 @@ export class GuildChannel extends Channel {
      * Whether or not this Channel is the Guild's set system Channel
      */
     public isSystemChannel(): boolean
+    /**
+     * Sync this GuildChannel to it's parent
+     */
+    public lockPermissions(reason?: string): Promise<this>
     /**
      * Sets the position of this GuildChannel
      */
@@ -5722,7 +6013,7 @@ export class Channel extends Base {
     /**
      * Whether or not this Channel is a Text Based Channel
      */
-    public isText(): this is BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel
+    public isText(): this is BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceBasedChannels
     /**
      * Whether or not this Channel is a Voice Channel
      */
@@ -6342,6 +6633,14 @@ export class Guild extends Base {
      */
     public safetyAlertsChannelId: string
     /**
+     * The Channel the Raid Alerts will be send to
+     */
+    public safetyAlertsChannel: BaseGuildTextChannel
+    /**
+     * Fetches the settings for Clyde in this Guild
+     */
+    public fetchClydeSettings(): Promise<{ guildId: string, personality: string }>
+    /**
      * Fetches this Guild's owner
      */
     public fetchOwner(options?: BaseFetchOptions): Promise<GuildMember>
@@ -6365,6 +6664,10 @@ export class Guild extends Base {
      * Deletes this Guild
      */
     public delete(reason?: string): Promise<this>
+    /**
+     * Sets the Channel where Raid Alerts will be send to
+     */
+    public setSafetyAlertsChannel(safetyAlertsChannel: ChannelResolvable, reason?: string): Promise<this>
     /**
      * Sets the name of this Guild
      */
@@ -6553,7 +6856,7 @@ export class RaidenSet<V> extends Set<V> {
     /**
      * Maps the values in to an Array
      */
-    public map(fn: (value: V) => void): V[]
+    public map(fn: (value: V, index: number, set: this) => void): V[]
     /**
      * Filters the current Set and returns it
      */
@@ -6598,7 +6901,7 @@ export class RaidenSet<V> extends Set<V> {
     /**
      * Returns the value in this index
      */
-    public at(index: number): this
+    public at(index: number): V
 }
 
 export class Collection<K, V> extends Map<K, V> {
@@ -6761,6 +7064,11 @@ export class Client extends EventEmitter {
      */
     public resumeGatewayURL: string
     /**
+     * Fetches a Webhook in Discord
+     * @param webhook - A WebhookResolvable. Can also be a webhook url
+     */
+    public fetchWebhook(webhook: WebhookResolvable, token?: string): Promise<Webhook>
+    /**
      * Whether or not Client is ready
      */
     public isReady(): boolean
@@ -6799,11 +7107,39 @@ export class Client extends EventEmitter {
 }
 
 export class REST {
-    public constructor(token?: string)
+    public constructor(options?: RestOptions, client?: Client)
     /**
      * The token of your bot
      */
     public token: string
+    /**
+     * The ratelimit bucket this REST is currently handling
+     */
+    public ratelimitBucket: string
+    /**
+     * The hash Collection for this REST
+     */
+    public hashCollection: Collection<string, RateLimitData>
+    /**
+     * The token type for this REST
+     */
+    public tokenType: string
+    /**
+     * The version of the Discord API this belongs to
+     */
+    public version: number
+    /**
+     * The root Discord API's url
+     */
+    public root: string
+    /**
+     * Sets the version of Discord API for this REST
+     */
+    public setVersion(version?: number): this
+    /**
+     * Sets the token type for this REST
+     */
+    public setTokenType(type?: "Bot" | "User"): this
     /**
      * Sets the token of this request
      */
@@ -6878,6 +7214,14 @@ export class EmbedBuilder {
      * The fields of this Embed
      */
     public fields: EmbedFields[]
+    /**
+     * The url of this Embed
+     */
+    public url: string
+    /**
+     * Sets the url of this Embed
+     */
+    public setUrl(url: string): this
     /**
      * Sets the title of this Embed
      */
@@ -7807,7 +8151,7 @@ export enum InputTextStyleEnums {
     Paragraph = 2
 }
 
-export enum EventTypes {
+export enum     EventTypes {
     Ready = "ready",
     ApplicationCommandPermissionsUpdate = "applicationCommandPermissionsUpdate",
     AutoModerationRuleCreate = "autoModerationRuleCreate",
@@ -7877,7 +8221,8 @@ export enum EventTypes {
     EmojiCreate = "emojiCreate",
     EmojiUpdate = "emojiUpdate",
     EmojiDelete = "emojiDelete",
-    Ratelimit = "ratelimit"
+    Ratelimit = "ratelimit",
+    GuildAuditLogEntryCreate = "guildAuditLogEntryCreate"
 }
 
 export enum WSEventCodes {
@@ -7900,7 +8245,8 @@ export enum WsReadyStateCodes {
 
 export enum InviteTargetTypesEnums {
     Stream = 1,
-    EmbeddedApplication = 2
+    EmbeddedApplication = 2,
+    RoleSubscriptionsPurchase = 3
 }
 
 export enum GuildScheduledEventPrivacyEnums {
@@ -8036,7 +8382,12 @@ export enum MessageTypeEnums {
     GuildInviteReminder = 22,
     ContextMenuCommand = 23,
     AutoModerationAction = 24,
-    RoleSubscriptionPurchase = 25
+    InteractionPremiumUpsell = 26,
+    StageStart = 27,
+    StageEnd = 28,
+    StageSpeaker = 29,
+    StageTopic = 31,
+    GuildApplicationPremiumSubscription = 32
 }
 
 export enum ActivityTypesEnums {
@@ -8073,9 +8424,11 @@ export enum GuildFeaturesEnums {
     VipRegions = "VIP_REGIONS",
     WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
     GuildOnboardingEverEnabled = "GUILD_ONBOARDING_EVER_ENABLED",
-    ApplicationCommandPermissionsV2 = "APPLICATION_COMMAND_PERMISSIONS_V2"
+    ApplicationCommandPermissionsV2 = "APPLICATION_COMMAND_PERMISSIONS_V2",
+    RoleSubscriptionsAvailableForPurchase = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+    RoleSubscriptionsEnabled = "ROLE_SUBSCRIPTIONS_ENABLED",
+    RaidAlertsEnabled = "RAID_ALERTS_ENABLED"
 }
-
 
 export enum AutoModerationEventTypesEnums {
     MessageSend = 1
@@ -8085,7 +8438,8 @@ export enum AutoModerationTriggerTypesEnums {
     Keyword = 1,
     Spam = 3,
     KeywordPreset = 4,
-    MentionSpam = 5
+    MentionSpam = 5,
+    MemberProfile = 6
 }
 
 export enum AutoModerationKeywordPresetTypesEnums {
@@ -8200,7 +8554,8 @@ export enum WebsocketEvents {
     ThreadMemberRemove = "THREAD_MEMBER_REMOVE",
     EmojiCreate = "EMOJI_CREATE",
     EmojiUpdate = "EMOJI_UPDATE",
-    EmojiDelete = "EMOJI_DELETE"
+    EmojiDelete = "EMOJI_DELETE",
+    GuildAuditLogEntryCreate = "GUILD_AUDIT_LOG_ENTRY_CREATE"
 }
 
 export enum WebsocketStatus {
@@ -8211,7 +8566,25 @@ export enum WebsocketStatus {
 }
 
 export enum ForumLayoutTypesEnums {
-    Default = 0,
-    List = 1,
-    Grid = 2
+    NotSet = 0,
+    ListView = 1,
+    GalleryView = 2
+}
+
+export enum ApplicationRoleConnectionMetadataTypeEnums {
+    IntegerLessThanOrEqual = 1,
+    IntegerGreaterThanOrEqual = 2,
+    IntegerEqual = 3,
+    IntegerNotEqual = 4,
+    DatetimeLessThanOrEqual = 5,
+    DatetimeGreaterThanOrEqual = 6,
+    BooleanEqual = 7,
+    BooleanNotEqual = 8
+}
+
+export enum CollectorEventTypes {
+    Collect = "collect",
+    End = "end",
+    Dispose = "dispose",
+    Remove = "remove"
 }

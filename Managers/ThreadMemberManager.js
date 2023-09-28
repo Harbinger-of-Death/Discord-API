@@ -33,7 +33,12 @@ class ThreadMemberManager extends CachedManager {
         if(member instanceof ThreadMember || member instanceof GuildMember || member instanceof User || typeof member === "string") return this._fetchId(member, options)
         if(typeof member === "object" && !options) options = member
         const { cache = true, force = false } = options ?? {}
-        const members = await this.client.api.get(`${this.client.root}/channels/${this.threadId}/thread-members`)
+        const query = {
+            withMember: options.withMember,
+            after: typeof options.after === "string" ? options.after : options.after?.id,
+            limit: options.limit ?? 100
+        }
+        const members = await this.client.api.get(`${this.client.root}/channels/${this.threadId}/thread-members`, { query })
         return new this.cache.constructor(members?.map(o => [o.user_id, this._add(o, { cache, force })]))
     }
 
@@ -42,7 +47,10 @@ class ThreadMemberManager extends CachedManager {
         const memberId = member instanceof ThreadMember || member instanceof User || member instanceof GuildMember ? member.userId ?? member.id : member
         if(!SnowflakeRegex.test(memberId)) throw new RangeError(`Invalid Member`)
         if(this.cache.has(memberId) && !force) return this.cache.get(memberId)
-        member = await this.client.api.get(`${this.client.root}/channels/${this.threadId}/thread-members/${memberId}`)
+        const query = {
+            withMember: options.withMember
+        }
+        member = await this.client.api.get(`${this.client.root}/channels/${this.threadId}/thread-members/${memberId}`, { query })
         return this._add(member, { cache, force: true })
     }
 

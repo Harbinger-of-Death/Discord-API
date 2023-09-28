@@ -9,7 +9,7 @@ class Intents extends Bitfield {
 Intents.Flags = {
     Guilds: 1n << 0n,
     GuildMembers: 1n << 1n,
-    GuildBans: 1n << 2n,
+    GuildModeration: 1n << 2n,
     GuildEmojisAndStickers: 1n << 3n,
     GuildIntegrations: 1n << 4n,
     GuildWebhooks: 1n << 5n,
@@ -27,7 +27,5 @@ Intents.Flags = {
     AutoModerationConfiguration: 1n << 20n,
     AutoModerationExecution: 1n << 21n
 }
-
-Intents.All = Object.values(Intents.Flags).reduce((a, b) => a | b, Bitfield.defaultBit)
 
 module.exports = Intents

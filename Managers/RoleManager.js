@@ -62,7 +62,6 @@ class RoleManager extends CachedManager {
     }
 
     async modifyPositions(roles = [], reason) {
-        console.log(roles)
         const body = roles?.map(o => {
             const roleId = o.role instanceof Role ? o.role.id : o.role?.id ?? o.role
             if(!this.cache.has(roleId)) throw new RangeError(`Invalid Role`)
@@ -83,6 +82,10 @@ class RoleManager extends CachedManager {
 
     get premiumSubscriberRole() {
         return this.cache.find(o => o.tags?.premiumSubscriber) ?? null
+    }
+
+    get linkedRoles() {
+        return this.cache.filter(o => o.tags?.guildConnections) ?? null
     }
 
     get everyone() {
