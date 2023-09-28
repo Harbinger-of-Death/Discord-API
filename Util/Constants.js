@@ -582,10 +582,6 @@ module.exports.CdnEndPoints = {
     ApplicationAsset: (asset, extension = ".png", size = 64, applicationId) => {
         return `${this.cdnRoot}/app-assets/${applicationId}/${asset}${extension}${size ? `?size=${size}` : ""}`
     },
-    UserAvatarDecoration: (asset, extension = ".png", size = 64) => {
-        if(asset.startsWith("a_")) extension = ".png"
-        return `${this.cdnRoot}/avatar-decoration-presets/${asset}${extension}${size ? `?size=${size}&` : "?"}passthrough=false`
-    }
 }
 
 module.exports.WebsocketEvents = {

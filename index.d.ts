@@ -4743,10 +4743,6 @@ export class User extends Base {
      * Returns this User's banner
      */
     public bannerURL(options?: ImageURLOptions<ImageFormatWithoutLottie>): string | void
-    /**
-     * Returns this User's avatar decoration
-     */
-    public avatarDecorationURL(options?: ImageURLOptions<ImageFormats>): string | void
 }
 
 export class GuildMember extends Base {

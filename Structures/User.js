@@ -19,8 +19,6 @@ class User extends Base {
         this.system = data.system ?? null
         this.globalName = data.global_name ?? null
         this.pronouns = data.pronouns ?? null
-        this.avatarDecorationAsset = data.avatar_decoration_data?.asset ?? null
-        this.avatarDecorationSkuId = data.avatar_decoration_data?.sku_id ?? null
     }
 
     async fetch(options = {}) {
@@ -33,11 +31,6 @@ class User extends Base {
 
     async send(options = {}) {
         return await this.client.users.send(this, options)
-    }
-
-    avatarDecorationURL(options = {}) {
-        if(!this.avatarDecorationAsset) return null;
-        return this.client.cdn.UserAvatarDecoration(this.avatarDecorationAsset, options.extension, options.size)
     }
 
     dmChannel() {
