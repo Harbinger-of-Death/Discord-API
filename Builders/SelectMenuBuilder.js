@@ -107,10 +107,8 @@ class SelectMenuBuilder {
             if(!(value.label && value.value)) throw new RangeError(`Field[${index}]: label and value are required`)
             if(value.label?.length > 100 && value.value?.length > 100) throw new RangeError(`Field[${index}]: label and value must be less than 100 characters`)
             if(value.description?.length > 100 && value.description) throw new RangeError(`Field[${index}]: description must be less than 100 characters`)
-            if(!(value.emoji?.id || value.emoji?.name) && value.emoji) throw new RangeError(`Field[${index}]: emoji id or name is required`)
             if(typeof value.label !== "string" || typeof value.value !== "string") throw new TypeError(`Field[${index}]: label and value must be string`)
             if(typeof value.description !== "string" && value.description) throw new TypeError(`Field[${index}]: description must be string`)
-            if(typeof (value.emoji?.id ?? value.emoji?.name) !== "string" && value.emoji) throw new TypeError(`Field[${index}]: emoji id or name must be string`)
             if(typeof value.default !== "boolean" && value.default) throw new TypeError(`Field[${index}]: default must be boolean`)
         }
         if(typeof this.customId !== "string") throw new TypeError(`Custom Id must be string`)

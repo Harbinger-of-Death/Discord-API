@@ -1,10 +1,9 @@
 const BaseSlashCommand = require("./BaseSlashCommand")
-
 class SlashOption extends BaseSlashCommand {
     constructor(data = {}) {
         super(data)
         this.required = data.required
-        this.choices = data.choices?.map(o => SlashOptionBuilder.transformChoices(o)) ?? []
+        this.choices = data.choices?.map(o => SlashOption.transformChoices(o)) ?? []
         this.channelTypes = (data.channelTypes ?? data.channel_types)?.map(o => o) ?? []
         this.minValue = data.minValue ?? data.min_value
         this.maxValue = data.maxValue ?? data.max_value

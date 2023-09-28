@@ -1,9 +1,10 @@
 const Base = require("../Base/base");
+const AutoModeration = require("./AutoModeration");
 class AutoModerationRuleAction extends Base {
     constructor(data = {}, guildId, client) {
         super(client)
         this.guildId = data.guild_id ?? guildId ?? null
-        this.action = data.action ? { type: data.action.type, metadata: Object.keys(data.action.metadata) ? { channelId: data.action.metadata?.channel_id, durationSeconds: data.action.metadata?.duration_seconds } : null } : null
+        this.action = Object.keys(data.action).length ? AutoModeration.resolveActionsArray(data.action) : null
         this.ruleId = data.rule_id ?? null
         this.ruleTriggerType = data.rule_trigger_type ?? null
         this.userId = data.user_id ?? null

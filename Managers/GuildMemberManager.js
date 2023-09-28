@@ -37,7 +37,7 @@ class GuildMemberManager extends CachedManager  {
             this.client.on(EventTypes.GuildMembersChunk, chunk => {
                 clearTimeout(timeout)
                 
-                if(chunk.guild_id === this.guildId) resolve(new this.cache.constructor(chunk.members?.map(o => [o.user?.id, this._add(o, { cache, force }, { id: o.user?.id })])))
+                if(chunk.guild_id === this.guildId) resolve(new this.cache.constructor(chunk.members?.map(o => [o.user?.id, this._add(o, { cache, force })])))
             })
         })
     }
@@ -48,7 +48,7 @@ class GuildMemberManager extends CachedManager  {
         if(!SnowflakeRegex.test(memberId)) throw new RangeError(`Invalid Guild Member`)
         if(this.cache.has(memberId) && !force) return this.cache.get(memberId)
         member = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/members/${memberId}`)
-        return this._add(member, { cache, force: true }, { id: member.user?.id })
+        return this._add(member, { cache, force: true })
     }
 
     async search(options = {}) {

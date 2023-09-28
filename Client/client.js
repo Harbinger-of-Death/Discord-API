@@ -14,8 +14,9 @@ const Invite = require("../Structures/Invite");
 const Sticker = require("../Structures/Sticker");
 const StickerPack = require("../Structures/StickerPack");
 const VoiceRegion = require("../Structures/VoiceRegion");
+const Webhook = require("../Structures/Webhook");
 const Collection = require("../Util/Collection");
-const { CdnEndPoints, SnowflakeRegex, WebsocketEvents, EventTypes } = require("../Util/Constants");
+const { CdnEndPoints, SnowflakeRegex, EventTypes, WebsocketStatus } = require("../Util/Constants");
 const Intents = require("../Util/Intents");
 class Client extends EventEmitter {
     constructor(options = {}) {
@@ -35,8 +36,6 @@ class Client extends EventEmitter {
         //URL
         this.root = `https://discord.com/api/v${this.version}`
         this.wssURL = `wss://gateway.discord.gg/?v=${this.version}&encoding=${this.encoding}`
-        
-
         //Managers
         this.ws = new WebsocketManager(this, this.wssURL)
         this.guilds = new GuildManager(this)
@@ -55,14 +54,45 @@ class Client extends EventEmitter {
     }
 
     validationOptions(options) {
-        if(!options.token) throw new RangeError(`No Token Specified`);
+        if(!/[\w]{24}\.[\w]{6}\.[\w-]{38}/.test(options.token) && options.token || !options.token) throw new RangeError(`Invalid Token Specified`)
         if(!options.intents) throw new RangeError(`Valid Intents not specified`);
         if(typeof options.token !== "string") throw new TypeError(`Token must be string`);
         return;
     }
 
     isReady() {
-        return this.ws.status === WebsocketEvents.Ready
+        return this.ws.status === WebsocketStatus.Ready
+    }
+
+    increaseMaxListeners() {
+        const maxListeners = this.getMaxListeners()
+        if(maxListeners !== 0) {
+            this.setMaxListeners(maxListeners + 1)
+        }
+
+        return this;
+    }
+
+    decrementMaxListeners() {
+        const maxListeners = this.getMaxListeners()
+        if(maxListeners !== 0) {
+            this.setMaxListeners(maxListeners - 1)
+        }
+
+        return this;
+    }
+
+    async fetchWebhook(webhook, token) {
+        if(typeof webhook === "string") {
+            const match = webhook.match(/https?:\/\/(?:\w+.)\w+\.com\/api\/webhooks\/(\d{17,19})\/([\w-]+)?/)
+            if(match?.length) {
+                webhook = match[1]
+                token = match[2]
+            }
+        }
+        if(webhook instanceof Webhook) webhook = webhook.id
+        webhook = await this.api.get(`${this.root}/webhooks/${webhook}${token ? `/${token}` : ""}`)
+        return new Webhook(webhook, this)
     }
 
     async fetchGuildPreview(guild) {
@@ -80,16 +110,23 @@ class Client extends EventEmitter {
     }
 
     async fetchGuildTemplate(code) {
-        if(typeof code === "string") code = code.slice(code.lastIndexOf("/")+1)
-        else code = code.code
+        const match = code.match(/https?:\/\/discord\.new\/([\w-]+)/)
+        if(match?.length) {
+            code = match[1]
+        } else typeof code === "string" ? code : code.code
+
         const template = await this.api.get(`${this.root}/guilds/templates/${code}`)
-        return new GuildTemplate(template, template.source_guild_id, this)
+        return new GuildTemplate(template, template.guild_id, this)
     }
 
     async fetchInvite(code, options = {}) {
-        if(typeof code === "string") code = code.slice(code.lastIndexOf("/")+1)
-        else code = code.code
+        const match = code.match(/https?:\/\/discord\.gg\/([\w-]+)/)
+        if(match?.length) {
+            code = match[1]
+        } else typeof code === "string" ? code : code.code
+
         const query = { with_counts: options.withCounts, with_expiration: options.withExpiration, guild_scheduled_event_id: typeof options.guildScheduledEvent === "string" ? options.guildScheduledEvent : options.guildScheduledEvent?.id }
+
         const invite = await this.api.get(`${this.root}/invites/${code}`, { query })
         return new Invite(invite, this)
     }

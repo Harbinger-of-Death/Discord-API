@@ -56,6 +56,10 @@ class VoiceState extends Base {
         return await this.edit({ suppress })
     }
 
+    get user() {
+        return this.client.users.cache.get(this.userId) ?? null
+    }
+
     equals(voiceState) {
         return this.channelId === voiceState.channelId &&
         this.sessionId === voiceState.sessionId &&

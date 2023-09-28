@@ -23,7 +23,10 @@ class GuildMember extends Base {
         this.communicationDisabledUntil = data.communication_disabled_until ? new Date(data.communication_disabled_until) : null
         this.communicationDisabledUntilTimestamp = this.communicationDisabledUntil?.getTime() ?? null
         this.flags = new GuildMemberFlags(data.flags).freeze()
-        this.user = this.client.users._add(data.user, { cache: true })
+    }
+    
+    get user() {
+        return this.client.users._add(this._data.user, { cache: true }) ?? null
     }
 
     get roles() {
@@ -66,6 +69,10 @@ class GuildMember extends Base {
         return this
     }
 
+    async send(options = {}) {
+        return this.user?.send(options)
+    }
+
     avatarURL(options = {}) {
         if(!this.avatar) return null;
         return this.client.cdn.GuildMemberAvatar(this.avatar, options.extension, options.size, options.forceStatic, this.guildId, this.id)
@@ -87,6 +94,10 @@ class GuildMember extends Base {
 
     get presence() {
         return this.guild?.presences.cache.get(this.id) ?? null
+    }
+
+    toString() {
+        return `<@${this.id}>`
     }
 
     permissionsIn(channel) {

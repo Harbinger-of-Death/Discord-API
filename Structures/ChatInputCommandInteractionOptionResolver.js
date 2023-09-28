@@ -23,6 +23,15 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         return options
     }
 
+    get(name, required = false) {
+        const options = this._parse()
+        if(options?.length <= 0) return null;
+        const filter = options.find(o => o.name === name)
+        if(filter) return filter
+        if(required) throw new RangeError(`Option has no such name found`)
+        return null;
+    }
+
     getAttachment(name, required = false) {
         const options = this._parse()
         if(options?.length <= 0) return null;

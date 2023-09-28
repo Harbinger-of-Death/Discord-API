@@ -3,12 +3,30 @@ const FormData = require("form-data");
 const fetch = require("node-fetch");
 const DiscordAPIError = require("../Errors/DiscordAPIError");
 const { EventTypes } = require("../Util/Constants");
-const collection = new (require("../Util/Collection"));
+const Collection = require("../Util/Collection");
 const { setTimeout: wait } = require("timers/promises")
 class REST {
-    constructor(client) {
+    constructor(options = {}, client) {
+        Object.defineProperty(this, "token", { value: options.token ?? client?.token, writable: true })
         this.client = client
         this.ratelimitBucket = null
+        this.hashCollection = new Collection()
+        this.version = client?.version ?? options.version ?? 10
+        this.tokenType = options.tokenType === `User` ? "" : `Bot `
+    }
+
+    get root() {
+        return `https://discord.com/api/v${this.version}`
+    }
+
+    setTokenType(type = this.tokenType) {
+        this.tokenType = type
+        return this;
+    }
+
+    setVersion(version = 10) {
+        this.version = version
+        return this;
     }
 
     setToken(token) {
@@ -21,9 +39,8 @@ class REST {
         const controller = new AbortController()
         let timeout = setTimeout(() => controller.abort(), this.client?.restRequestTimeout ?? 5000).unref()
         let headers = {
-            authorization: `Bot ${this.client?.token ?? this.token}`
+            authorization: `${this.tokenType}${this.client?.token ?? this.token}`
         }
-
         if(options.tokenType) headers["authorization"] = `${options.tokenType} ${options.authorization}`
         if(typeof options["reason"] === "string") headers["X-Audit-Log-Reason"] = options["reason"]
         const oldURL = url
@@ -66,39 +83,41 @@ class REST {
             if([...urlSearchParams.values()].length) url = url.concat(`?${decodeURIComponent(urlSearchParams)}`)
         }
 
-        if(collection.has(this.ratelimitBucket)) {
-            const rateLimit = collection.get(this.ratelimitBucket)
-            if(rateLimit.route === oldURL) {
-                if(rateLimit.ratelimited) return this.handleRatelimit(oldURL, options)
-            }
+        if(this.hashCollection.has(`${this.ratelimitBucket}:${oldURL}`)) {
+            const ratelimitData = this.hashCollection.get(`${this.ratelimitBucket}:${oldURL}`)
+            if(ratelimitData.ratelimited) return this.handleRatelimit(oldURL, options)
         }
         const request = await fetch(url, { method: options.method, agent, signal: controller.signal, headers, body }).finally(() => clearTimeout(timeout))
         this.ratelimitBucket = request.headers.get("X-RateLimit-Bucket")
-        const remaining = parseInt(request.headers.get("X-RateLimit-Remaining"))
+        const limit = +request.headers.get("X-RateLimit-Limit")
+        const remaining = +request.headers.get("X-RateLimit-Remaining")
         const reset = Math.floor((request.headers.get("X-RateLimit-Reset") * 1000) - Date.now())
-        const limit = parseInt(request.headers.get("X-RateLimit-Limit"))
-        if(this.ratelimitBucket) {
-            if(collection.has(this.ratelimitBucket)) {
-                const ratelimit = collection.get(this.ratelimitBucket)
-                if(ratelimit.ratelimited) return;
-                ratelimit.remaining = remaining
-                if(ratelimit.remaining <= 1) ratelimit.ratelimited = true 
-            } else {
-                collection.set(this.ratelimitBucket, { remaining, reset, limit, route: url, ratelimited: remaining <= 1, method: options.method, bucket: this.ratelimitBucket })
+        const response = request.headers.get("content-type")?.includes("application/json") ? await request.json() : null
+        const scope = request.headers.get("x-ratelimit-scope")
+        if(!this.hashCollection.has(`${this.ratelimitBucket}:${oldURL}`)) {
+            if(remaining <= 1) this.hashCollection.set(`${this.ratelimitBucket}:${oldURL}`, { limit, remaining, reset, bucket: this.ratelimitBucket, method: options.method, route: oldURL, ratelimited: true })
+        }
+        if(request.status === 429) {
+            switch(scope) {
+                case "shared":
+                    this.hashCollection.set(`${this.ratelimitBucket}:${oldURL}`, { retryAfter: Math.floor(response.retry_after * 1000), global: response.global, ratelimited: true })
+                    return this.handleRatelimit(oldURL, options)
+                case "user":
+                    return this.handleRatelimit(oldURL, options)
             }
         }
-        const response = request.headers.get("content-type")?.includes("application/json") ? await request.json() : undefined
-        if(request.status === 429) return await this.handleRatelimit(oldURL, options)
         if(!request.ok) throw new DiscordAPIError({
-            message: response.message ?? response.error_description ?? request.statusText,
+            message: response?.message ?? response.error_description ?? request.statusText,
             method: options.method,
-            code: response.code,
+            code: response?.code,
             httpError: request.status,
             path: url,
-            rawError: response.errors ?? {},
+            rawError: response?.errors ?? {},
             requestBody: options.auth ?? options.body,
         })
-        if(collection.size > 0) this.clearCollection(reset)
+
+        if(this.hashCollection.size) this.hashSweeper(reset)
+
         return response
     }
 
@@ -138,18 +157,19 @@ class REST {
     }
     
     async handleRatelimit(oldUrl, options) {
-        const ratelimitData = collection.get(this.ratelimitBucket)
+        const ratelimitData = this.hashCollection.get(`${this.ratelimitBucket}:${oldUrl}`)
         if(ratelimitData) {
-            this.client.emit(EventTypes.Ratelimit, ratelimitData)
-            await wait(ratelimitData.reset)
+            this.client?.emit(EventTypes.Ratelimit, ratelimitData)
+            await wait(ratelimitData.reset ?? ratelimitData.retryAfter)
             ratelimitData.ratelimited = false
+            this.hashCollection.delete(`${this.ratelimitBucket}:${oldUrl}`)
             return await this._make(oldUrl, options)
         }
         return;
     }
 
-    clearCollection(resetAfter) {
-        return setTimeout(() => collection.clear(), resetAfter)
+    hashSweeper(resetAfter) {
+        return setTimeout(() => this.hashCollection.clear(), resetAfter)
     }
 }
 

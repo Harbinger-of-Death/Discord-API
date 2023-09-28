@@ -14,10 +14,12 @@ class MessageComponentInteraction extends BaseInteraction {
     }
 
     async update(options = {}) {
+        this.replied = true
         return await this.webhook.reply(options, 7)
     }
 
     async deferUpdate(options = {}) {
+        this.replied = true
         return await this.webhook.reply(options, 6)
     }
 }

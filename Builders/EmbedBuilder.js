@@ -10,6 +10,7 @@ class EmbedBuilder {
         this.footer = data.footer ? { text: data.footer.text, iconURL: data.footer.iconURL ?? data.footer.icon_url } : undefined
         this.timestamp = data.timestamp ? Util.generateDateISOString(data.timestamp) : undefined
         this.fields = data.fields?.map(o => EmbedBuilder.transformFields(o)) ?? []
+        this.url = data.url ?? undefined
     }
 
     setTitle(title) {
@@ -80,6 +81,11 @@ class EmbedBuilder {
         return this;
     }
 
+    setUrl(url) {
+        this.url = url
+        return this;
+    }
+
 
     validation() {
         if(!this.title && !this.description && !this.fields?.length) throw new RangeError(`Embed must have title, description or fields`)
@@ -115,6 +121,7 @@ class EmbedBuilder {
         this.validation()
         return {
             title: this.title,
+            url: this.url,
             description: this.description,
             color: this.color,
             image: this.image,

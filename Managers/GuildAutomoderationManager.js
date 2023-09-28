@@ -58,15 +58,17 @@ class GuildAutomoderationManager extends CachedManager {
                 regex_patterns: options.triggerMetadata.regexPatterns,
                 presets: options.triggerMetadata.presets,
                 allow_list: options.triggerMetadata.allowList,
-                mention_total_limit: options.triggerMetadata.mentionTotalLimit
+                mention_total_limit: options.triggerMetadata.mentionTotalLimit,
+                mention_raid_protection_enabled: options.triggerMetadata.mentionRaidProtectionEnabled
             } : undefined,
-            actions: options.actions?.map(o => { return {
+            actions: options.actions?.map(o => ({
                 type: o.type,
                 metadata: o.metadata ? {
                     channel_id: typeof o.metadata.channel === "string" ? o.metadata.channel : o.metadata.channel?.id,
-                    duration_seconds: o.metadata.durationSeconds
+                    duration_seconds: o.metadata.durationSeconds,
+                    custom_message: o.metadata.customMessage
                 } : undefined
-            }}),
+            })),
             enabled: options.enabled,
             exempt_roles: options.exemptRoles?.map(o => typeof o === "string" ? o : o.id),
             exempt_channels: options.exemptChannels?.map(o => typeof o === "string"? o : o.id)

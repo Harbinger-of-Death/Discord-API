@@ -23,6 +23,13 @@ module.exports.MessageTypeEnums = {
     GuildInviteReminder: 22,
     ContextMenuCommand: 23,
     AutoModerationAction: 24,
+    RoleSubscriptionPurchase: 25,
+    InteractionPremiumUpsell: 26,
+    StageStart: 27,
+    StageEnd: 28,
+    StageSpeaker: 29,
+    StageTopic: 31,
+    GuildApplicationPremiumSubscription: 32
 }
 
 module.exports.ApplicationCommandTypesEnums = {
@@ -212,7 +219,8 @@ module.exports.EventTypes = {
     EmojiCreate : "emojiCreate",
     EmojiUpdate : "emojiUpdate",
     EmojiDelete : "emojiDelete",
-    Ratelimit: "ratelimit"
+    Ratelimit: "ratelimit",
+    GuildAuditLogEntryCreate: "guildAuditLogEntryCreate"
 }
 
 module.exports.WsCloseCodes = {
@@ -252,7 +260,8 @@ module.exports.WsReadyStateCodes = {
 
 module.exports.InviteTargetTypesEnums = {
     Stream: 1,
-    EmbeddedApplication: 2
+    EmbeddedApplication: 2,
+    RoleSubscriptionsPurchase: 3
 }
 
 module.exports.GuildScheduledEventPrivacyEnums = {
@@ -386,12 +395,27 @@ module.exports.AuditLogEventEnums = {
     AutoModerationUserCommunicationDisabled: 145,
     CreatorMonetizationRequestCreated: 150,
     CreatorMonetizationTermsAccepted: 151,
-    RolePromptCreate: 160,
-    RolePromptUpdate: 161,
-    RolePromptDeletE: 162,
-    GuildHomeFeatureItem: 171,
-    GuildHomeRemoveItem: 172
 }
+
+module.exports.AuditLogEventUpdate = [
+    this.AuditLogEventEnums.ApplicationCommandPermissionUpdate,
+    this.AuditLogEventEnums.AutoModerationRuleUpdate,
+    this.AuditLogEventEnums.GuildUpdate,
+    this.AuditLogEventEnums.ChannelUpdate,
+    this.AuditLogEventEnums.ChannelOverwriteUpdate,
+    this.AuditLogEventEnums.MemberUpdate,
+    this.AuditLogEventEnums.MemberRoleUpdate,
+    this.AuditLogEventEnums.RoleUpdate,
+    this.AuditLogEventEnums.InviteUpdate,
+    this.AuditLogEventEnums.WebhookUpdate,
+    this.AuditLogEventEnums.EmojiUpdate,
+    this.AuditLogEventEnums.IntegrationUpdate,
+    this.AuditLogEventEnums.StageInstanceUpdate,
+    this.AuditLogEventEnums.GuildScheduledEventUpdate,
+    this.AuditLogEventEnums.StickerUpdate,
+    this.AuditLogEventEnums.ThreadUpdate,
+    this.AuditLogEventEnums.AutoModerationRuleUpdate
+]
 
 module.exports.AutoModerationEventTypesEnums = {
     MessageSend: 1
@@ -401,7 +425,8 @@ module.exports.AutoModerationTriggerTypesEnums = {
     Keyword: 1,
     Spam: 3,
     KeywordPreset: 4,
-    MentionSpam: 5
+    MentionSpam: 5,
+    MemberProfile: 6
 }
 
 module.exports.AutoModerationKeywordPresetTypesEnums = {
@@ -439,7 +464,10 @@ module.exports.GuildFeaturesEnums = {
     Verified: "VERIFIED",
     VipRegions: "VIP_REGIONS",
     WelcomeScreenEnabled: "WELCOME_SCREEN_ENABLED",
-    ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2"
+    ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2",
+    RoleSubscriptionsAvailableForPurchase: "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+    RoleSubscriptionsEnabled: "ROLE_SUBSCRIPTIONS_ENABLED",
+    RaidAlertsEnabled: "RAID_ALERTS_ENABLED",
 }
 
 module.exports.ImageFileTypes = {
@@ -517,8 +545,9 @@ module.exports.CdnEndPoints = {
         if(avatar.startsWith("a_") && !forceStatic) extension = ".gif"
         return `${this.cdnRoot}/avatars/${userId}/${avatar}${extension}${size ? `?size=${size}` : ""}`
     },
-    DefaultUserAvatar: (discriminator, extension = ".png") => {
-        return `${this.cdnRoot}/embed/avatars/${discriminator % 5}${extension}`
+    DefaultUserAvatar: (userId, extension = ".png") => {
+        userId = BigInt(userId)
+        return `${this.cdnRoot}/embed/avatars/${(userId >> 22n) % 6n}${extension}`
     },
     UserBanner: (banner, extension = ".png", size = 64, forceStatic = false, userId) => {
         if(banner.startsWith("a_") && !forceStatic) extension = ".gif"
@@ -631,7 +660,8 @@ module.exports.WebsocketEvents = {
     ThreadMemberRemove: 'THREAD_MEMBER_REMOVE',
     EmojiCreate: 'EMOJI_CREATE',
     EmojiUpdate: 'EMOJI_UPDATE',
-    EmojiDelete: 'EMOJI_DELETE'
+    EmojiDelete: 'EMOJI_DELETE',
+    GuildAuditLogEntryCreate: "GUILD_AUDIT_LOG_ENTRY_CREATE"
 }
 
 module.exports.WebsocketStatus = {
@@ -645,4 +675,22 @@ module.exports.ForumLayoutTypesEnums = {
     NotSet: 0,
     ListView: 1,
     GalleryView: 2
+}
+
+module.exports.ApplicationRoleConnectionMetadataTypeEnums = {
+    IntegerLessThanOrEqual: 1,
+    IntegerGreaterThanOrEqual: 2,
+    IntegerEqual: 3,
+    IntegerNotEqual: 4,
+    DatetimeLessThanOrEqual: 5,
+    DatetimeGreaterThanOrEqual: 6,
+    BooleanEqual: 7,
+    BooleanNotEqual: 8
+}
+
+module.exports.CollectorEventTypes = {
+    Collect: "collect",
+    End: "end",
+    Dispose: "dispose",
+    Remove: "remove"
 }

@@ -6,7 +6,8 @@ class Resumed extends BaseAction {
     }
 
     _patch() {
-        return this.client.debug(`[Websocket]: Successfully resumed gateway connection`)
+        const replayedEvents = this.client.seq - this.client.closeSequence
+        return this.client.debug(`[Websocket]: Successfully resumed gateway connection. Replayed ${replayedEvents} event${replayedEvents > 1 ? "s" : ""}`)
     }
 }
 

@@ -8,11 +8,13 @@ const Application = require("./Application");
 const Attachment = require("./Attachment");
 const Component = require("./Component");
 const Embed = require("./Embed");
+const MessageComponentCollector = require("./MessageComponentCollector");
 const MessageActivity = require("./MessageActivity");
 const MessageInteraction = require("./MessageInteraction");
 const MessageMentions = require("./MessageMentions");
 const MessageReference = require("./MessageReference");
 const Webhook = require("./Webhook");
+const ReactionCollector = require("./ReactionCollector");
 class Message extends Base {
     constructor(data = {}, client, extras) {
         super(client)
@@ -60,6 +62,12 @@ class Message extends Base {
             everyone: data.mention_everyone
         }, this.guildId, this.client)
         this.url = data.id ? `https://discord.com/channels/${!this.guildId ? `@me` : this.guildId}/${this.channelId}/${this.id}` : null
+        this.roleSubscriptionData = data.role_subscription_data ? {
+            roleSubscriptionListingId: data.role_subscription_data.role_subscription_listing_id,
+            tierName: data.role_subscription_data.tier_name,
+            totalMonthsSubscribed: data.role_subscription_data.total_months_subscribed,
+            renewal: data.role_subscription_data.is_renewal
+        } : null
     }
 
     inGuild() {
@@ -70,6 +78,18 @@ class Message extends Base {
     isReply() {
         if(this.type === MessageTypeEnums.Reply) return true;
         return false;
+    }
+
+    isCrosspost() {
+        return this.flags.has(MessageFlags.Flags.IsCrosspost)
+    }
+
+    isThreadMessage() {
+        return this.flags.has(MessageFlags.Flags.HasThread)
+    }
+
+    isVoiceMessage() {
+        return this.flags.has(MessageFlags.Flags.IsVoiceMessage)
     }
 
     get repliable() {
@@ -167,6 +187,13 @@ class Message extends Base {
         }, ...options })
     }
 
+    createMessageComponentCollector(options = {}) {
+        return new MessageComponentCollector(options, { messageId: this.id, channelId: this.channelId, guildId: this.guildId }, this.client)
+    }
+
+    createReactionCollector(options = {}) {
+        return new ReactionCollector(options, { messageId: this.id, channelId: this.channelId, guildId: this.guildId }, this.client)
+    }
 }
 
 module.exports = Message
