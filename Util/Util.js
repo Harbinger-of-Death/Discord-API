@@ -110,6 +110,23 @@ class Util {
     static codeBlock(text, language = "js") {
         return `\`\`\`${language}\n${text}\`\`\``
     }
+
+    static createPaginationArrays(arr = [], arrLength = 2) {
+        return Array.from({ length: Math.ceil(arr.length / arrLength) }, (_, i) => arr.slice(i * arrLength, i * arrLength + arrLength))
+    }
+
+    static async promisifiedTimeout(ms) {
+        return new Promise(res => setTimeout(res, ms))
+    }
+
+    static setTimeout(ms, callback = () => {}) {
+        return setTimeout(callback, ms)
+    }
+
+    static setInterval(ms, callback) {
+        return setInterval(callback, ms)
+
+    }
 }
 
 module.exports = Util
