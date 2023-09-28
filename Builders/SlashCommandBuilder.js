@@ -11,7 +11,7 @@ class SlashCommandBuilder {
         this.description = data.description
         this.descriptionLocalizations = data.descriptionLocalizations ?? data.description_localizations
         this.options = data.options?.map(o => SlashCommandBuilder.transformOptions(o)) ?? []
-        this.defaultMemberPermissions = new Permissions(data.defaultMemberPermissions ? BigInt(data.defaultMemberPermissions) : 0n)
+        this.defaultMemberPermissions = data.defaultMemberPermissions ? new Permissions(BigInt(data.defaultMemberPermissions)).freeze() : undefined
         this.dmPermission = data.dmPermission ?? data.dm_permission
         this.nsfw = data.nsfw ?? false
     }
@@ -116,7 +116,7 @@ class SlashCommandBuilder {
             description: this.description,
             description_localizations: this.descriptionLocalizations,
             options: this.options,
-            default_member_permissions: this.defaultMemberPermissions.toString(),
+            default_member_permissions: this.defaultMemberPermissions?.toString(),
             dm_permission: this.dmPermission,
             nsfw: this.nsfw
         }

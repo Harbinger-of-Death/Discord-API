@@ -425,7 +425,8 @@ module.exports.AutoModerationTriggerTypesEnums = {
     Keyword: 1,
     Spam: 3,
     KeywordPreset: 4,
-    MentionSpam: 5
+    MentionSpam: 5,
+    MemberProfile: 6
 }
 
 module.exports.AutoModerationKeywordPresetTypesEnums = {
@@ -580,6 +581,10 @@ module.exports.CdnEndPoints = {
     },
     ApplicationAsset: (asset, extension = ".png", size = 64, applicationId) => {
         return `${this.cdnRoot}/app-assets/${applicationId}/${asset}${extension}${size ? `?size=${size}` : ""}`
+    },
+    UserAvatarDecoration: (asset, extension = ".png", size = 64) => {
+        if(asset.startsWith("a_")) extension = ".png"
+        return `${this.cdnRoot}/avatar-decoration-presets/${asset}${extension}${size ? `?size=${size}&` : "?"}passthrough=false`
     }
 }
 

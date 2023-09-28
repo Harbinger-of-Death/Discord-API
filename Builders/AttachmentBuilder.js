@@ -31,7 +31,7 @@ class AttachmentBuilder {
             attachment: this.attachment,
             filename: this.filename,
             spoiler: this.spoiler,
-            description: this.description
+            description: this.description,
         }
     }
 

@@ -89,13 +89,22 @@ class Util {
 
     static base64ToBuffer(base64) {
         if(base64 instanceof Buffer) return base64
-        if(base64.startsWith("data")) base64 = base64.replace(/^(data:[A-Za-z]+\/[A-Za-z]+;base64,)/, "")
+        if(base64.startsWith("data")) {
+            base64 = /^(?:data:[A-Za-z]+\/[A-Za-z]+;base64,(.+))/.exec(base64)
+            if(base64[1]) base64 = base64[1]
+        }
         return Buffer.from(base64, "base64")
     }
 
     static async downloadFile(file, directory = "./index.txt") {
         if(!(file instanceof Buffer)) file = await this.getBuffer(file)
         return fs.writeFileSync(directory, file)
+    }
+
+    static discordTimestamp(timestamp, format = "R") {
+        if(Number.isNaN(timestamp) && !(timestamp instanceof Date)) throw new TypeError(`Invalid time`)
+        timestamp = Math.floor(timestamp / 1000)
+        return `<t:${timestamp}:${format}>`
     }
 
     static codeBlock(text, language = "js") {
