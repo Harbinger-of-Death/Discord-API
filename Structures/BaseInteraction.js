@@ -2,10 +2,12 @@ const Interaction = require("./Interaction");
 class BaseInteraction extends Interaction {
 
     async reply(options = {}) {
+        this.replied = true
         return await this.webhook.reply(options, 4)
     }
 
     async deferReply(options = {}) {
+        this.replied = true
         return await this.webhook.reply(options, 5)
     }
 
@@ -26,6 +28,7 @@ class BaseInteraction extends Interaction {
     }
 
     async showModal(options = {}) {
+        this.replied = true
         return await this.webhook.reply(options, 9)
     }
 

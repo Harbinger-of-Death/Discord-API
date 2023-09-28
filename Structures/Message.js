@@ -188,11 +188,11 @@ class Message extends Base {
     }
 
     createMessageComponentCollector(options = {}) {
-        return new MessageComponentCollector(options.filter, options, { messageId: this.id, channelId: this.channelId, guildId: this.guildId }, this.client)
+        return new MessageComponentCollector(options, { messageId: this.id, channelId: this.channelId, guildId: this.guildId }, this.client)
     }
 
     createReactionCollector(options = {}) {
-        return new ReactionCollector(options.filter, options, { messageId: this.id, channelId: this.channelId, guildId: this.guildId }, this.client)
+        return new ReactionCollector(options, { messageId: this.id, channelId: this.channelId, guildId: this.guildId }, this.client)
     }
 }
 

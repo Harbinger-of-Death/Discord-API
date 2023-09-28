@@ -271,7 +271,7 @@ export interface ClientEvents {
     stickersDelete: [sticker: Sticker]
     messageCreate: [message: Message]
     messageUpdate: [oldMessage: Message | void, newMessage: Message]
-    messageDelete: [Message: Message]
+    messageDelete: [message?: Message]
     interactionCreate: [interaction: BaseInteraction | Interaction]
     messageReactionAdd: [reaction: MessageReaction, user: GuildMember | User]
     messageReactionRemove: [reaction: MessageReaction, user: User]
@@ -293,6 +293,9 @@ export interface ClientEvents {
     ratelimit: [ratelimit: RateLimitData]
     guildMembersChunk: [data: {}]
     guildAuditLogEntryCreate: [entry: AuditLogEntry]
+    threadCreate: [channel: ThreadChannel]
+    threadUpdate: [oldThread: ThreadChannel, newThread: ThreadChannel]
+    threadDelete: [channel: ThreadChannel | null]
 }
 
 
@@ -1993,6 +1996,10 @@ export interface PresenceActivity {
      * The url of this Activity. Only used when in Streaming Activity type
      */
     url?: string
+    /**
+     * The state of this Activity. For Custom Statuses
+     */
+    state?: string
 }
 
 export interface VoiceStateData {
@@ -2211,6 +2218,22 @@ export interface ThreadMemberFetchOptions extends BaseFetchOptions {
     limit?: number
 }
 
+export interface RestOptions {
+    /**
+     * The token for your Bot
+     */
+    token?: string
+    /**
+     * The Discord API's version you want to use
+     */
+    version?: number
+    /**
+     * The type of the Token you want to use
+     */
+    tokenType?: "User" | "Bot"
+}
+
+export type MarkdownDiscordTimestamp = "t" | "T" | "d" | "D" | "f" | "F" | "R"
 export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
@@ -2261,7 +2284,7 @@ export type DateResolvable = Date | number
 export type ColorResolvable = string | number | Array<number>
 export type PermissionFlagsResolvable = PermissionFlagsStrings | bigint
 export type Locales = "id" | "da" | "de" | "en-GB" | "en-US" | "es-ES" | "fr" | "hr" | "it" | "lt" | "hu" | "nl" | "no" | "pl" | "pt-BR" | "ro" | "fi" | "sv-SE" | "vi" | "tr" | "cs" | "el" | "bg" | "ru" | "uk" | "hi" | "th" | "zh-CN" | "ja" | "zh-TW" | "ko"
-export type PermissionFlagsStrings = "CreateInstantInvite" | "KickMembers" | "BanMembers" | "Administrator" | "ManageChannels" | "ManageGuild" | "AddReactions" | "ViewAuditLog" | "PrioritySpeaker" | "Stream" | "ViewChannel" | "SendMessages" | "SendTTSMessage" | "ManageMessages" | "EmbedLinks" | "AttachFiles" | "ReadMessageHistory" | "MentionEveryone" | "UseExternalEmojis" | "ViewGuildInsights" | "Connect" | "Speak" | "MuteMembers" | "DeafenMembers" | "MoveMembers" | "UseVad" | "ChangeNickname" | "ManageNicknames" | "ManageRoles" | "ManageWebhooks" | "ManageEmojisAndStickers" | "UseApplicationCommands" | "RequestToSpeak" | "ManageEvents" | "ManageThreads" | "CreatePublicThreads" | "CreatePrivateThreads" | "UseExternalStickers" | "SendMessagesInThreads" | "UseEmbeddedActivities" | "ModerateMembers" | "ViewCreatorMonetizationAnalytics" | "SendVoiceMessages"
+export type PermissionFlagsStrings = "CreateInstantInvite" | "KickMembers" | "BanMembers" | "Administrator" | "ManageChannels" | "ManageGuild" | "AddReactions" | "ViewAuditLog" | "PrioritySpeaker" | "Stream" | "ViewChannel" | "SendMessages" | "SendTTSMessage" | "ManageMessages" | "EmbedLinks" | "AttachFiles" | "ReadMessageHistory" | "MentionEveryone" | "UseExternalEmojis" | "ViewGuildInsights" | "Connect" | "Speak" | "MuteMembers" | "DeafenMembers" | "MoveMembers" | "UseVad" | "ChangeNickname" | "ManageNicknames" | "ManageRoles" | "ManageWebhooks" | "ManageEmojisAndStickers" | "UseApplicationCommands" | "RequestToSpeak" | "ManageEvents" | "ManageThreads" | "CreatePublicThreads" | "CreatePrivateThreads" | "UseExternalStickers" | "SendMessagesInThreads" | "UseEmbeddedActivities" | "ModerateMembers" | "ViewCreatorMonetizationAnalytics" | "SendVoiceMessages" | "UseClydeAI"
 export type ComponentResolvable = ButtonBuilder | SelectMenuBuilder | InputTextBuilder
 export type ImageFormatWithoutAnimate = Exclude<ImageFormats, ".gif">
 export type ImageFormatWithoutLottie = Exclude<ImageFormats, ".json">

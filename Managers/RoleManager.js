@@ -62,7 +62,6 @@ class RoleManager extends CachedManager {
     }
 
     async modifyPositions(roles = [], reason) {
-        console.log(roles)
         const body = roles?.map(o => {
             const roleId = o.role instanceof Role ? o.role.id : o.role?.id ?? o.role
             if(!this.cache.has(roleId)) throw new RangeError(`Invalid Role`)

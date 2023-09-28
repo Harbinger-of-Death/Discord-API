@@ -13,8 +13,8 @@ class WebsocketManager extends WebSocket {
 
     async connect() {
         if (this.readyState !== WsReadyStateCodes.Open) {
-          setTimeout(() => this.connect(), this.client.restRestRequestTimeout);
-          return;
+            this.client.debug(`[Websocket]: Websocket isn't ready. Remaking Websocket connection`)
+            return this._handleNewInstance(this.client.wssURL)
         }
       
         const { url, shards, session_start_limit } = await this.client.api.get(`${this.client.root}/gateway/bot`) || {};
@@ -56,8 +56,8 @@ class WebsocketManager extends WebSocket {
     handleOpen() {
         this.on(WSEventCodes.Open, () => {
             const msg = this.reconnected ? 
-                `[Websocket]: Successfully reconnected to Discord Gateway. Now resuming missed events` :
-                `[Websocket]: Connected to Discord Gateway`;
+                `[Websocket]: Successfully reconnected to Discord Gateway at ${new Date().toLocaleString("en-US")}, and potentially resume missed events if some` :
+                `[Websocket]: Connected to Discord Gateway at ${new Date().toLocaleString("en-US")}`;
             this.client.debug(msg);
             this.handleConnect();
         });
@@ -86,6 +86,22 @@ class WebsocketManager extends WebSocket {
         });
     }
     
+    _handleNewInstance(url) {
+        this.status = WebsocketStatus.Reconnecting
+        this.removeAllListeners()
+        setTimeout(() => {
+            this.client.debug(`[Websocket]: Closing the previous WebSocket connection then making a new one`)
+            if(this.readyState !== this.CLOSED) {
+                this.destroy(4000)
+                this.client.debug(`[Websocket]: Successfully closed previous WebSocket connection`)
+            }
+            if(this.readyState === this.CLOSED) this.client.debug(`[Websocket]: Websocket has been already closed. So this should be easy`)
+            this.client.debug(`[Websocket]: Now connecting to gateway url: ${url}`)
+            this.client.ws = new WebsocketManager(this.client, url)
+            this.client.closeSequence = this.client.seq
+            this.client.ws.reconnected = true
+        }, 5_000).unref()
+    }
 
     handleReconnect() {
         if(!this.client.resumeGatewayURL) {
@@ -100,20 +116,8 @@ class WebsocketManager extends WebSocket {
             this.client.debug(`[Heartbeat]: Clearing the heartbeat interval`)
             clearInterval(this.interval)
         }
-        this.status = WebsocketStatus.Reconnecting
-        this.removeAllListeners()
-        setTimeout(() => {
-            this.client.debug(`[Websocket]: Closing the previous WebSocket connection then making a new one`)
-            if(this.readyState !== this.CLOSED) {
-                this.destroy(4000)
-                this.client.debug(`[Websocket]: Successfully closed previous WebSocket connection`)
-            }
-            if(this.readyState === this.CLOSED) this.client.debug(`[Websocket]: Websocket has been already closed. So this should be easy`)
-            this.client.debug(`[Websocket]: Now connecting to resume gateway url: ${this.client.resumeGatewayURL}`)
-            this.client.ws = new WebsocketManager(this.client, this.client.resumeGatewayURL)
-            this.client.closeSequence = this.client.seq
-            this.client.ws.reconnected = true
-        }, 5_000).unref()
+        return this._handleNewInstance(this.client.resumeGatewayURL ?? this.client.wssURL)
+
     }
 
     destroy(closeCode) {
@@ -128,6 +132,7 @@ class WebsocketManager extends WebSocket {
                 return {
                     name: o.name,
                     type: o.type,
+                    state: o.state,
                     url: o.url
                 }
             }),

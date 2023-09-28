@@ -6,21 +6,32 @@ const InteractionWebhook = require("./InteractionWebhook");
 class Interaction extends Base {
     constructor(data = {}, guildId, client) {
         super(client)
+        Object.defineProperties(this, {
+            _member: { value: data.member },
+            _user: { value: data.user }
+        })
         this.id = data.id ?? null
         this.data = data.data ?? {}
         this.applicationId = data.application_id ?? null
         this.type = data.type ?? null
         this.guildId = data.guild_id ?? guildId ?? null
         this.channelId = data.channel_id ?? data.channel?.id ?? null
-        this.member = this.guild?.members._add(data.member, this.guildId, { cache: true, force: true }, { id: data.user?.id })
-        this.user = this.client.users._add(data.user, { cache: true, force: true })
         this.token = data.token ?? null
         this.appPermissions = new Permissions(data.app_permissions ? BigInt(data.app_permissions) : 0n).freeze()
         this.locale = data.locale ?? null
         this.guildLocale = data.guild_locale ?? null
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
+        this.replied = false
         this.webhook = new InteractionWebhook({ id: this.applicationId, interactionId: this.id, token: this.token, guildId: this.guildId, channelId: this.channelId }, this.client)
+    }
+
+    get member() {
+        return this.guild.members._add(this._member, { cache: true, force: true })
+    }
+
+    get user() {
+        return this.client.users._add(this._member?.user ?? this._user, { cache: true, force: true })
     }
 
     inGuild() {
