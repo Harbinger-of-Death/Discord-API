@@ -27,8 +27,9 @@ class Client extends EventEmitter {
         //Client Options
         this.intents = new Intents(options.intents)
         this.partials = options.partials ?? []
-        this.restRequestTimeout = options.restRequestTimeout ?? 15_000
-        this.restReadyTimeout = options.restReadyTimeout ?? 2000
+        this.rest = {}
+        this.rest.restRequestTimeout = options.rest?.restRequestTimeout ?? 15_000
+        this.rest.restReadyTimeout = options.rest?.restReadyTimeout ?? 2000
         this.version = options.version ?? 9
         this.encoding = options.encoding ?? "json"
         this.presence = options.presence
@@ -46,7 +47,7 @@ class Client extends EventEmitter {
         this.application = null
         this.heartbeatInterval = null  
         this.readyAt = null
-        this.api = new REST(this)
+        this.api = new REST(this.rest, this)
     }
 
     get cdn() {

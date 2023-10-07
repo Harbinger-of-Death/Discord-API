@@ -220,6 +220,18 @@ export interface ClientOptions {
      * Partials for this Client to use
      */
     partials?: Partials[]
+
+    /**
+     * The Presence of this Client
+     */
+    presence?: CreateClientPresence
+    /**
+     * The options for this Client REST
+     */
+    rest?: ClientRest
+}
+
+export interface ClientRest {
     /**
      * Time to wait before cancelling the REST request
      */
@@ -228,10 +240,6 @@ export interface ClientOptions {
      * Time to wait for everything to be cached before emitting READY event
      */
     restReadyTimeout?: number
-    /**
-     * The Presence of this Client
-     */
-    presence?: CreateClientPresence
 }
 
 export interface ClientEvents {
@@ -271,7 +279,7 @@ export interface ClientEvents {
     stickersDelete: [sticker: Sticker]
     messageCreate: [message: Message]
     messageUpdate: [oldMessage: Message | void, newMessage: Message]
-    messageDelete: [Message: Message]
+    messageDelete: [message?: Message]
     interactionCreate: [interaction: BaseInteraction | Interaction]
     messageReactionAdd: [reaction: MessageReaction, user: GuildMember | User]
     messageReactionRemove: [reaction: MessageReaction, user: User]
@@ -293,6 +301,9 @@ export interface ClientEvents {
     ratelimit: [ratelimit: RateLimitData]
     guildMembersChunk: [data: {}]
     guildAuditLogEntryCreate: [entry: AuditLogEntry]
+    threadCreate: [channel: ThreadChannel]
+    threadUpdate: [oldThread: ThreadChannel, newThread: ThreadChannel]
+    threadDelete: [channel: ThreadChannel | null]
 }
 
 
@@ -428,7 +439,7 @@ export interface GuildCreateData extends BaseOptions {
     /**
      * The Features of this Guild
      */
-    features?: Array<Extract<GuildFeatures, "InvitesDisabled" | "Community" | "Discoverable">>
+    features?: Array<Extract<GuildFeatures, "InvitesDisabled" | "Community" | "Discoverable" | "RaidAlertsEnabled">>
     /**
      * THe Description of this Guild
      */
@@ -437,6 +448,10 @@ export interface GuildCreateData extends BaseOptions {
      * Whether or not to enable the Premium Progress Bar of this Guild
      */
     premiumProgressBar?: boolean
+    /**
+     * The Channel where to send Raid Alerts to
+     */
+    safetyAlertsChannel?: ChannelResolvable
 }
 
 export interface PartialChannelData {
@@ -705,7 +720,7 @@ export interface CdnEndpoints {
     /**
      * Forms a default User avatar url
      */
-    DefaultUserAvatar: (discriminator: number, extension: ".png", size: number) => string
+    DefaultUserAvatar: (userId: string, extension: ".png") => string
     /**
      * Forms a User banner url
      */
@@ -1773,6 +1788,10 @@ export interface AutoModerationTriggerMetadata {
      */
     mentionTotalLimit: number
     /**
+     * Whether or not to enable protection against raids
+     */
+    mentionRaidProtectionEnabled?: boolean
+    /**
      * Array of Regex Patterns to run against Message content
      */
     regexPatterns?: Array<string>
@@ -1985,6 +2004,10 @@ export interface PresenceActivity {
      * The url of this Activity. Only used when in Streaming Activity type
      */
     url?: string
+    /**
+     * The state of this Activity. For Custom Statuses
+     */
+    state?: string
 }
 
 export interface VoiceStateData {
@@ -2203,6 +2226,22 @@ export interface ThreadMemberFetchOptions extends BaseFetchOptions {
     limit?: number
 }
 
+export interface RestOptions {
+    /**
+     * The token for your Bot
+     */
+    token?: string
+    /**
+     * The Discord API's version you want to use
+     */
+    version?: number
+    /**
+     * The type of the Token you want to use
+     */
+    tokenType?: "User" | "Bot"
+}
+
+export type MarkdownDiscordTimestamp = "t" | "T" | "d" | "D" | "f" | "F" | "R"
 export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string
 export type PresenceStatus = "online" | "offline" | "idle" | "dnd" | "invisible"
@@ -2221,7 +2260,7 @@ export type MessageResolvable = Message | string
 export type ApplicationFlagsResolvable = ApplicationFlagsStrings | bigint
 export type ApplicationFlagsStrings = "GatewayPresence" | "GatewayPresenceLimited" | "GatwewayGuildMembers" | "GatewayGuildMembersLimited" | "VerificationPendingGuildLimit" | "Embedded" | "GatewayMessageContent" | "GatewayMessageContentLimited" | "ApplicationCommandBadge" | "Active"
 export type MessageFlagsResolvable = MessageFlagsStrings | bigint
-export type MessageFlagsStrings = "Crossposted" | "IsCrosspost" | "SuppressEmbeds" | "SourceMessageDeleted" | "Urgent" | "HasThread" | "Ephemeral" | "Loading" | "FailedToMentionSomeRolesInThread"
+export type MessageFlagsStrings = "Crossposted" | "IsCrosspost" | "SuppressEmbeds" | "SourceMessageDeleted" | "Urgent" | "HasThread" | "Ephemeral" | "Loading" | "FailedToMentionSomeRolesInThread" | "SuppressNotifications" | "IsVoiceMessage"
 export type AllowedMentionTypes = "users" | "roles" | "everyone"
 export type StickerResolvable = string | Sticker
 export type InviteResolvable = string | Invite
@@ -2235,6 +2274,7 @@ export type UserResolvable = GuildMember | User | string
 export type UserFlagsResolvable = bigint | UserFlagsStrings
 export type UserFlagsStrings = "Staff" | "Partner" | "Hypesquad" | "BugHunterLevel1" | "HypeSquadOnlineHouse1" | "HypeSquadOnlineHouse2" | "HypeSquadOnlineHouse3" | "PremiumEarlySupporter" | "TeamPseudoUser" | "BugHunterLevel2" | "VerifiedBot" | "VerifiedDeveloper" | "CertifiedModerator" | "BotHttpInteractions" | "ActiveDeveloper" | "Spammer"
 export type ImageFormats = ".jpg" | ".jpeg" | ".png" | ".webp" | ".gif" | ".json"
+export type MediaFormats = ".mp3" | ".wav" | ".mp4" | ".webm" | ".pdf"
 export type Partials = "CHANNEL"
 export type ChannelResolvable = string | Channel | GuildChannel | ThreadChannel
 export type ChannelFlagsResolvable = ChannelFlagsString | bigint
@@ -2243,7 +2283,7 @@ export type BufferResolvable = string | Buffer | AttachmentBuilder | Stream | Ar
 export type GuildResolvable = Guild | string
 export type SystemChannelFlagsResolvable = bigint | SystemChannelFlagsStrings
 export type SystemChannelFlagsStrings = "SuppressJoinNotifications" | "SuppresPremiumSubscriptions" | "SuppressGuildReminderNotifications" | "SuppressJoinNotificationReplies" | "SuppressRoleSubscriptionPurchaseNotifications" | "SuppressRoleSubscriptionPurchaseNotificationReplies"
-export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2" | "RoleSubscriptionsAvailableForPurchase" | "RoleSubscriptionsEnabled"
+export type GuildFeatures = "AnimatedBanner" | "AnimatedIcon" | "AutoModeration" | "Banner" | "Community" | "DeveloperSupportServer" | "Discoverable" | "Featurable" | "InvitesDisabled" | "InviteSplash" | "MemberVerificationGateEnabled" | "MonetizationEnabled" | "MoreStickers" | "News" | "Partnered" | "PreviewEnabled" | "RoleIcons" | "TicketsEventsDisabled" | "VanityUrl" | "Verified" | "VipRegions" | "WelcomeScreenEnabled" | "ApplicationCommandPermissionsV2" | "RoleSubscriptionsAvailableForPurchase" | "RoleSubscriptionsEnabled" | "RaidAlertsEnabled"
 export type IntentsResolvable = bigint | IntentStrings
 export type IntentStrings = "Guilds" | "GuildMembers" | "GuildModeration" | "GuildEmojisAndStickers" | "GuildIntegrations" | "GuildWebhooks" | "GuildInvites" | "GuildVoiceStates" | "GuildPresences" | "GuildMessages" | "GuildMessageReactions" | "GuildMessageTyping" | "DirectMessages" | "DirectMessageReactions" | "DirectMessageTyping" | "MessageContent" | "GuildScheduledEvents" | "AutoModerationConfiguration" | "AutoModerationExecution"
 export type RESTMethod = "GET" | "POST" | "DELETE" | "PUT" | "PATCH" 
@@ -2252,7 +2292,7 @@ export type DateResolvable = Date | number
 export type ColorResolvable = string | number | Array<number>
 export type PermissionFlagsResolvable = PermissionFlagsStrings | bigint
 export type Locales = "id" | "da" | "de" | "en-GB" | "en-US" | "es-ES" | "fr" | "hr" | "it" | "lt" | "hu" | "nl" | "no" | "pl" | "pt-BR" | "ro" | "fi" | "sv-SE" | "vi" | "tr" | "cs" | "el" | "bg" | "ru" | "uk" | "hi" | "th" | "zh-CN" | "ja" | "zh-TW" | "ko"
-export type PermissionFlagsStrings = "CreateInstantInvite" | "KickMembers" | "BanMembers" | "Administrator" | "ManageChannels" | "ManageGuild" | "AddReactions" | "ViewAuditLog" | "PrioritySpeaker" | "Stream" | "ViewChannel" | "SendMessages" | "SendTTSMessage" | "ManageMessages" | "EmbedLinks" | "AttachFiles" | "ReadMessageHistory" | "MentionEveryone" | "UseExternalEmojis" | "ViewGuildInsights" | "Connect" | "Speak" | "MuteMembers" | "DeafenMembers" | "MoveMembers" | "UseVad" | "ChangeNickname" | "ManageNicknames" | "ManageRoles" | "ManageWebhooks" | "ManageEmojisAndStickers" | "UseApplicationCommands" | "RequestToSpeak" | "ManageEvents" | "ManageThreads" | "CreatePublicThreads" | "CreatePrivateThreads" | "UseExternalStickers" | "SendMessagesInThreads" | "UseEmbeddedActivities" | "ModerateMembers" | "ViewCreatorMonetizationAnalytics"
+export type PermissionFlagsStrings = "CreateInstantInvite" | "KickMembers" | "BanMembers" | "Administrator" | "ManageChannels" | "ManageGuild" | "AddReactions" | "ViewAuditLog" | "PrioritySpeaker" | "Stream" | "ViewChannel" | "SendMessages" | "SendTTSMessage" | "ManageMessages" | "EmbedLinks" | "AttachFiles" | "ReadMessageHistory" | "MentionEveryone" | "UseExternalEmojis" | "ViewGuildInsights" | "Connect" | "Speak" | "MuteMembers" | "DeafenMembers" | "MoveMembers" | "UseVad" | "ChangeNickname" | "ManageNicknames" | "ManageRoles" | "ManageWebhooks" | "ManageEmojisAndStickers" | "UseApplicationCommands" | "RequestToSpeak" | "ManageEvents" | "ManageThreads" | "CreatePublicThreads" | "CreatePrivateThreads" | "UseExternalStickers" | "SendMessagesInThreads" | "UseEmbeddedActivities" | "ModerateMembers" | "ViewCreatorMonetizationAnalytics" | "SendVoiceMessages" | "UseClydeAI"
 export type ComponentResolvable = ButtonBuilder | SelectMenuBuilder | InputTextBuilder
 export type ImageFormatWithoutAnimate = Exclude<ImageFormats, ".gif">
 export type ImageFormatWithoutLottie = Exclude<ImageFormats, ".json">

@@ -58,7 +58,8 @@ class GuildAutomoderationManager extends CachedManager {
                 regex_patterns: options.triggerMetadata.regexPatterns,
                 presets: options.triggerMetadata.presets,
                 allow_list: options.triggerMetadata.allowList,
-                mention_total_limit: options.triggerMetadata.mentionTotalLimit
+                mention_total_limit: options.triggerMetadata.mentionTotalLimit,
+                mention_raid_protection_enabled: options.triggerMetadata.mentionRaidProtectionEnabled
             } : undefined,
             actions: options.actions?.map(o => ({
                 type: o.type,

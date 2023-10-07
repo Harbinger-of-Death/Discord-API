@@ -468,7 +468,8 @@ module.exports.GuildFeaturesEnums = {
     WelcomeScreenEnabled: "WELCOME_SCREEN_ENABLED",
     ApplicationCommandPermissionsV2: "APPLICATION_COMMAND_PERMISSIONS_V2",
     RoleSubscriptionsAvailableForPurchase: "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
-    RoleSubscriptionsEnabled: "ROLE_SUBSCRIPTIONS_ENABLED"
+    RoleSubscriptionsEnabled: "ROLE_SUBSCRIPTIONS_ENABLED",
+    RaidAlertsEnabled: "RAID_ALERTS_ENABLED",
 }
 
 module.exports.ImageFileTypes = {
@@ -546,8 +547,9 @@ module.exports.CdnEndPoints = {
         if(avatar.startsWith("a_") && !forceStatic) extension = ".gif"
         return `${this.cdnRoot}/avatars/${userId}/${avatar}${extension}${size ? `?size=${size}` : ""}`
     },
-    DefaultUserAvatar: (discriminator, extension = ".png") => {
-        return `${this.cdnRoot}/embed/avatars/${discriminator % 5}${extension}`
+    DefaultUserAvatar: (userId, extension = ".png") => {
+        userId = BigInt(userId)
+        return `${this.cdnRoot}/embed/avatars/${(userId >> 22n) % 6n}${extension}`
     },
     UserBanner: (banner, extension = ".png", size = 64, forceStatic = false, userId) => {
         if(banner.startsWith("a_") && !forceStatic) extension = ".gif"
@@ -581,7 +583,7 @@ module.exports.CdnEndPoints = {
     },
     ApplicationAsset: (asset, extension = ".png", size = 64, applicationId) => {
         return `${this.cdnRoot}/app-assets/${applicationId}/${asset}${extension}${size ? `?size=${size}` : ""}`
-    }
+    },
 }
 
 module.exports.WebsocketEvents = {

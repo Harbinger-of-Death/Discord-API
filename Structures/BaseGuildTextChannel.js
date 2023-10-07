@@ -13,6 +13,7 @@ class BaseGuildTextChannel extends GuildChannel {
         this.lastMessageId = data.last_message_id ?? null
         this.lastPinnedAt = data.last_pinned_at ? new Date(data.last_pinned_at) : null
         this.lastPinnedTimestamp = this.lastPinnedAt?.getTime() ?? null
+        this.defaultThreadRateLimitPerUser = data.default_thread_rate_limit_per_user ?? null
         this.threads = new ThreadManager(this.guildId, this.id, this.client, [...this.client.channels.cache.filter(o => o.parentId === this.id)?.values()])
         this.messages = new MessageManager(this.id, this.guildId, this.client)
     }

@@ -6,10 +6,27 @@ const { EventTypes } = require("../Util/Constants");
 const Collection = require("../Util/Collection");
 const { setTimeout: wait } = require("timers/promises")
 class REST {
-    constructor(client) {
+    constructor(options = {}, client) {
+        Object.defineProperty(this, "token", { value: options.token ?? client?.token, writable: true })
         this.client = client
         this.ratelimitBucket = null
         this.hashCollection = new Collection()
+        this.version = client?.version ?? options.version ?? 10
+        this.tokenType = options.tokenType === `User` ? "" : `Bot `
+    }
+
+    get root() {
+        return `https://discord.com/api/v${this.version}`
+    }
+
+    setTokenType(type = this.tokenType) {
+        this.tokenType = type
+        return this;
+    }
+
+    setVersion(version = 10) {
+        this.version = version
+        return this;
     }
 
     setToken(token) {
@@ -20,11 +37,10 @@ class REST {
     async _make(url, options = {}) {
         const agent = new Agent({ keepAlive: true })
         const controller = new AbortController()
-        let timeout = setTimeout(() => controller.abort(), this.client?.restRequestTimeout ?? 5000).unref()
+        let timeout = setTimeout(() => controller.abort(), this.client?.rest.restRequestTimeout ?? 5000).unref()
         let headers = {
-            authorization: `Bot ${this.client?.token ?? this.token}`
+            authorization: `${this.tokenType}${this.client?.token ?? this.token}`
         }
-
         if(options.tokenType) headers["authorization"] = `${options.tokenType} ${options.authorization}`
         if(typeof options["reason"] === "string") headers["X-Audit-Log-Reason"] = options["reason"]
         const oldURL = url
@@ -81,6 +97,7 @@ class REST {
         if(!this.hashCollection.has(`${this.ratelimitBucket}:${oldURL}`)) {
             if(remaining <= 1) this.hashCollection.set(`${this.ratelimitBucket}:${oldURL}`, { limit, remaining, reset, bucket: this.ratelimitBucket, method: options.method, route: oldURL, ratelimited: true })
         }
+
         if(request.status === 429) {
             switch(scope) {
                 case "shared":
@@ -143,7 +160,7 @@ class REST {
     async handleRatelimit(oldUrl, options) {
         const ratelimitData = this.hashCollection.get(`${this.ratelimitBucket}:${oldUrl}`)
         if(ratelimitData) {
-            this.client.emit(EventTypes.Ratelimit, ratelimitData)
+            this.client?.emit(EventTypes.Ratelimit, ratelimitData)
             await wait(ratelimitData.reset ?? ratelimitData.retryAfter)
             ratelimitData.ratelimited = false
             this.hashCollection.delete(`${this.ratelimitBucket}:${oldUrl}`)

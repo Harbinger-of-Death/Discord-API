@@ -79,6 +79,7 @@ class Guild extends Base {
         this.joinedAt = data.joined_at ? new Date(data.joined_at) : null
         this.joinedTimestamp = this.joinedAt?.getTime() ?? null
         this.memberCount = data.member_count ?? null
+        this.safetyAlertsChannelId = data.safety_alerts_channel_id ?? null
         this.bans = new GuildBanManager(this.id, this.client)
         this.members = new GuildMemberManager(this.id, data.members, this.client)
         this.roles = new RoleManager(this.id, this.client, data.roles)
@@ -307,6 +308,19 @@ class Guild extends Base {
         return await this.edit({ features, reason })
     }
 
+    get safetyAlertsChannel() {
+        return this.client.channels.cache.get(this.safetyAlertsChannelId) ?? null
+    }
+
+    async setSafetyAlertsChannel(safetyAlertsChannel, reason) {
+        return this.edit({ safetyAlertsChannel, reason })
+    }
+
+    async fetchClydeSettings() {
+        const clydeSettings = await this.client.api.get(`${this.client.root}/guilds/${this.id}/clyde-settings`)
+        return { guildId: this.id ?? clydeSettings.guild_id, personality: clydeSettings.personality }
+    }
+
     equals(guild) {
         return this.name === guild.name &&
         this.verificationLevel === guild.verificationLevel &&
@@ -327,7 +341,8 @@ class Guild extends Base {
         this.features.length === guild.features.length &&
         this.features.every(features => guild.features.includes(features)) &&
         this.description === guild.description &&
-        this.premiumProgressBar === guild.premiumProgressBar
+        this.premiumProgressBar === guild.premiumProgressBar &&
+        this.safetyAlertsChannelId === guild.safetyAlertsChannelId
     }
 }
 

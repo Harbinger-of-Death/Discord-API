@@ -32,7 +32,7 @@ class ThreadChannel extends Channel {
     }
 
     get appliedTags() {
-        return this.parent?.availableTags.filter(o => this._data.applied_tags?.includes(o.id)) ?? null
+        return this.parent?.isForum() ? this.parent.availableTags.filter(o => this._data.applied_tags?.includes(o.id)) : null
     }
 
     async setName(name, reason) {
@@ -165,10 +165,12 @@ class ThreadChannel extends Channel {
     equals(channel) {
         return super.equals(channel) &&
         this.autoArchiveDuration === channel.autoArchiveDuration &&
-        this.name === channel.name &&
         this.rateLimitPerUser === channel.rateLimitPerUser &&
-        this.appliedTags.size === channel.appliedTags.size &&
-        this.appliedTags.every(tags => tags.equals(channel.appliedTags.get(tags.id)))
+        this.appliedTags?.size === channel.appliedTags?.size &&
+        this.archived === channel.archived &&
+        this.locked === channel.locked &&
+        this.archiveTimestamp === channel.archiveTimestamp &&
+        this.appliedTags?.every(tags => tags.equals(channel.appliedTags?.get(tags.id)))
     }
 
     get permissionOverwrites() {

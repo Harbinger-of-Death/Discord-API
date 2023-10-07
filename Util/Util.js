@@ -64,20 +64,35 @@ class Util {
             case ".gif":
                 mimeType = "image/gif"
                 break;
-            case ".html":
-                mimeType = "text/html"
+            case ".pdf":
+                mimeType = "application/pdf"
+                break;
+            case ".mp3":
+                mimeType = "audio/mpeg"
+                break;
+            case ".wav":
+                mimeType = "audio/wav"
+                break;
+            case ".mp4":
+                mimeType = "video/mp4"
+                break;
+            case ".webm":
+                mimeType = "video/webm"
                 break;
             default:
                 mimeType = "text/plain"
                 break;
-
+        
         }
         return `data:${mimeType};base64,${buffer.toString("base64")}`
     }
 
     static base64ToBuffer(base64) {
         if(base64 instanceof Buffer) return base64
-        if(base64.startsWith("data")) base64 = base64.replace(/^(data:[A-Za-z]+\/[A-Za-z]+;base64,)/, "")
+        if(base64.startsWith("data")) {
+            base64 = /^(?:data:[A-Za-z]+\/[A-Za-z]+;base64,(.+))/.exec(base64)
+            if(base64[1]) base64 = base64[1]
+        }
         return Buffer.from(base64, "base64")
     }
 
@@ -86,8 +101,31 @@ class Util {
         return fs.writeFileSync(directory, file)
     }
 
+    static discordTimestamp(timestamp, format = "R") {
+        if(Number.isNaN(timestamp) && !(timestamp instanceof Date)) throw new TypeError(`Invalid time`)
+        timestamp = Math.floor(timestamp / 1000)
+        return `<t:${timestamp}:${format}>`
+    }
+
     static codeBlock(text, language = "js") {
         return `\`\`\`${language}\n${text}\`\`\``
+    }
+
+    static createPaginationArrays(arr = [], arrLength = 2) {
+        return Array.from({ length: Math.ceil(arr.length / arrLength) }, (_, i) => arr.slice(i * arrLength, i * arrLength + arrLength))
+    }
+
+    static async promisifiedTimeout(ms) {
+        return new Promise(res => setTimeout(res, ms))
+    }
+
+    static setTimeout(ms, callback = () => {}) {
+        return setTimeout(callback, ms)
+    }
+
+    static setInterval(ms, callback) {
+        return setInterval(callback, ms)
+
     }
 }
 
