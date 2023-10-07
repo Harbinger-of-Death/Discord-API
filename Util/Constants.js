@@ -582,8 +582,8 @@ module.exports.CdnEndPoints = {
     ApplicationAsset: (asset, extension = ".png", size = 64, applicationId) => {
         return `${this.cdnRoot}/app-assets/${applicationId}/${asset}${extension}${size ? `?size=${size}` : ""}`
     },
-    UserAvatarDecoration: (avatarDecoration, extension = ".png", size = 64, userId) => {
-        return `${this.cdnRoot}/avatar-decorations/${userId}/${avatarDecoration}${extension}${size ? `?size=${size}` : ""}`
+    UserAvatarDecoration: (avatarDecorationAsset) => {
+        return `${this.cdnRoot}/avatar-decoration-presets/${avatarDecorationAsset}.png`
     }
 }
 

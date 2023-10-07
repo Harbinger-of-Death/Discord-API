@@ -4696,9 +4696,13 @@ export class User extends Base {
      */
     public createdTimestamp: number
     /**
-     * The avatar deocration of this User
+     * The SKU Id of this' User's avatar decoration
      */
-    public avatarDecoration: string
+    public avatarDecorationSkuId: string
+    /**
+     * The asset of this' User's avatar decoration
+     */
+    public avatarDecorationAsset: string
     /**
      * The GuildMember of this User in the specified Guild
      */
@@ -4746,7 +4750,7 @@ export class User extends Base {
     /**
      * Forms an Avatar Decoration url from this User
      */
-    public avatarDecorationURL(options?: Omit<ImageURLOptions<ImageFormatWithoutLottieAnimate>, "forceStatic">): string
+    public avatarDecorationURL(): string | void
     /**
      * Returns this User's banner
      */

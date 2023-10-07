@@ -10,7 +10,6 @@ class User extends Base {
         this.username = data.username ?? null
         this.avatar = data.avatar ?? null
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
-        this.avatarDecoration = data.avatar_decoration ?? null
         this.createdTimestamp = this.createdAt?.getTime() ?? null
         this.bot = data.bot ?? null
         this.banner = data.banner ?? null
@@ -20,6 +19,8 @@ class User extends Base {
         this.system = data.system ?? null
         this.globalName = data.global_name ?? null
         this.pronouns = data.pronouns ?? null
+        this.avatarDecorationSkuId = data.avatar_decoration_data?.sku_id ?? null
+        this.avatarDecorationAsset = data.avatar_decoration_data?.asset ?? null
     }
 
     async fetch(options = {}) {
@@ -73,9 +74,9 @@ class User extends Base {
         return await this.client.fetchOauthGuildMember(accessToken, guildId)
     }
 
-    avatarDecorationURL(options = {}) {
-        if(!this.avatarDecoration) return null;
-        return this.client.cdn.UserAvatarDecoration(this.avatarDecoration, options.extension, options.size, this.id)
+    avatarDecorationURL() {
+        if(!this.avatarDecorationAsset) return null;
+        return this.client.cdn.UserAvatarDecoration(this.avatarDecorationAsset)
     }
 
     toString() {
