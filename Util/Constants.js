@@ -426,7 +426,6 @@ module.exports.AutoModerationTriggerTypesEnums = {
     Spam: 3,
     KeywordPreset: 4,
     MentionSpam: 5,
-    MemberProfile: 6
 }
 
 module.exports.AutoModerationKeywordPresetTypesEnums = {
