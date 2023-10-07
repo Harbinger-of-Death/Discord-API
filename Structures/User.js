@@ -19,6 +19,8 @@ class User extends Base {
         this.system = data.system ?? null
         this.globalName = data.global_name ?? null
         this.pronouns = data.pronouns ?? null
+        this.avatarDecorationSkuId = data.avatar_decoration_data?.sku_id ?? null
+        this.avatarDecorationAsset = data.avatar_decoration_data?.asset ?? null
     }
 
     async fetch(options = {}) {
@@ -70,6 +72,11 @@ class User extends Base {
         const guildId = typeof guild === "string" ? guild : guild.id
         if(this.client.guilds.cache.has(guildId)) return await this.client.guilds.cache.get(guildId).members.fetch(this.id)
         return await this.client.fetchOauthGuildMember(accessToken, guildId)
+    }
+
+    avatarDecorationURL() {
+        if(!this.avatarDecorationAsset) return null;
+        return this.client.cdn.UserAvatarDecoration(this.avatarDecorationAsset)
     }
 
     toString() {

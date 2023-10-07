@@ -4696,6 +4696,14 @@ export class User extends Base {
      */
     public createdTimestamp: number
     /**
+     * The SKU Id of this' User's avatar decoration
+     */
+    public avatarDecorationSkuId: string
+    /**
+     * The asset of this' User's avatar decoration
+     */
+    public avatarDecorationAsset: string
+    /**
      * The GuildMember of this User in the specified Guild
      */
     public memberOf(guild: GuildResolvable, accessToken?: string): Promise<GuildMember>
@@ -4739,6 +4747,10 @@ export class User extends Base {
      * Shows this User's default avatar
      */
     public defaultUserAvatarURL(options?: Omit<ImageURLOptions<".png">, "size" | "forceStatic">): string
+    /**
+     * Forms an Avatar Decoration url from this User
+     */
+    public avatarDecorationURL(): string | void
     /**
      * Returns this User's banner
      */

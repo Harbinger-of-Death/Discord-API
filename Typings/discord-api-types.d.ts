@@ -19,7 +19,6 @@ export interface RoleSubscriptionData {
      */
     renewal: boolean
 }
-
 export interface Choices {
     /**
      * The name of this choice
@@ -753,6 +752,10 @@ export interface CdnEndpoints {
      * Forms a Guild Member Banner url
      */
     GuildMemberBanner: (banner: string, extension: ImageFormatWithoutLottie, size: number, forceStatic: boolean, guildId: string, userId: string) => string
+    /**
+     * Forms a User Avatar Decoration url
+     */
+    UserAvatarDecoration: (avatarDecorationAsset: string) => string
 }
 
 export interface ImageURLOptions<T = undefined> {
