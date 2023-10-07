@@ -8431,7 +8431,6 @@ export enum AutoModerationTriggerTypesEnums {
     Spam = 3,
     KeywordPreset = 4,
     MentionSpam = 5,
-    MemberProfile = 6
 }
 
 export enum AutoModerationKeywordPresetTypesEnums {
