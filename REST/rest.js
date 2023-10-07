@@ -37,7 +37,7 @@ class REST {
     async _make(url, options = {}) {
         const agent = new Agent({ keepAlive: true })
         const controller = new AbortController()
-        let timeout = setTimeout(() => controller.abort(), this.client?.restRequestTimeout ?? 5000).unref()
+        let timeout = setTimeout(() => controller.abort(), this.client?.rest.restRequestTimeout ?? 5000).unref()
         let headers = {
             authorization: `${this.tokenType}${this.client?.token ?? this.token}`
         }
@@ -97,6 +97,7 @@ class REST {
         if(!this.hashCollection.has(`${this.ratelimitBucket}:${oldURL}`)) {
             if(remaining <= 1) this.hashCollection.set(`${this.ratelimitBucket}:${oldURL}`, { limit, remaining, reset, bucket: this.ratelimitBucket, method: options.method, route: oldURL, ratelimited: true })
         }
+
         if(request.status === 429) {
             switch(scope) {
                 case "shared":

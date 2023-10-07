@@ -220,6 +220,18 @@ export interface ClientOptions {
      * Partials for this Client to use
      */
     partials?: Partials[]
+
+    /**
+     * The Presence of this Client
+     */
+    presence?: CreateClientPresence
+    /**
+     * The options for this Client REST
+     */
+    rest?: ClientRest
+}
+
+export interface ClientRest {
     /**
      * Time to wait before cancelling the REST request
      */
@@ -228,10 +240,6 @@ export interface ClientOptions {
      * Time to wait for everything to be cached before emitting READY event
      */
     restReadyTimeout?: number
-    /**
-     * The Presence of this Client
-     */
-    presence?: CreateClientPresence
 }
 
 export interface ClientEvents {
