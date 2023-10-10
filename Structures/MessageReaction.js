@@ -16,6 +16,18 @@ class MessageReaction extends Base {
         this.me = data.me ?? null
         this.emoji = new ReactionEmoji(data.emoji, this.guildId, this, this.client)
         this.users = new ReactionUserManager(this.channelId, this.messageId, this.emoji, this.client)
+        this.messageAuthorId = data.message_author_id ?? null
+        this.burst = data.count_details?.burst ?? null
+        this.normal = data.count_details?.normal ?? null
+        this.burstColors = data.burst_colors ?? []
+    }
+
+    isSuper() {
+        return this.burst === 1 ? true : false
+    }
+
+    isNormal() {
+        return this.normal === 1 ? true : false
     }
 
     async remove() {
@@ -38,6 +50,10 @@ class MessageReaction extends Base {
     
     get user() {
         return this.client.users.cache.get(this.userId) ?? null
+    }
+
+    get messageAuthor() {
+        return this.client.users.cache.get(this.messageAuthorId) ?? null
     }
 
     equals(reaction) {

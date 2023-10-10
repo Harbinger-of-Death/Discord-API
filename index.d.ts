@@ -2056,6 +2056,34 @@ export class MessageReaction extends Base {
      */
     public users: ReactionUserManager
     /**
+     * The id of the Message author of the reacted Message
+     */
+    public messageAuthorId: string
+    /**
+     * The Message author of the reacted Message
+     */
+    public messageAuthor: Readonly<User>
+    /**
+     * The count of super Reactions
+     */
+    public burst: number
+    /**
+     * The count of normal Reactions
+     */
+    public normal: number
+    /**
+     * Array of hex colors used for super reaction
+     */
+    public burstColors: string[]
+    /**
+     * Whether or not this MessageReaction is a super Reaction. Only works if you fetch the Message
+     */
+    public isSuper(): boolean
+    /**
+     * Whether or not this MessageReaction is a normal Reaction. Only works if you fetch the Message
+     */
+    public isNormal(): boolean
+    /**
      * Whether or not this MessageReaction is equals to another
      */
     public equals(reaction: MessageReaction): boolean
