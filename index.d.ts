@@ -8347,7 +8347,9 @@ export enum AuditLogEventEnums {
     AutoModerationRuleDelete = 142,
     AutoModerationBlockMessage = 143,
     AutoModerationFlagToChannel = 144,
-    AutoModerationUserCommunicationDisabled = 145
+    AutoModerationUserCommunicationDisabled = 145,
+    CreatorMonetizationRequestCreated = 150,
+    CreatorMonetizationTermsAccepted = 151,
     VoiceChannelStatusUpdate = 192,
     VoiceChannelStatusDelete = 193
 }
