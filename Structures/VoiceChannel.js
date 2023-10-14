@@ -3,6 +3,7 @@ class VoiceChannel extends VoiceBasedChannels {
     constructor(data = {}, client, extras) {
         super(data, client, extras)
         this.videoQualityMode = data.video_quality_mode ?? null
+        this.status = data.status ?? null
         this.userLimit = data.user_limit ?? null
     }
 
@@ -17,6 +18,7 @@ class VoiceChannel extends VoiceBasedChannels {
     equals(channel) {
         return super.equals(channel) &&
         this.videoQualityMode === channel.videoQualityMode &&
+        this.status === channel.status &&
         this.userLimit === channel.userLimit
     }
 

@@ -8214,7 +8214,8 @@ export enum     EventTypes {
     EmojiUpdate = "emojiUpdate",
     EmojiDelete = "emojiDelete",
     Ratelimit = "ratelimit",
-    GuildAuditLogEntryCreate = "guildAuditLogEntryCreate"
+    GuildAuditLogEntryCreate = "guildAuditLogEntryCreate",
+    VoiceChannelStatusUpdate = "voiceChannelStatusUpdate"
 }
 
 export enum WSEventCodes {
@@ -8347,6 +8348,8 @@ export enum AuditLogEventEnums {
     AutoModerationBlockMessage = 143,
     AutoModerationFlagToChannel = 144,
     AutoModerationUserCommunicationDisabled = 145
+    VoiceChannelStatusUpdate = 192,
+    VoiceChannelStatusDelete = 193
 }
 
 export enum MessageTypeEnums {
@@ -8546,7 +8549,8 @@ export enum WebsocketEvents {
     EmojiCreate = "EMOJI_CREATE",
     EmojiUpdate = "EMOJI_UPDATE",
     EmojiDelete = "EMOJI_DELETE",
-    GuildAuditLogEntryCreate = "GUILD_AUDIT_LOG_ENTRY_CREATE"
+    GuildAuditLogEntryCreate = "GUILD_AUDIT_LOG_ENTRY_CREATE",
+    VoiceChannelStatusUpdate = "VOICE_CHANNEL_STATUS_UPDATE"
 }
 
 export enum WebsocketStatus {

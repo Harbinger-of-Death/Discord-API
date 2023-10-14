@@ -81,7 +81,8 @@ Permissions.Flags = {
     ModerateMembers: 1n << 40n,
     ViewCreatorMonetizationAnalytics: 1n << 41n,
     SendVoiceMessages: 1n << 46n,
-    UseClydeAI: 1n << 47n
+    UseClydeAI: 1n << 47n,
+    SetVoiceChannelStatus: 1n << 48n
 }
 
 module.exports = Permissions
