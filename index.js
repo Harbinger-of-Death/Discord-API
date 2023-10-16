@@ -33,6 +33,7 @@ const SystemChannelFlags = require("./Util/SystemChannelFlags");
 const ThreadMemberFlags = require("./Util/ThreadMemberFlags");
 const UserFlags = require("./Util/UserFlags");
 const Util = require("./Util/Util");
+const GuildMember = require("./Structures/GuildMember");
 //Root class
 module.exports.Client = Client;
 module.exports.WebhookClient = WebhookClient;
@@ -113,3 +114,4 @@ module.exports.REST = REST;
 //Instances
 module.exports.Message = Message;
 module.exports.Interaction = Interaction;
+module.exports.GuildMember = GuildMember;
