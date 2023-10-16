@@ -165,7 +165,7 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         const filter = options.find(o => o.name === name)
         if(filter) {
             if(filter.type !== OptionTypesEnums.User) throw new RangeError(`Expected option type to be ${OptionTypesEnums.User}. Received=${filter.type}`)
-            if(this.guildId) return this.guild?.members._add({ user: this.data.resolved?.users[filter.value], ...this.data.resolved?.members[filter.value] }, { cache: true })
+            if(this.guildId && Object.hasOwn(this.data.resolved, "members")) return this.guild?.members._add({ user: this.data.resolved?.users[filter.value], ...this.data.resolved?.members[filter.value] }, { cache: true })
         }
 
         if(required) throw new RangeError(`Option has no such name found`)
