@@ -8433,7 +8433,8 @@ export enum GuildFeaturesEnums {
 }
 
 export enum AutoModerationEventTypesEnums {
-    MessageSend = 1
+    MessageSend = 1,
+    MemberUpdate = 2
 }
 
 export enum AutoModerationTriggerTypesEnums {
@@ -8441,6 +8442,7 @@ export enum AutoModerationTriggerTypesEnums {
     Spam = 3,
     KeywordPreset = 4,
     MentionSpam = 5,
+    MemberProfile = 6
 }
 
 export enum AutoModerationKeywordPresetTypesEnums {
@@ -8452,7 +8454,8 @@ export enum AutoModerationKeywordPresetTypesEnums {
 export enum AutoModerationActionTypesEnums {
     BlockMessage = 1,
     SendAlertMessage = 2,
-    Timeout = 3
+    Timeout = 3,
+    BlockMemberInteraction = 4
 }
 
 export enum ImageFileTypes {
