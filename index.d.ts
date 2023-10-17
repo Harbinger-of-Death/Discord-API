@@ -2945,6 +2945,10 @@ export class MessageManager extends Base {
      */
     public unpin(message: MessageResolvable, reason?: string): Promise<Message | void>
     /**
+     * Sends a Message to a Channel
+     */
+    public send(options: MessageOptionsData): Promise<Message>
+    /**
      * The cache of Messages this holds
      */
     public cache: Collection<string, Message>
@@ -4743,6 +4747,10 @@ export class User extends Base {
      * Returns this User's banner
      */
     public bannerURL(options?: ImageURLOptions<ImageFormatWithoutLottie>): string | void
+    /**
+     * Sends a Message to this User
+     */
+    public send(options: MessageOptionsData): Promise<Message>
 }
 
 export class GuildMember extends Base {
