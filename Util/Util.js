@@ -6,12 +6,14 @@ class Util {
     static resolveColor(color) {
         if(typeof color === "string") {
             if(color === "Random") color = Math.floor(Math.random() * (0xffffff + 1))
-            else color = parseInt(color.replace("#", ""), 16)
+            if(color.startsWith(`#`)) color = BigInt(`0x${color.replace("#", "")}`)
+            else if(color.startsWith(`0x`)) color = BigInt(color)
+            else color = BigInt(`0x${color}`)
         }
         if(Array.isArray(color)) color = (color[0] << 16) + (color[1] << 8) + color[2]
         if(color > 0xffffff || color < 0) throw new RangeError(`Color must be between 0-255 in range`)
-        else if(isNaN(color)) throw new RangeError(`Invalid Color type`)
-        return color
+        if(typeof color !== "number" && typeof color !== "bigint") throw new TypeError(`Color must be a valid decimal`)
+        return Number(color)
     }
 
     static generateDateISOString(date = Date.now()) {
