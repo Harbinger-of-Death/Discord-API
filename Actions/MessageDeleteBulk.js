@@ -12,11 +12,11 @@ class MessageDeleteBulk extends BaseAction {
         const packet = data.d
         const channel = this.client.channels.cache.get(packet.channel_id)
         const messages = new Collection(packet.ids?.map(o => [o, channel?.messages._add(o, { cache: false })]))
-        this.client.emit(EventTypes.MessageDeleteBulk, messages)
         for(const key of channel?.messages.cache.keys()) {
             channel?.messages.cache.delete(key)
         }
-        return;
+
+        return this.client.emit(EventTypes.MessageDeleteBulk, messages)
     }
 }
 
