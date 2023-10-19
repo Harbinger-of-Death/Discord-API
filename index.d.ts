@@ -1618,7 +1618,7 @@ export class ChatInputCommandInteraction extends CommandInteraction {
 
 export class SelectMenuInteraction extends MessageComponentInteraction {
     /**
-     * The selected options in this Interaction
+     * The selected options in this Select Menu Interaction
      */
     public values: string[]
     /**
