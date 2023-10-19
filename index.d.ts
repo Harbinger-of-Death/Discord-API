@@ -1622,6 +1622,10 @@ export class SelectMenuInteraction extends MessageComponentInteraction {
      */
     public values: string[]
     /**
+     * The default values of this Select Menu Interaction
+     */
+    public defaultValues: SelectMenuDefaultValues[]
+    /**
      * Gets the Channels that have been Selected in the Select Menu
      */
     public channels(): Collection<string, GuildChannel>

@@ -5,6 +5,7 @@ class SelectMenuInteraction extends MessageComponentInteraction {
     constructor(data = {}, guildId, client) {
         super(data, guildId, client)
         this.values = data.data?.values ?? []
+        this.defaultValues = this.component?.defaultValues ?? []
     }
 
     channels() {
