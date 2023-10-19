@@ -2241,6 +2241,17 @@ export interface RestOptions {
     tokenType?: "User" | "Bot"
 }
 
+export interface SelectMenuDefaultValues {
+    /**
+     * The id of the User, Role or Channel 
+     */
+    id: UserResolvable | RoleResolvable | ChannelResolvable
+    /**
+     * The type of the value that id represents
+     */
+    type: "user" | "role" | "channel"
+}
+
 export type MarkdownDiscordTimestamp = "t" | "T" | "d" | "D" | "f" | "F" | "R"
 export type WebhookResolvable = string | Webhook
 export type EmojiIdentifierResolvable = Emoji | string

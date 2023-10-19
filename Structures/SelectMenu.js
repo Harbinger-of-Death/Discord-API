@@ -15,6 +15,7 @@ class SelectMenu {
         this.minValues = data.min_values ?? null
         this.maxValues = data.max_values ?? null
         this.channelTypes = data.channel_types ?? null
+        this.defaultValues = data.default_values ?? null
         this.disabled = data.disalbed ?? null
     }
 }

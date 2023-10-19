@@ -10,6 +10,7 @@ class SelectMenuBuilder {
         this.minValues = data.minValues ?? data.min_values
         this.maxValues = data.maxValues ?? data.max_values
         this.channelTypes = data.channel_types ?? data.channelTypes ?? []
+        this.defaultValues = data.default_values ?? data.defaultValues ?? []
         this.disabled = data.disabled
     }
 
@@ -60,6 +61,26 @@ class SelectMenuBuilder {
 
     setDisabled(disabled) {
         this.disabled = disabled
+        return this;
+    }
+
+    setDefaultValues(...values) {
+        if(Array.isArray(values[0])) {
+            this.defaultValues = values[0].map(d => d)
+        } else {
+            this.defaultValues = values.map(d => d)
+        }
+
+        return this;
+    }
+
+    addDefaultValues(...values) {
+        if(Array.isArray(values[0])) {
+            values[0].map(d => this.defaultValues.push(d))
+        } else {
+            values.map(d => this.defaultValues.push(d))
+        }
+
         return this;
     }
 
@@ -122,6 +143,13 @@ class SelectMenuBuilder {
                 if(!channelTypeFilter.includes(value)) throw new TypeError(`Field[${index}]: Invalid Channel Type`)
             }
         }
+
+        if(this.defaultValues?.length) {
+            for(const [index, val] of this.defaultValues.entries()) {
+                if(!val.id || !val.type) throw new RangeError(`Field[${index}]: Missing id and type`)
+                if(typeof val.id !== "string" || typeof val.type !== "string") throw new TypeError(`Field[${index}]: Invalid id and type type's`)
+            }
+        }
         return;
     }
 
@@ -135,7 +163,8 @@ class SelectMenuBuilder {
             min_values: this.minValues,
             max_values: this.maxValues,
             channel_types: this.channelTypes,
-            disabled: this.disabled
+            disabled: this.disabled,
+            default_values: this.defaultValues
         }
     }
 
