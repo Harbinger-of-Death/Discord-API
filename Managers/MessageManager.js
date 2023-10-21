@@ -1,5 +1,5 @@
 const Message = require("../Structures/Message");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const EmojiResolver = require("../Util/EmojiResolver");
 const DataPayload = require("../Util/DataPayload");
 const Snowflake = require("../Util/Snowflake");
@@ -29,7 +29,7 @@ class MessageManager extends CachedManager {
     async _fetchId(message, options = {}) {
         const { cache = true, force = false } = options
         const messageId = message instanceof Message ? message.id : message
-        if(!SnowflakeRegex.test(messageId)) throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId)) throw new RangeError(`Invalid Message`)
         if(this.cache.has(messageId) && !force) return this.cache.get(messageId)
         message = await this.client.api.get(`${this.client.root}/channels/${this.channelId}/messages/${messageId}`)
         return this._add(message, { cache, force: true })
@@ -37,7 +37,7 @@ class MessageManager extends CachedManager {
 
     async edit(message, options = {}) {
         const messageId = message instanceof Message ? message.id : message
-        if(!SnowflakeRegex.test(messageId) && !this.cache.has(messageId)) throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId) && !this.cache.has(messageId)) throw new RangeError(`Invalid Message`)
         const body = await DataPayload.create(options)
         message = await this.client.api.patch(`${this.client.root}/channels/${this.channelId}/messages/${messageId}`, { body })
         return this._add(message, { cache: true, force: true })
@@ -45,7 +45,7 @@ class MessageManager extends CachedManager {
 
     async delete(message, reason) {
         const messageId = message instanceof Message ? message.id : message
-        if(!SnowflakeRegex.test(messageId) && !this.cache.has(messageId)) throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId) && !this.cache.has(messageId)) throw new RangeError(`Invalid Message`)
         message = this.cache.get(messageId)
         await this.client.api.delete(`${this.client.root}/channels/${this.channelId}/messages/${messageId}`, { reason })
         return message ?? null
@@ -59,14 +59,14 @@ class MessageManager extends CachedManager {
 
     async crosspost(message) {
         const messageId = message instanceof Message ? message.id : message
-        if(!SnowflakeRegex.test(messageId) && !this.cache.has(messageId)) throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId) && !this.cache.has(messageId)) throw new RangeError(`Invalid Message`)
         message = await this.client.api.post(`${this.client.root}/channels/${this.channelId}/messages/${messageId}/crosspost`)
         return this._add(message)
     }
 
     async react(message, emoji) {
         const messageId = message instanceof Message ? message.id : message
-        if(!SnowflakeRegex.test(messageId) && !this.cache.has(messageId)) throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId) && !this.cache.has(messageId)) throw new RangeError(`Invalid Message`)
         emoji = EmojiResolver.create(emoji, this.client)
         await this.client.api.put(`${this.client.root}/channels/${this.channelId}/messages/${messageId}/reactions/${emoji}/@me`)
         return this.cache.get(messageId) ?? null
@@ -94,14 +94,14 @@ class MessageManager extends CachedManager {
 
     async pin(message, reason) {
         const messageId = message instanceof Message ? message.id : message
-        if(!SnowflakeRegex.test(messageId)) throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId)) throw new RangeError(`Invalid Message`)
         await this.client.api.put(`${this.client.root}/channels/${this.channelId}/pins/${messageId}`, { reason })
         return this.cache.get(messageId) ?? null
     }
 
     async unpin(message, reason) {
         const messageId = message instanceof Message ? message.id : message
-        if(!SnowflakeRegex.test(messageId)) throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId)) throw new RangeError(`Invalid Message`)
         await this.client.api.delete(`${this.client.root}/channels/${this.channelId}/pins/${messageId}`, { reason })
         return this.cache.get(messageId) ?? null
     }
@@ -110,7 +110,7 @@ class MessageManager extends CachedManager {
         if(messages instanceof Map) return [...messages.keys()]
         if(Array.isArray(messages)) return messages.map(o => {
             const messageId = o instanceof Message ? o.id : o
-            if(!SnowflakeRegex.test) throw new RangeError(`Invalid Message`)
+            if(!RegExes.SnowflakeRegExp.test) throw new RangeError(`Invalid Message`)
             return messageId
         })
         return messages

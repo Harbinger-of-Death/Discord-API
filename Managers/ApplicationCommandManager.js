@@ -1,7 +1,7 @@
 const SlashCommandBuilder = require("../Builders/SlashCommandBuilder");
 const SlashOptionBuilder = require("../Builders/SlashOptionBuilder");
 const ApplicationCommand = require("../Structures/ApplicationCommand");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const CachedManager = require("./CachedManager");
 class ApplicationCommandManager extends CachedManager {
     constructor(client, extras) {
@@ -20,7 +20,7 @@ class ApplicationCommandManager extends CachedManager {
     async _fetchId(command, options = {}) {
         const { cache = true, force = false } = options
         const commandId = command instanceof ApplicationCommand ? command.id : command
-        if(!SnowflakeRegex.test(commandId)) throw new RangeError(`Invalid Application Command`)
+        if(!RegExes.SnowflakeRegExp.test(commandId)) throw new RangeError(`Invalid Application Command`)
         if(this.cache.has(commandId) && !force) return this.cache.get(commandId)
         command = await this.client.api.get(`${this.client.root}/applications/${this.client.user.id}${this.guildId ? `/guilds/${this.guildId}/commands/${commandId}` : `/commands/${commandId}`}`)
         return this._add(command, { cache, force: true })
@@ -34,7 +34,7 @@ class ApplicationCommandManager extends CachedManager {
 
     async edit(command, options = {}) {
         const commandId = command instanceof ApplicationCommand ? command.id : command
-        if(!SnowflakeRegex.test(commandId) && !this.cache.has(commandId)) throw new RangeError(`Invalid Application Command`)
+        if(!RegExes.SnowflakeRegExp.test(commandId) && !this.cache.has(commandId)) throw new RangeError(`Invalid Application Command`)
         const body = ApplicationCommandManager.modifyCommand(options)
         command = await this.client.api.patch(`${this.client.root}/applications/${this.client.user.id}${this.guildId ? `/guilds/${this.guildId}/commands/${commandId}` : `/commands/${commandId}`}`, { body })
         return this._add(command, command.guild_id, { cache: true, force: true })
@@ -48,7 +48,7 @@ class ApplicationCommandManager extends CachedManager {
 
     async delete(command) {
         const commandId = command instanceof ApplicationCommand ? command.id : command
-        if(!SnowflakeRegex.test(commandId) && !this.cache.has(commandId)) throw new RangeError(`Invalid Application Command`)
+        if(!RegExes.SnowflakeRegExp.test(commandId) && !this.cache.has(commandId)) throw new RangeError(`Invalid Application Command`)
         command = this.cache.get(commandId)
         await this.client.api.delete(`${this.client.root}/applications/${this.client.user.id}${this.guildId ? `/guilds/${this.guildId}/commands/${commandId}` : `/commands/${commandId}`}`)
         return command ?? null

@@ -1,5 +1,5 @@
 const GuildScheduledEvent = require("../Structures/GuildScheduledEvent");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const Util = require("../Util/Util");
 const CachedManager = require("./CachedManager");
 class GuildScheduledEventManager extends CachedManager {
@@ -44,7 +44,7 @@ class GuildScheduledEventManager extends CachedManager {
 
     async delete(scheduledEvent) {
         const scheduledEventId = scheduledEvent instanceof GuildScheduledEvent ? scheduledEvent.id : scheduledEvent
-        if(!SnowflakeRegex.test(scheduledEventId)) throw new RangeError(`Invalid Guild Scheduled Event`)
+        if(!RegExes.SnowflakeRegExp.test(scheduledEventId)) throw new RangeError(`Invalid Guild Scheduled Event`)
         scheduledEvent = this.cache.get(scheduledEventId)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/scheduled-events/${scheduledEventId}`)
         return scheduledEvent ?? null

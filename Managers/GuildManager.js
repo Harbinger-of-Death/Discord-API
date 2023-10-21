@@ -4,7 +4,7 @@ const OauthGuild = require("../Structures/OauthGuild");
 const VoiceRegion = require("../Structures/VoiceRegion");
 const Webhook = require("../Structures/Webhook");
 const WelcomeScreen = require("../Structures/WelcomeScreen");
-const { SnowflakeRegex, GuildFeaturesEnums } = require("../Util/Constants");
+const { RegExes, GuildFeaturesEnums } = require("../Util/Constants");
 const SystemChannelFlags = require("../Util/SystemChannelFlags");
 const Util = require("../Util/Util");
 const CachedManager = require("./CachedManager");
@@ -49,7 +49,7 @@ class GuildManager extends CachedManager {
 
     async edit(guild, options = {}) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const { reason } = options
         const body = await GuildManager.transformPayload(options)
         guild = await this.client.api.patch(`${this.client.root}/guilds/${guildId}`, { body, reason })
@@ -58,7 +58,7 @@ class GuildManager extends CachedManager {
 
     async delete(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!SnowflakeRegex.test(guildId) && !this.cache.has(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!RegExes.SnowflakeRegExp.test(guildId) && !this.cache.has(guildId)) throw new RangeError(`Invalid Guild`)
         guild = this.cache.get(guildId)
         await this.client.api.delete(`${this.client.root}/guilds/${guildId}`)
         return guild ?? null
@@ -67,7 +67,7 @@ class GuildManager extends CachedManager {
     async setMfaLevel(guild, options = {}) {
         const { reason, mfaLevel } = options
         const guildId = typeof guild === "string" ? guild : guild.id
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const body = {
             level: mfaLevel
         }
@@ -78,28 +78,28 @@ class GuildManager extends CachedManager {
 
     async fetchVoiceRegions(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const voiceRegions = await this.client.api.get(`${this.client.root}/guilds/${guildId}/regions`)
         return new this.cache.constructor(voiceRegions?.map(o => [o.id, new VoiceRegion(o, guildId, this.client)]))
     }
 
     async fetchWebhooks(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const webhooks = await this.client.api.get(`${this.client.root}/guilds/${guildId}/webhooks`)
         return new this.cache.constructor(webhooks?.map(o => [o.id, new Webhook(o, this.client)]))
     }
 
     async fetchPreview(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const preview = await this.client.api.get(`${this.client.root}/guilds/${guildId}/preview`)
         return new GuildPreview(preview, this.client)
     }
 
     async fetchPruneCount(guild, options = {}) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const query = {
             days: options.days ?? 7,
             include_roles: options.roles?.map(o => typeof o === "string" ? o : o.id)
@@ -111,14 +111,14 @@ class GuildManager extends CachedManager {
 
     async fetchWidgetSettings(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const settings = await this.client.api.get(`${this.client.root}/guilds/${guildId}/widget`)
         return { enabled: settings.enabled, channelId: settings.channel_id }
     }
 
     async beginPrune(guild, options = {}) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const { days = 7, computePruneCount = true, roles: [], reason } = options
         const body = { days, compute_prune_count: computePruneCount, include_roles: roles.map(o => typeof o === "string" ? o : o.id) }
         const count = await this.client.api.post(`${this.client.root}/guilds${guildId}/prune`, { body, reason })
@@ -127,7 +127,7 @@ class GuildManager extends CachedManager {
 
     async modifyWidget(guild, options = {}) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)        
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)        
         const { reason, enabled, channel } = options
         const body = { enabled, channel_id: typeof channel === "string" ? channel : channel?.id }
         const widget = await this.client.api.patch(`${this.client.root}/guilds/${guildId}/widget`, { body, reason })
@@ -136,14 +136,14 @@ class GuildManager extends CachedManager {
 
     async fetchVanityURL(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const vanity = await this.client.api.get(`${this.client.root}/guilds/${guildId}/vanity-url`)
         return { code: vanity.code, uses: vanity.uses }
     }
 
     async fetchGuildWelcomeScreen(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const welcomeScreen = await this.client.api.get(`${this.client.root}/guilds/${guildId}/welcome-screen`)
         return new WelcomeScreen(welcomeScreen, guildId, this.client)
     }
@@ -151,7 +151,7 @@ class GuildManager extends CachedManager {
     async modifyGuildWelcomeScreen(guild, options = {}) {
         const { reason } = options
         const guildId = guild instanceof Guild ? guild.id : guild
-        if(!this.cache.has(guildId) && !SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!this.cache.has(guildId) && !RegExes.SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const body = { enabled: options.enabled, welcome_channels: options.welcomeChannels?.map(o => {
             return {
                 channel_id: typeof o.channel === "string" ? o.channel : o.channel?.id,

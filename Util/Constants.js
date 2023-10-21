@@ -1,3 +1,8 @@
+module.exports.RegExes = {
+    SnowflakeRegExp: /^\d{17,19}/,
+    SNAKE_CASE_REGEXP: /^([A-Za-z]+_)*[A-Za-z]+$/
+}
+
 module.exports.MessageTypeEnums = {
     Default: 0,
     RecipientAdd: 1,
@@ -500,7 +505,6 @@ module.exports.ConnectionVisibility = {
 
 module.exports.cdnRoot = `https://cdn.discordapp.com`
 
-module.exports.SnowflakeRegex = /^\d{17,19}/
 
 module.exports.NonSystemMessageTypes = [
     this.MessageTypeEnums.Default,

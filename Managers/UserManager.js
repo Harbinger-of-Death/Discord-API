@@ -4,7 +4,7 @@ const OauthUserConnections = require("../Structures/OauthUserConnections");
 const RoleConnectionsMetadata = require("../Structures/RoleConnectionsMetadata");
 const RoleConnections = require("../Structures/RoleConnections");
 const User = require("../Structures/User");
-const { SnowflakeRegex, ChannelTypesEnums } = require("../Util/Constants");
+const { RegExes, ChannelTypesEnums } = require("../Util/Constants");
 const Util = require("../Util/Util");
 const CachedManager = require("./CachedManager");
 class UserManager extends CachedManager {
@@ -21,7 +21,7 @@ class UserManager extends CachedManager {
     async fetch(user, options = {}) {
         const { cache = true, force = false } = options
         let userId = user instanceof User ? user.id : user.id ?? user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         if(this.cache.has(userId) && !force) return this.cache.get(userId)
         if(userId === this.client.user.id) userId = `@me`
         user = await this.client.api.get(`${this.client.root}/users/${userId}`)
@@ -36,7 +36,7 @@ class UserManager extends CachedManager {
 
     async createDm(user, options = {}) {
         const userId = user instanceof User ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         const { cache = true, force = false } = options
         if(this.dmChannel(userId) && !force) return this.dmChannel(userId)
         const body = { recipient_id: userId }
@@ -46,7 +46,7 @@ class UserManager extends CachedManager {
 
     async send(user, options = {}) {
         const userId = user instanceof User ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         return await (await this.createDm(userId)).send(options)
     }
 
@@ -65,7 +65,7 @@ class UserManager extends CachedManager {
             access_tokens: options.accessTokens,
             nicks: options.users?.reduce((acc, user) => {
                 const userId = user instanceof User ? user?.id : user
-                if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+                if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
                 acc[userId] = user.nickname ?? user.nick
                 return acc
             }, {})
@@ -78,7 +78,7 @@ class UserManager extends CachedManager {
 
     dmChannel(user) {
         const userId = user instanceof User ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         return this.client.channels.cache.find(o => o.type === ChannelTypesEnums.Dm && o.recipientId === userId)
     }
 

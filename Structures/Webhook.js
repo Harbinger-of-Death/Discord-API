@@ -1,5 +1,5 @@
 const Base = require("../Base/base");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const DataPayload = require("../Util/DataPayload");
 const Util = require("../Util/Util");
 class Webhook extends Base {
@@ -30,7 +30,7 @@ class Webhook extends Base {
 
     async fetchMessage(message, options = {}) {
         const messageId = typeof message === "string" ? message : message.id
-        if(!SnowflakeRegex.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId) && messageId !== "@original") throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId) && messageId !== "@original") throw new RangeError(`Invalid Message`)
         const query = { thread_id: typeof options.thread === "string" ? options.thread : options.thread?.id }
         message = await this.client.api.get(`${this.client.root}/webhooks/${this.id}/${this.token}/messages/${messageId}`, { query })
         return this.client.channels.cache.get(message?.channel_id)?.messages._add(message)
@@ -45,7 +45,7 @@ class Webhook extends Base {
 
     async editMessage(message, options = {}) {
         const messageId = typeof message === "string" ? message : message.id
-        if(!SnowflakeRegex.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId) && messageId !== "@original") throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId) && messageId !== "@original") throw new RangeError(`Invalid Message`)
         const query = { thread_id: typeof options.thread === "string" ? options.thread : options.thread?.id }
         const body = await DataPayload.create(options)
         message = await this.client.api.patch(`${this.client.root}/webhooks/${this.id}/${this.token}/messages/${messageId}`, { query, body })
@@ -54,7 +54,7 @@ class Webhook extends Base {
 
     async deleteMessage(message, thread) {
         const messageId = typeof message === "string" ? message : message.id
-        if(!SnowflakeRegex.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId) && messageId !== "@original") throw new RangeError(`Invalid Message`) 
+        if(!RegExes.SnowflakeRegExp.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId) && messageId !== "@original") throw new RangeError(`Invalid Message`) 
         const query = { thread_id: typeof thread === "string" ? thread : thread?.id }
         await this.client.api.delete(`${this.client.root}/webhooks/${this.id}/${this.token}/messages/${messageId}`, { query })
         return;

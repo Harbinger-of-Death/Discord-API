@@ -1,6 +1,6 @@
 const Base = require("../Base/base");
 const GuildMemberRoleManager = require("../Managers/GuildMemberRoleManager");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const GuildMemberFlags = require("../Util/GuildMemberFlags");
 const Permissions = require("../Util/Permissions");
 class GuildMember extends Base {
@@ -102,7 +102,7 @@ class GuildMember extends Base {
 
     permissionsIn(channel) {
         const channelId = typeof channel === "string" ? channel : channel.id
-        if(!SnowflakeRegex.test(channelId)) throw new RangeError(`Invalid Channel`)
+        if(!RegExes.SnowflakeRegExp.test(channelId)) throw new RangeError(`Invalid Channel`)
         return this.client.channels.cache.get(channelId)?.permissionsFor(this)
     }
 

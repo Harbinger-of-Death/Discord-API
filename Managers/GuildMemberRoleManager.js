@@ -1,5 +1,5 @@
 const Role = require("../Structures/Role");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const CachedManager = require("./CachedManager");
 class GuildMemberRoleManager extends CachedManager {
     constructor(member, guildId, iterable, client) {
@@ -17,13 +17,13 @@ class GuildMemberRoleManager extends CachedManager {
         if(Array.isArray(roles)) {
             roles = roles.reduce((acc, prev) => {
                 const roleId = prev instanceof Role ? prev.id : prev
-                if(!SnowflakeRegex.test(roleId)) throw new RangeError(`Invalid Role`)
+                if(!RegExes.SnowflakeRegExp.test(roleId)) throw new RangeError(`Invalid Role`)
                 return acc.concat(roleId)
             }, [...this.cache.keys()])
             return await this.set(roles, reason)
         }
         const roleId = roles instanceof Role ? roles.id : roles
-        if(!SnowflakeRegex.test(roleId)) throw new RangeError(`Invalid Role`)
+        if(!RegExes.SnowflakeRegExp.test(roleId)) throw new RangeError(`Invalid Role`)
         await this.client.api.put(`${this.client.root}/guilds/${this.guildId}/members/${this.member?.id}/roles/${roleId}`, { reason })
         return this.member
     }
@@ -33,7 +33,7 @@ class GuildMemberRoleManager extends CachedManager {
         if(Array.isArray(roles)) {
             roles = this.cache?.filter(o => {
                 const roleId = o instanceof Role ? o.id : o
-                if(!SnowflakeRegex.test(roleId)) throw new RangeError(`Invalid Error`)
+                if(!RegExes.SnowflakeRegExp.test(roleId)) throw new RangeError(`Invalid Error`)
                 return !roles.includes(roleId)
             })
 
@@ -41,7 +41,7 @@ class GuildMemberRoleManager extends CachedManager {
         }
 
         const roleId = roles instanceof Role ? roles.id : roles
-        if(!SnowflakeRegex.test(roleId)) throw new RangeError(`Invalid Role`)
+        if(!RegExes.SnowflakeRegExp.test(roleId)) throw new RangeError(`Invalid Role`)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/members/${this.member?.id}/roles/${roleId}`, { reason })
         return this.member
     }

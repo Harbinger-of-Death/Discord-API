@@ -53,7 +53,7 @@ class StageInstanceManager extends CachedManager {
 
     async delete(channel, reason) {
         const channelId = channel instanceof StageChannel ? channel.id : channel
-        if(!SnowflakeRegex.test(channelId)) throw new RangeError(`Invalid Stage Channel`)
+        if(!RegExes.SnowflakeRegExp.test(channelId)) throw new RangeError(`Invalid Stage Channel`)
         await this.client.api.delete(`${this.client.root}/stage-instances/${channelId}`, { reason })
         return;
     }

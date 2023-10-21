@@ -1,5 +1,5 @@
 const Base = require("../Base/base");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const Permissions = require("../Util/Permissions");
 const Snowflake = require("../Util/Snowflake");
 
@@ -92,7 +92,7 @@ class Role extends Base {
 
     permissionsIn(channel) {
         const channelId = typeof channel === "string" ? channel : channel.id
-        if(!SnowflakeRegex.test(channelId)) throw new RangeError(`Invalid Channel`)
+        if(!RegExes.SnowflakeRegExp.test(channelId)) throw new RangeError(`Invalid Channel`)
         return this.client.channels.cache.get(channelId)?.permissionsFor(this)
     }
 

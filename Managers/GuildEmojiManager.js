@@ -1,5 +1,5 @@
 const Emoji = require("../Structures/Emoji");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const Util = require("../Util/Util");
 const EmojiManager = require("./EmojiManager");
 class GuildEmojiManager extends EmojiManager {
@@ -19,7 +19,7 @@ class GuildEmojiManager extends EmojiManager {
     async _fetchId(emoji, options = {}) {
         const { cache = true, force = false } = options
         const emojiId = emoji instanceof Emoji ? emoji.id : emoji
-        if(!SnowflakeRegex.test(emojiId)) throw new RangeError(`Invalid Emoji`)
+        if(!RegExes.SnowflakeRegExp.test(emojiId)) throw new RangeError(`Invalid Emoji`)
         if(this.cache.has(emojiId) && !force) return this.cache.get(emojiId)
         emoji = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/emojis/${emojiId}`)
         return this._add(emoji, { cache, force: true })
@@ -34,7 +34,7 @@ class GuildEmojiManager extends EmojiManager {
 
     async edit(emoji, options = {}) {
         const emojiId = emoji instanceof Emoji ? emoji.id : emoji
-        if(!SnowflakeRegex.test(emojiId) && !this.cache.has(emojiId)) throw new RangeError(`Invalid Emoji`)
+        if(!RegExes.SnowflakeRegExp.test(emojiId) && !this.cache.has(emojiId)) throw new RangeError(`Invalid Emoji`)
         const body = { name: options.name, roles: options.roles?.map(o => typeof o === "string" ? o : o.id) }
         const { reason } = options
         emoji = await this.client.api.patch(`${this.client.root}/guilds/${this.guildId}/emojis/${emojiId}`, { body, reason })
@@ -43,7 +43,7 @@ class GuildEmojiManager extends EmojiManager {
 
     async delete(emoji, reason) {
         const emojiId = emoji instanceof Emoji ? emoji.id : emoji
-        if(!SnowflakeRegex.test(emojiId) && !this.cache.has(emojiId)) throw new RangeError(`Invalid Emoji`)
+        if(!RegExes.SnowflakeRegExp.test(emojiId) && !this.cache.has(emojiId)) throw new RangeError(`Invalid Emoji`)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/emojis/${emojiId}`, { reason })
         return this.cache.get(emojiId) ?? null
     }

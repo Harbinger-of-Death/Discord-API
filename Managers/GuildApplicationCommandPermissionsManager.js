@@ -1,5 +1,5 @@
 const ApplicationCommandPermission = require("../Structures/ApplicationCommandPermission");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const CachedManager = require("./CachedManager");
 class GuildApplicationCommandPermissionsManager extends CachedManager {
     constructor(guildId, commandId, client) {
@@ -33,7 +33,7 @@ class GuildApplicationCommandPermissionsManager extends CachedManager {
     async _fetchId(command = this.commandId, options = {}) {
         const { cache = true, force = false } = options
         const commandId = typeof command === "string" ? command : command.id
-        if(!SnowflakeRegex.test(commandId)) throw new RangeError(`Invalid Application Command`)
+        if(!RegExes.SnowflakeRegExp.test(commandId)) throw new RangeError(`Invalid Application Command`)
         if(this.cache.has(commandId) && !force) return this.cache.get(commandId)
         const permission = await this.client.api.get(`${this.client.root}/applications/${this.client.user.id}/guilds/${this.guildId}/commands/${commandId}/permissions`)
         return this._add(permission, { cache, force: true })
@@ -42,7 +42,7 @@ class GuildApplicationCommandPermissionsManager extends CachedManager {
     async create(options = {}) {
         const { permissions, accessToken = "", command = this.commandId } = options
         const commandId = typeof command === "string" ? command : command?.id
-        if(!SnowflakeRegex.test(commandId)) throw new RangeError(`Invalid Application Command`)
+        if(!RegExes.SnowflakeRegExp.test(commandId)) throw new RangeError(`Invalid Application Command`)
         if(!accessToken) throw new RangeError(`No Access Token provided`)
         const body = { permissions: permissions?.map(o => {
             return {

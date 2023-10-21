@@ -16,7 +16,8 @@ const StickerPack = require("../Structures/StickerPack");
 const VoiceRegion = require("../Structures/VoiceRegion");
 const Webhook = require("../Structures/Webhook");
 const Collection = require("../Util/Collection");
-const { CdnEndPoints, SnowflakeRegex, EventTypes, WebsocketStatus } = require("../Util/Constants");
+const { CdnEndPoints, RegExes, EventTypes, WebsocketStatus } = require("../Util/Constants");
+const { SnowflakeRegExp } = RegExes
 const Intents = require("../Util/Intents");
 class Client extends EventEmitter {
     constructor(options = {}) {
@@ -98,14 +99,14 @@ class Client extends EventEmitter {
 
     async fetchGuildPreview(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild.id ?? guild
-        if(!SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const preview = await this.api.get(`${this.root}/guilds/${guildId}/preview`)
         return new GuildPreview(preview, this)
     }
 
     async fetchGuildWidget(guild) {
         const guildId = guild instanceof Guild ? guild.id : guild.id ?? guild
-        if(!SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         const widget = await this.api.get(`${this.root}/guilds/${guildId}/widget.json`)
         return new GuildWidget(widget, this)
     }
@@ -134,7 +135,7 @@ class Client extends EventEmitter {
 
     async fetchSticker(sticker) {
         const stickerId = sticker instanceof Sticker ? sticker.id : sticker
-        if(!SnowflakeRegex.test(stickerId)) throw new RangeError(`Invalid Sticker`)
+        if(!SnowflakeRegExp.test(stickerId)) throw new RangeError(`Invalid Sticker`)
         sticker = await this.api.get(`${this.root}/stickers/${stickerId}`)
         return new Sticker(sticker, sticker.guild_id, this)
     }
@@ -151,7 +152,7 @@ class Client extends EventEmitter {
 
     async fetchOauthGuildMember(accessToken, guild) {
         const guildId = typeof guild === "string" ? guild : guild.id
-        if(!SnowflakeRegex.test(guildId)) throw new RangeError(`Invalid Guild`)
+        if(!SnowflakeRegExp.test(guildId)) throw new RangeError(`Invalid Guild`)
         if(!accessToken) throw new RangeError(`Missing Access Token`)
         const member = await this.api.get(`${this.root}/users/@me/guilds/${guildId}/member`, { authorization: accessToken, tokenType: `Bearer` })
         return new GuildMember(member, this, { guildId })

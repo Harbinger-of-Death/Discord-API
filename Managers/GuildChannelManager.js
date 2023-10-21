@@ -1,6 +1,6 @@
 const FetchedThreads = require("../Structures/FetchedThreads");
 const Invite = require("../Structures/Invite");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const ChannelManager = require("./ChannelManager");
 class GuildChannelManager extends ChannelManager {
     constructor(guildId, client, iterable) {
@@ -19,7 +19,7 @@ class GuildChannelManager extends ChannelManager {
     async _fetchId(channel, options = {}) {
         const channelId = typeof channel === "string" ? channel : channel?.id
         const { cache = true, force = false } = options
-        if(!SnowflakeRegex.test(channelId)) throw new RangeError(`Invalid Channel`)
+        if(!RegExes.SnowflakeRegExp.test(channelId)) throw new RangeError(`Invalid Channel`)
         if(this.cache.has(channelId) && !force) return this.cache.get(channelId)
         channel = await this.client.api.get(`${this.client.root}/channels/${channelId}`)
         if(this.guildId !== channel.guild_id) throw new RangeError(`Invalid Channel not in Guild`)
@@ -58,7 +58,7 @@ class GuildChannelManager extends ChannelManager {
 
     async edit(channel, options = {}) {
         const channelId = typeof channel === "string" ? channel : channel?.id
-        if(!this.cache.has(channelId) && !SnowflakeRegex.test(channelId)) throw new RangeError(`Invalid Channel`)
+        if(!this.cache.has(channelId) && !RegExes.SnowflakeRegExp.test(channelId)) throw new RangeError(`Invalid Channel`)
         const body = this.constructor.transformPayload(options)
         const { reason } = options
         channel = await this.client.api.patch(`${this.client.root}/channels/${channelId}`, { body, reason })
@@ -67,7 +67,7 @@ class GuildChannelManager extends ChannelManager {
 
     async delete(channel, reason) {
         const channelId = typeof channel === "string" ? channel : channel?.id
-        if(!SnowflakeRegex.test(channelId) && !this.cache.has(channelId)) throw new RangeError(`Invalid Channel`)
+        if(!RegExes.SnowflakeRegExp.test(channelId) && !this.cache.has(channelId)) throw new RangeError(`Invalid Channel`)
         channel = this.cache.get(channelId)
         await this.client.api.delete(`${this.client.root}/channels/${channelId}`, { reason })
         return channel ?? null
@@ -122,7 +122,7 @@ class GuildChannelManager extends ChannelManager {
 
     async sendTyping(channel) {
         const channelId = typeof channel === "string" ? channel : channel?.id
-        if(!this.cache.has(channelId) && !SnowflakeRegex.test(channelId)) throw new RangeError(`Invalid Channel`)
+        if(!this.cache.has(channelId) && !RegExes.SnowflakeRegExp.test(channelId)) throw new RangeError(`Invalid Channel`)
         await this.client.api.post(`${this.client.root}/channels/${channelId}/typing`)
         return this.cache.get(channelId)
     }

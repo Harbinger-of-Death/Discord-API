@@ -1,6 +1,6 @@
 const GuildMember = require("../Structures/GuildMember");
 const User = require("../Structures/User");
-const { OpCodes, SnowflakeRegex, EventTypes } = require("../Util/Constants");
+const { OpCodes, RegExes, EventTypes } = require("../Util/Constants");
 const Util = require("../Util/Util");
 const CachedManager = require("./CachedManager");
 class GuildMemberManager extends CachedManager  {
@@ -45,7 +45,7 @@ class GuildMemberManager extends CachedManager  {
     async _fetchId(member, options = {}) {
         const { cache = true, force = false } = options
         const memberId = typeof member === "string" ? member : member.id
-        if(!SnowflakeRegex.test(memberId)) throw new RangeError(`Invalid Guild Member`)
+        if(!RegExes.SnowflakeRegExp.test(memberId)) throw new RangeError(`Invalid Guild Member`)
         if(this.cache.has(memberId) && !force) return this.cache.get(memberId)
         member = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/members/${memberId}`)
         return this._add(member, { cache, force: true })
@@ -75,7 +75,7 @@ class GuildMemberManager extends CachedManager  {
 
     async edit(member, options = {}) {
         let memberId = typeof member === "string" ? member : member.id
-        if(!SnowflakeRegex.test(memberId)) throw new RangeError(`Invalid GuildMember`)
+        if(!RegExes.SnowflakeRegExp.test(memberId)) throw new RangeError(`Invalid GuildMember`)
         const { reason } = options
         const body =  GuildMemberManager.transformPayload(options)
         if(this.client.user.id === memberId && body.nick?.length) memberId = "@me"
@@ -85,7 +85,7 @@ class GuildMemberManager extends CachedManager  {
 
     async kick(member, reason) {
         const userId = typeof member === "string" ? member : member.id
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid GuildMember`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid GuildMember`)
         member = this.cache.get(userId)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/members/${userId}`, { reason })
         return member ?? null
@@ -93,21 +93,21 @@ class GuildMemberManager extends CachedManager  {
 
     async ban(member, options = {}) {
         const memberId = member instanceof GuildMember || member instanceof User ? member.id : member
-        if(!SnowflakeRegex.test(memberId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(memberId)) throw new RangeError(`Invalid User`)
         await this.client.guilds.cache.get(this.guildId)?.bans.create(member, options)
         return this.client.guilds.cache.get(this.guildId)?.members.cache.get(memberId) ?? this.client.users.cache.get(memberId) ?? null
     }
 
     async unban(member, reason) {
         const memberId = member instanceof User || member instanceof GuildMember ? member.id : member
-        if(!SnowflakeRegex.test(memberId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(memberId)) throw new RangeError(`Invalid User`)
         await this.client.guilds.cache.get(this.guildId)?.bans.remove(memberId, reason)
         return this.client.users.cache.get(memberId) ?? null
     }
 
     async addMember(user, options = {}) {
         const userId = user instanceof User || user instanceof GuildMember ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         const body = {
             access_token: options.accessToken,
             nick: options.nickname ?? options.nick,
@@ -122,7 +122,7 @@ class GuildMemberManager extends CachedManager  {
 
     async addRole(user, options = {}) {
         const userId = user instanceof User || user instanceof GuildMember ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         const { reason } = options
         await this.client.api.put(`${this.client.root}/guilds/${this.guildId}/members/${userId}/roles/${typeof options.role === "string" ? options.role : options.role?.id}`, { reason })
         return this._add(userId)
@@ -130,7 +130,7 @@ class GuildMemberManager extends CachedManager  {
 
     async removeRole(user, options = {}) {
         const userId = user instanceof User || user instanceof GuildMember ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         const { reason } = options
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/members/${userId}/roles/${typeof options.role === "string" ? options.role : options.role?.id}`, { reason })
         return this._add(userId)

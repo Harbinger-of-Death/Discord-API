@@ -1,7 +1,7 @@
 const Base = require("../Base/base");
 const ReactionManager = require("../Managers/ReactionManager");
 const Collection = require("../Util/Collection");
-const { SnowflakeRegex, NonSystemMessageTypes, MessageTypeEnums, RepliableMessageTypes } = require("../Util/Constants");
+const { RegExes, NonSystemMessageTypes, MessageTypeEnums, RepliableMessageTypes } = require("../Util/Constants");
 const MessageFlags = require("../Util/MessageFlags");
 const Snowflake = require("../Util/Snowflake");
 const Application = require("./Application");
@@ -157,7 +157,7 @@ class Message extends Base {
     async removeAttachment(attachment) {
         if(!attachment) return await this.removeAttachments()
         const attachmentId = attachment instanceof Attachment ? attachment.id : attachment
-        if(!SnowflakeRegex.test(attachmentId)) throw new RangeError(`Invalid Attachment`)
+        if(!RegExes.SnowflakeRegExp.test(attachmentId)) throw new RangeError(`Invalid Attachment`)
         if(!this.attachments.has(attachmentId)) throw new RangeError(`Attachment not found`)
         this.attachments.delete(attachmentId)
         return await this.edit({ attachments: [...this.attachments.keys()] })

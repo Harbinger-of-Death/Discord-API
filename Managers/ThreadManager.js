@@ -1,7 +1,7 @@
 const ThreadChannel = require("../Structures/ThreadChannel");
 const FetchedThreads = require("../Structures/FetchedThreads");
 const Message = require("../Structures/Message");
-const { SnowflakeRegex, ChannelTypesEnums } = require("../Util/Constants");
+const { RegExes, ChannelTypesEnums } = require("../Util/Constants");
 const CachedManager = require("./CachedManager");
 class ThreadManager extends CachedManager {
     constructor(guildId, channelId, client, iterable) {
@@ -25,7 +25,7 @@ class ThreadManager extends CachedManager {
 
     async createThreadFromMessage(message, options = {}) {
         const messageId = message instanceof Message ? message.id : message
-        if(!SnowflakeRegex.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId)) throw new RangeError(`Invalid Message`)
+        if(!RegExes.SnowflakeRegExp.test(messageId) && !this.client.channels.cache.get(this.channelId)?.messages.cache.has(messageId)) throw new RangeError(`Invalid Message`)
         const body = { name: options.name, auto_archive_duration: options.autoArchiveDuration, type: options.type ?? ChannelTypesEnums.PublicThread, invitable: options.invitable, rate_limit_per_user: options.rateLimitPerUser }
         const channel = await this.client.api.post(`${this.client.root}/channels/${this.channelId}/messages/${messageId}/threads`, { body })
         return this._add(channel, { cache: true })

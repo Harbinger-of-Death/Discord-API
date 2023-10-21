@@ -1,7 +1,7 @@
 const GuildMember = require("../Structures/GuildMember");
 const ThreadMember = require("../Structures/ThreadMember");
 const User = require("../Structures/User");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const CachedManager = require("./CachedManager");
 class ThreadMemberManager extends CachedManager {
     constructor(guildId, threadId, client) {
@@ -45,7 +45,7 @@ class ThreadMemberManager extends CachedManager {
     async _fetchId(member, options = {}) {
         const { cache = true, force = false } = options
         const memberId = member instanceof ThreadMember || member instanceof User || member instanceof GuildMember ? member.userId ?? member.id : member
-        if(!SnowflakeRegex.test(memberId)) throw new RangeError(`Invalid Member`)
+        if(!RegExes.SnowflakeRegExp.test(memberId)) throw new RangeError(`Invalid Member`)
         if(this.cache.has(memberId) && !force) return this.cache.get(memberId)
         const query = {
             withMember: options.withMember
@@ -56,14 +56,14 @@ class ThreadMemberManager extends CachedManager {
 
     async add(member = this.client.user.id) {
         const memberId = member instanceof ThreadMember || member instanceof User || member instanceof GuildMember ? member.userId ?? member.id : member
-        if(!SnowflakeRegex.test(memberId) && !this.cache.has(memberId)) throw new RangeError(`Invalid Member`)
+        if(!RegExes.SnowflakeRegExp.test(memberId) && !this.cache.has(memberId)) throw new RangeError(`Invalid Member`)
         await this.client.api.put(`${this.client.root}/channels/${this.threadId}/thread-members/${memberId === this.client.user.id ? `@me` : memberId}`)
         return this.cache.get(memberId)
     }
 
     async remove(member = this.client.user.id) {
         const memberId = member instanceof ThreadMember || member instanceof User || member instanceof GuildMember ? member.userId ?? member.id : member
-        if(!SnowflakeRegex.test(memberId) && !this.cache.has(memberId)) throw new RangeError(`Invalid Member`)
+        if(!RegExes.SnowflakeRegExp.test(memberId) && !this.cache.has(memberId)) throw new RangeError(`Invalid Member`)
         await this.client.api.delete(`${this.client.root}/channels/${this.threadId}/thread-members/${memberId === this.client.user.id ? `@me` : memberId}`)
         return this.cache.get(memberId) ?? null
     }

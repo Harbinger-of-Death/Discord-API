@@ -1,7 +1,7 @@
 const GuildBan = require("../Structures/GuildBan");
 const GuildMember = require("../Structures/GuildMember");
 const User = require("../Structures/User");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const CachedManager = require("./CachedManager");
 class GuildBanManager extends CachedManager {
     constructor(guildId, client) {
@@ -30,7 +30,7 @@ class GuildBanManager extends CachedManager {
     async _fetchId(user, options = {}) {
         const { cache = true, force = false } = options
         const userId = user instanceof User || user instanceof GuildMember ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         if(this.cache.has(userId) && !force) return this.cache.get(userId)
         const ban = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/bans/${userId}`)
         return this._add(ban, { cache, force: true }, { id: userId })
@@ -39,7 +39,7 @@ class GuildBanManager extends CachedManager {
     async create(user, options = {}) {
         const { reason, deleteMessageSeconds } = options
         const userId = user instanceof User || user instanceof GuildMember ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         const body = { deleteMessageSeconds }
         await this.client.api.put(`${this.client.root}/guilds/${this.guildId}/bans/${userId}`, { reason, body })
         return this._add({ user: userId }, { cache: false })
@@ -47,7 +47,7 @@ class GuildBanManager extends CachedManager {
 
     async remove(user, reason) {
         const userId = user instanceof User || user instanceof GuildMember ? user.id : user
-        if(!SnowflakeRegex.test(userId) && !this.cache.has(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId) && !this.cache.has(userId)) throw new RangeError(`Invalid User`)
         const ban = this.cache.get(userId)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/bans/${userId}`, { reason })
         return ban ?? null

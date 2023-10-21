@@ -55,7 +55,7 @@ class RoleManager extends CachedManager {
 
     async delete(role, reason) {
         const roleId = role instanceof Role ? role.id : role.id ?? role
-        if(!SnowflakeRegex.test(roleId)) throw new RangeError(`Invalid Role`)
+        if(!RegExes.SnowflakeRegExp.test(roleId)) throw new RangeError(`Invalid Role`)
         role = super.cache.get(roleId)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/roles/${roleId}`, { reason })
         return role ?? null

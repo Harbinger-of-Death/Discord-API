@@ -1,6 +1,6 @@
 const FormData = require("form-data");
 const Sticker = require("../Structures/Sticker");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const DataResolver = require("../Util/DataResolver");
 const Util = require("../Util/Util");
 const CachedManager = require("./CachedManager");
@@ -21,7 +21,7 @@ class GuildStickerManager extends CachedManager {
     async _fetchId(sticker, options = {}) {
         const { cache = true, force = false } = options
         const stickerId = sticker instanceof Sticker ? sticker.id : sticker
-        if(!SnowflakeRegex.test(stickerId)) throw new RangeError(`Invalid Sticker`)
+        if(!RegExes.SnowflakeRegExp.test(stickerId)) throw new RangeError(`Invalid Sticker`)
         if(this.cache.has(stickerId) && !force) return this.cache.get(stickerId)
         sticker = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/stickers/${stickerId}`)
         return this._add(sticker, { cache, force: true })
@@ -53,7 +53,7 @@ class GuildStickerManager extends CachedManager {
 
     async delete(sticker, reason) {
         const stickerId = sticker instanceof Sticker ? sticker.id : sticker
-        if(!SnowflakeRegex.test(stickerId)) throw new RangeError(`Invalid Sticker`)
+        if(!RegExes.SnowflakeRegExp.test(stickerId)) throw new RangeError(`Invalid Sticker`)
         sticker = this.cache.get(stickerId)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/stickers/${stickerId}`, { reason })
         return sticker ?? null

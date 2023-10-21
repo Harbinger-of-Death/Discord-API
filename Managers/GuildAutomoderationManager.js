@@ -1,5 +1,5 @@
 const AutoModeration = require("../Structures/AutoModeration")
-const { SnowflakeRegex } = require("../Util/Constants")
+const { RegExes } = require("../Util/Constants")
 const CachedManager = require("./CachedManager")
 class GuildAutomoderationManager extends CachedManager {
     constructor(guildId, client) {
@@ -18,7 +18,7 @@ class GuildAutomoderationManager extends CachedManager {
     async _fetchId(rule, options = {}) {
         const { cache = true, force = false } = options
         const ruleId = rule instanceof AutoModeration ? rule.id : rule
-        if(!SnowflakeRegex.test(ruleId)) throw new RangeError(`Invalid Auto Moderation Rule`)
+        if(!RegExes.SnowflakeRegExp.test(ruleId)) throw new RangeError(`Invalid Auto Moderation Rule`)
         if(this.cache.has(ruleId) && !force) return this.cache.get(ruleId)
         rule = await this.client.api.get(`${this.client.root}/guilds/${this.guildId}/auto-moderation/rules/${ruleId}`)
         return this._add(rule, { cache, force: true })
@@ -33,7 +33,7 @@ class GuildAutomoderationManager extends CachedManager {
 
     async edit(rule, options = {}) {
         const ruleId = rule instanceof AutoModeration ? rule.id : rule
-        if(!SnowflakeRegex.test(ruleId)) throw new RangeError(`Invalid Auto Moderation Rule`)
+        if(!RegExes.SnowflakeRegExp.test(ruleId)) throw new RangeError(`Invalid Auto Moderation Rule`)
         const body = GuildAutomoderationManager.parseOptions(options)
         const { reason } = options
         rule = await this.client.api.patch(`${this.client.root}/guilds/${this.guildId}/auto-moderation/rules/${ruleId}`, { body, reason })
@@ -42,7 +42,7 @@ class GuildAutomoderationManager extends CachedManager {
 
     async delete(rule, reason) {
         const ruleId = rule instanceof AutoModeration ? rule.id : rule
-        if(!SnowflakeRegex.test(ruleId)) throw new RangeError(`Invalid Auto Moderation Rule`)
+        if(!RegExes.SnowflakeRegExp.test(ruleId)) throw new RangeError(`Invalid Auto Moderation Rule`)
         rule = this.cache.get(ruleId)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/auto-moderation/rules/${ruleId}`, { reason })
         return rule ?? null

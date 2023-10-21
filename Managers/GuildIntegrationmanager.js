@@ -1,5 +1,5 @@
 const GuildIntegration = require("../Structures/GuildIntegration");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const CachedManager = require("./CachedManager");
 class GuildIntegrationManager extends CachedManager {
     constructor(guildId, client) {
@@ -33,7 +33,7 @@ class GuildIntegrationManager extends CachedManager {
 
     async delete(integration, reason) {
         const integrationId = integration instanceof GuildIntegration ? integration.id : integration.id ?? integration
-        if(!SnowflakeRegex.test(integrationId) && !this.cache.has(integrationId)) throw new RangeError(`Invalid Integration`)
+        if(!RegExes.SnowflakeRegExp.test(integrationId) && !this.cache.has(integrationId)) throw new RangeError(`Invalid Integration`)
         integration = this.cache.get(integration)
         await this.client.api.delete(`${this.client.root}/guilds/${this.guildId}/integrations/${integrationId}`, { reason })
         return integration ?? null

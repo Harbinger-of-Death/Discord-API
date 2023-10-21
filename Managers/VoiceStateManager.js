@@ -1,7 +1,7 @@
 const { User } = require("discord.js");
 const GuildMember = require("../Structures/GuildMember");
 const VoiceState = require("../Structures/VoiceState");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const Util = require("../Util/Util");
 const CachedManager = require("./CachedManager");
 class VoiceStateManager extends CachedManager {
@@ -16,7 +16,7 @@ class VoiceStateManager extends CachedManager {
 
     async modifyUserVoice(user, options = {}) {
         let userId = user instanceof User || user instanceof GuildMember ? user.id : user
-        if(!SnowflakeRegex.test(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
         const channelId = typeof options.channel === "string" ? options.channel : options.channel?.id
         if(!this.client.channels.cache.has(channelId) && options.channel) throw new RangeError(`Invalid Channel`)
         const body = {

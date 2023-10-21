@@ -1,7 +1,7 @@
 const ClientUser = require("../Structures/ClientUser");
 const GuildMember = require("../Structures/GuildMember");
 const User = require("../Structures/User");
-const { SnowflakeRegex } = require("../Util/Constants");
+const { RegExes } = require("../Util/Constants");
 const EmojiResolver = require("../Util/EmojiResolver");
 const CachedManager = require("./CachedManager");
 class ReactionUserManager extends CachedManager {
@@ -32,7 +32,7 @@ class ReactionUserManager extends CachedManager {
 
     async remove(user = this.client.user.id) {
         const userId = user instanceof User || user instanceof GuildMember ? user.id : user
-        if(!SnowflakeRegex.test(userId) && !this.cache.has(userId)) throw new RangeError(`Invalid User`)
+        if(!RegExes.SnowflakeRegExp.test(userId) && !this.cache.has(userId)) throw new RangeError(`Invalid User`)
         const emoji = await EmojiResolver.create(this.emoji, this.client)
         await this.client.api.delete(`${this.client.root}/channels/${this.channelId}/messages/${this.messageId}/reactions/${emoji}/${userId}`)
         return this.cache.get(userId) ?? null
