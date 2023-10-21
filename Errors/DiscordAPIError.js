@@ -2,7 +2,7 @@ class DiscordAPIError extends TypeError {
     constructor(data = {}) {
         super(data.message)
         this.name = `DiscordAPIError[${data.code ?? data.httpError}]`
-        this.message = `${data.message}${data.rawError ? `\n${this.parseErrorObject(data.rawError)}` : ""}`
+        this.message = Object.values(data.rawError ?? {}).length ? `${data.message}${data.rawError ? `\n${this.parseErrorObject(data.rawError)}` : ""}` : data.message
         this.method = data.method
         this.code = data.code ?? 0
         this.httpError = data.httpError
