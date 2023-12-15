@@ -3,6 +3,12 @@ module.exports.RegExes = {
     SNAKE_CASE_REGEXP: /^([A-Za-z]+_)*[A-Za-z]+$/
 }
 
+module.exports.InviteTypes = {
+    Guild: 0,
+    GroupDm: 1,
+    Friend: 2
+}
+
 module.exports.MessageTypeEnums = {
     Default: 0,
     RecipientAdd: 1,
