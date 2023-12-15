@@ -757,6 +757,10 @@ export interface CdnEndpoints {
      * Forms a Guild Member Banner url
      */
     GuildMemberBanner: (banner: string, extension: ImageFormatWithoutLottie, size: number, forceStatic: boolean, guildId: string, userId: string) => string
+    /**
+     * Forms a Guild Home Page Background url
+     */
+    GuildHomeHeader: (homeHeader: string, extension: ImageFormatWithoutAnimate, size: number, guildId: string) => string
 }
 
 export interface ImageURLOptions<T = undefined> {

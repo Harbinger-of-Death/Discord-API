@@ -205,6 +205,7 @@ class GuildManager extends CachedManager {
             features: payload.features ? this.parseFeatures(payload.features) : undefined,
             description: payload.description,
             premium_progress_bar_enabled: payload.premiumProgressBar,
+            home_header: payload.homeHeader ? await Util.generateDataURI(payload.homeHeader) : undefined,
             safety_alerts_channel_id: typeof payload.safetyAlertsChannel === "string" ? payload.safetyAlertsChannel : payload.safetyAlertsChannel?.id
         } 
     }

@@ -585,6 +585,9 @@ module.exports.CdnEndPoints = {
     ApplicationAsset: (asset, extension = ".png", size = 64, applicationId) => {
         return `${this.cdnRoot}/app-assets/${applicationId}/${asset}${extension}${size ? `?size=${size}` : ""}`
     },
+    GuildHomeHeader: (homeHeader, extension = ".jpg", size = 64, guildId) => {
+        return `${this.cdnRoot}/home-headers/${guildId}/${homeHeader}${extension}${size ? `?size=${size}` : ""}`
+    }
 }
 
 module.exports.WebsocketEvents = {

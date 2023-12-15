@@ -79,6 +79,7 @@ class Guild extends Base {
         this.joinedAt = data.joined_at ? new Date(data.joined_at) : null
         this.joinedTimestamp = this.joinedAt?.getTime() ?? null
         this.memberCount = data.member_count ?? null
+        this.homeHeader = data.home_header ?? null
         this.safetyAlertsChannelId = data.safety_alerts_channel_id ?? null
         this.bans = new GuildBanManager(this.id, this.client)
         this.members = new GuildMemberManager(this.id, data.members, this.client)
@@ -193,6 +194,10 @@ class Guild extends Base {
         return await this.edit({ premiumProgressBar, reason })
     }
 
+    async setHomeHeader(homeHeader, reason) {
+        return await this.edit({ homeHeader, reason })
+    }
+
     get systemChannel() {
         return this.client.channels.cache.get(this.systemChannelId) ?? null
     }
@@ -260,6 +265,11 @@ class Guild extends Base {
 
     async modifyWelcomeScreen(options = {}) {
         return await this.client.guilds.modifyGuildWelcomeScreen(this, options)
+    }
+
+    homeHeaderURL(options = {}) {
+        if(!this.homeHeader) return null;
+        return this.client.cdn.GuildHomeHeader(this.homeHeader, options.extension, options.size, this.id)
     }
 
     iconURL(options = {}) {
