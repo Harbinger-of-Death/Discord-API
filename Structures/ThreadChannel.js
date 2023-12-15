@@ -7,7 +7,6 @@ class ThreadChannel extends Channel {
     constructor(data = {}, client, extras) {    
         super(data, client, extras)
         this.userId = data.user_id ?? null
-        this.name = data.name ?? null
         this.lastMessageId = data.last_message_id ?? null
         this.rateLimitPerUser = data.rate_limit_per_user ?? null
         this.ownerId = data.owner_id ?? null
@@ -71,6 +70,13 @@ class ThreadChannel extends Channel {
         return await this.edit({ flags, reason })
     }
 
+    async addAppliedTags(appliedTags, reason) {
+        Array.isArray(appliedTags)
+        ? appliedTags?.map(d => this._data.applied_tags?.push(d))
+        : this._data.applied_tags?.push(d)
+        return await this.edit({ appliedTags: this._data.applied_tags, reason })
+    }
+
     async setAppliedTags(appliedTags, reason) {
         return await this.edit({ appliedTags, reason })
     }
@@ -89,61 +95,6 @@ class ThreadChannel extends Channel {
 
     async bulkDelete(messages, options = {}) {
         return await this.messages.bulkDelete(messages, options)
-    }
-
-    isCategory() {
-        if(this.type === ChannelTypesEnums.GuildCategory) return true;
-        return false;
-    }
-
-    isDM() {
-        if(this.type === ChannelTypesEnums.Dm) return true;
-        return false;
-    }
-
-    isGuildText() {
-        if(this.type === ChannelTypesEnums.GuildText) return true;
-        return false;
-    }
-
-    isText() {
-        if([ChannelTypesEnums.GuildText, ChannelTypesEnums.GuildVoice, ChannelTypesEnums.Dm, ChannelTypesEnums.GuildAnnouncement].includes(this.type)) return true;
-        return false;
-    }
-
-    isGuildVoice() {
-        if(this.type === ChannelTypesEnums.GuildVoice) return true;
-        return false;
-    }
-
-    isVoice() {
-        if([ChannelTypesEnums.GuildVoice, ChannelTypesEnums.GuildStageVoice].includes(this.type)) return true;
-        return false;
-    }
-
-    isThread() {
-        if([ChannelTypesEnums.PublicThread, ChannelTypesEnums.PrivateThread, ChannelTypesEnums.AnnouncementThread].includes(this.type)) return true;
-        return false;
-    }
-
-    isNews() {
-        if(this.type === ChannelTypesEnums.GuildAnnouncement) return true;
-        return false;
-    }
-
-    isStage() {
-        if(this.type === ChannelTypesEnums.GuildStageVoice) return true;
-        return false;
-    }
-
-    inGuild() {
-        if(this.guildId) return true;
-        return false;
-    }
-
-    isForum() {
-        if(this.type === ChannelTypesEnums.GuildForum) return true;
-        return false;
     }
 
     async fetchOwner(options = {}) {

@@ -1,5 +1,8 @@
 let increment = 0n
+
+
 class Snowflake {
+
     static generate(timestamp = Date.now()) {
         timestamp = BigInt(timestamp)
         if(increment >= 0xFFFn) increment = 0n
@@ -9,10 +12,10 @@ class Snowflake {
     static deconstruct(snowflake) {
         snowflake = BigInt(snowflake)
         return {
-            createdAt: new Date(parseInt((snowflake >> 22n) + Snowflake.DiscordEpoch)),
-            workerId: (snowflake & 0x3E0000n) >> 17n,
-            processId: (snowflake & 0x1F000n) >> 12n,
-            increment: snowflake & 0xFFFn,
+            createdAt: new Date(Number((snowflake >> 22n) + Snowflake.DiscordEpoch)),
+            workerId: (snowflake >> 17n) >> 0b11111n,
+            processId: (snowflake >> 12n) >> 0b11111n,
+            increment: snowflake & 0b111111111111n,
         }
     }
 }

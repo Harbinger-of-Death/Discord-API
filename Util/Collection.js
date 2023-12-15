@@ -40,6 +40,11 @@ class Collection extends Map {
         return [...this.entries()].map((val, index) => fn(val[1], val[0], index, this))
     }
 
+    mapVal(fn) {
+        if(typeof fn !== "function") throw new TypeError(`Fn must be a function`)
+        return [...this.values()].map((value, index) => fn(value, index, this))
+    }
+
     find(fn, thisArg) {
         if(typeof fn !== "function") throw new TypeError(`Fn must be a function`)
         if(typeof thisArg !== "undefined") fn = fn.bind(thisArg)

@@ -1,5 +1,6 @@
 const ActionRowBuilder = require("../Builders/ActionRowBuilder")
 const EmbedBuilder = require("../Builders/EmbedBuilder")
+const Collection = require("./Collection")
 const { InteractionResponsesEnums } = require("./Constants")
 const DataResolver = require("./DataResolver")
 const MessageFlags = require("./MessageFlags")
@@ -57,6 +58,7 @@ class DataPayload {
             username: payload.username,
             avatar_url: payload.avatar,
             thread_name: payload.threadName,
+            applied_tags: Array.isArray(payload.appliedTags) || payload.appliedTags instanceof Collection ? payload.appliedTags?.map(d => typeof d === "string" ? d : d.id) : [payload.appliedTags]
         }
     }
 
