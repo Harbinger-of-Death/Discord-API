@@ -6,7 +6,7 @@ const Permissions = require("../Util/Permissions");
 const Snowflake = require("../Util/Snowflake");
 const SlashOption = require("./SlashOption");
 const SlashSubCommandGroup = require("./SlashSubCommandGroup");
-const SlashSubCommand = require("./SlashSubcommand");
+const SlashSubCommand = require("./SlashSubCommand");
 
 class ApplicationCommand extends Base {
     constructor(data = {}, client, extras) {

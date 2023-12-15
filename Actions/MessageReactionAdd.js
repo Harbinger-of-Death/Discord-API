@@ -17,18 +17,21 @@ class MessageReactionAdd extends BaseAction {
             if(this.client.partials?.includes(PartialsEnums.Message) && !oldMessage) await channel.messages.fetch(packet.message_id)
             const message = channel.messages.cache.get(packet.message_id)
             const user = this.client.users.cache.get(packet.user_id)
+            const member = this.client.guilds.cache.get(packet.guild_id)?.members.cache.get(packet.user_id) ?? null
             if(message) {
                 let reaction = message.reactions.cache.get(reactionId)
                 if(reaction) {
                     if(reaction.count && oldMessage) reaction.count += 1
                     if(this.client.user.id === user?.id) reaction.me = true
                     reaction.users._add(user, { cache: true })
-                    return this.client.emit(EventTypes.MessageReactionAdd, reaction, user)
                 } else {
-                    const newReaction = message.reactions._add({ count: 1, me: this.client.user.id === user?.id, ...packet }, { cache: true })
-                    newReaction.users._add(user, { cache: true })
-                    return this.client.emit(EventTypes.MessageReactionAdd, newReaction, user)
+                    reaction = message.reactions._add({ count: 1, me: this.client.user.id === user?.id, ...packet }, { cache: true })
+                    reaction.users._add(user, { cache: true })
                 }
+
+                reaction.userId = packet.user_id
+                reaction.member = member
+                return this.client.emit(EventTypes.MessageReactionAdd, reaction, user)
             }
         }
     }   

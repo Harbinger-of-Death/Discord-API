@@ -65,13 +65,13 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         if(filter) {
             if(filter.type !== OptionTypesEnums.Mentionable) throw new RangeError(`Expected option type to be ${OptionTypesEnums.Mentionable}. Received=${filter.type}`)
             if(Object.hasOwn(this.data.resolved, "members") || Object.hasOwn(this.data.resolved, "users")) {
-                if(!this.guildId) return this.client.users._add(this.data.resolved?.users[filter.value], { cache: true, force: true })
+                if(!this.guildId) return this.client.users._add(this.data.resolved?.users[filter.value], { cache: false, force: true })
                 const resolvedMember = this.data.resolved?.members[filter.value]
                 resolvedMember["user"] = this.data.resolved?.users[filter.value]
-                return this.guild?.members._add(resolvedMember, { cache: true, force: true })
+                return this.guild?.members._add(resolvedMember, { cache: false, force: true })
             }
 
-            if(Object.hasOwn(this.data.resolved, "roles")) return this.guild?.roles._add(this.data.resolved?.roles[filter.value])
+            if(Object.hasOwn(this.data.resolved, "roles")) return this.guild?.roles._add(this.data.resolved?.roles[filter.value], { cache: false, force: true })
         }
 
         if(required) throw new RangeError(`Option has no such name found`)
@@ -85,7 +85,7 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         const filter = options.find(o => o.name === name)
         if(filter) {
             if(filter.type !== OptionTypesEnums.Role) throw new RangeError(`Expected option type to be ${OptionTypesEnums.Role}. Received=${filter.type}`)
-            if(this.guildId) return this.guild?.roles._add(this.data.resolved?.roles[filter.value])
+            if(this.guildId) return this.guild?.roles._add(this.data.resolved?.roles[filter.value], { cache: false, force: true })
             return null;
         }
 
@@ -99,7 +99,7 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         const filter = options.find(o => o.name === name)
         if(filter) {
             if(filter.type !== OptionTypesEnums.Channel) throw new RangeError(`Expected option type to be ${OptionTypesEnums.Channel}. Received=${filter.type}`)
-            return this.client.channels._add(this.data.resolved?.channels[filter.value])            
+            return this.client.channels._add(this.data.resolved?.channels[filter.value], { cache: false, force: true })            
         }
 
         if(required) throw new RangeError(`Option has no such name found`)
@@ -112,7 +112,7 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         const filter = options.find(o => o.name === name)
         if(filter) {
             if(filter.type !== OptionTypesEnums.User) throw new RangeError(`Expected option type to be ${OptionTypesEnums.User}. Received=${filter.type}`)
-            if(Object.hasOwn(this.data.resolved, "users")) return this.client.users._add(this.data.resolved?.users[filter.value])            
+            if(Object.hasOwn(this.data.resolved, "users")) return this.client.users._add(this.data.resolved?.users[filter.value], { cache: false, force: true })            
             return null;
         }
 
@@ -165,7 +165,7 @@ class ChatInputCommandInteractionOptionResolver extends Base {
         const filter = options.find(o => o.name === name)
         if(filter) {
             if(filter.type !== OptionTypesEnums.User) throw new RangeError(`Expected option type to be ${OptionTypesEnums.User}. Received=${filter.type}`)
-            if(this.guildId && Object.hasOwn(this.data.resolved, "members")) return this.guild?.members._add({ user: this.data.resolved?.users[filter.value], ...this.data.resolved?.members[filter.value] }, { cache: true })
+            if(this.guildId && Object.hasOwn(this.data.resolved, "members")) return this.guild.members._add(this.data.resolved.members[filter.value], { cache: false, force: true }, { id: filter.value, user: this.data.resolved.users[filter.value] })
         }
 
         if(required) throw new RangeError(`Option has no such name found`)

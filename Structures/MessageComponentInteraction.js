@@ -5,7 +5,10 @@ class MessageComponentInteraction extends BaseInteraction {
         super(data, guildId, client)
         this.componentType = data.data?.component_type ?? null
         this.customId = data.data?.custom_id ?? null
-        this.message = data.message ? this.channel?.messages._add(data.message) : null
+    }
+
+    get message() {
+        return this.channel?.messages._add(this._data?.message, { cache: true }) ?? null
     }
 
     get component() {

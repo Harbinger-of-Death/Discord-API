@@ -27,7 +27,6 @@ class ActionsManager extends Base {
             case OpCodes.Hello:
                 return new Hello(data, this.client)
         }
-        
         const Handler = PacketHandler[data.t]
         return Handler ? new Handler(this.client, data) : null
     }

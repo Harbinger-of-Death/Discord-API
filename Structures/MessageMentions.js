@@ -19,7 +19,7 @@ class MessageMentions extends Base {
 
     get members() {
         this._members = new Collection()
-        if(this._mentions?.length) this._mentions.map(o => this._members.set(o.id, this.guild?.members._add({ user: o, ...o.member }, { cache: true })))
+        if(this._mentions?.length) this._mentions.map(o => this._members.set(o.id, this.guild?.members._add({ user: o, ...o.member }, { cache: true }, { id: o.id })))
 
         return this._members
     }

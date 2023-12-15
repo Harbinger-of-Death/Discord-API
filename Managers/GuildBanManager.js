@@ -40,7 +40,7 @@ class GuildBanManager extends CachedManager {
         const { reason, deleteMessageSeconds } = options
         const userId = user instanceof User || user instanceof GuildMember ? user.id : user
         if(!RegExes.SnowflakeRegExp.test(userId)) throw new RangeError(`Invalid User`)
-        const body = { deleteMessageSeconds }
+        const body = { delete_message_seconds: deleteMessageSeconds }
         await this.client.api.put(`${this.client.root}/guilds/${this.guildId}/bans/${userId}`, { reason, body })
         return this._add({ user: userId }, { cache: false })
     }

@@ -33,6 +33,9 @@ const ThreadMemberFlags = require("./Util/ThreadMemberFlags");
 const UserFlags = require("./Util/UserFlags");
 const Util = require("./Util/Util");
 const GuildMember = require("./Structures/GuildMember");
+const Snowflake = require("./Util/Snowflake");
+const MessageReaction = require("./Structures/MessageReaction");
+const GuildBan = require("./Structures/GuildBan");
 //Root class
 module.exports.Client = Client;
 module.exports.WebhookClient = WebhookClient;
@@ -50,6 +53,7 @@ module.exports.EmbedBuilder = EmbedBuilder;
 module.exports.InputTextBuilder = InputTextBuilder;
 module.exports.AttachmentBuilder = AttachmentBuilder;
 //Utilities
+module.exports.Snowflake = Snowflake;
 module.exports.CollectorEventTypes = CollectorEventTypes;
 module.exports.ChannelTypesEnums = ChannelTypesEnums;
 module.exports.OptionTypesEnums = OptionTypesEnums;
@@ -95,7 +99,6 @@ module.exports.ApplicationRoleConnectionMetadataTypeEnums = ApplicationRoleConne
 module.exports.Collector = Collector;
 module.exports.MessageComponentCollector = MessageComponentCollector;
 module.exports.MessageCollector = MessageCollector;
-module.exports.CollectorEvents = CollectorEvents;
 //Bitfield Flags
 module.exports.Permissions = Permissions;
 module.exports.Intents = Intents;
@@ -111,5 +114,7 @@ module.exports.ThreadMemberFlags = ThreadMemberFlags;
 module.exports.REST = REST;
 //Instances
 module.exports.Message = Message;
+module.exports.MessageReaction = MessageReaction;
 module.exports.Interaction = Interaction;
 module.exports.GuildMember = GuildMember;
+module.exports.GuildBan = GuildBan;

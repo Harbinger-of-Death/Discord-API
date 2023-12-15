@@ -64,6 +64,7 @@ class InteractionCreate extends BaseAction {
                 interaction = Interaction
                 break;
         }
+
         interaction = new interaction(packet, packet.guild_id, this.client)
         return this.client.emit(EventTypes.InteractionCreate, interaction)
     }

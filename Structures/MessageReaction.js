@@ -11,7 +11,7 @@ class MessageReaction extends Base {
         this.channelId = data.channel_id ?? extras?.channelId ?? null
         this.messageId = data.message_id ?? extras?.messageId ?? null
         this.guildId = data.guild_id ?? extras?.guildId ?? null
-        this.member = this.guild?.members._add(data.member, { cache: true })
+        this.member = this.guild?.members._add(data.member, { cache: true }, { id: this.userId }) ?? null
         this.count = data.count ?? null
         this.me = data.me ?? null
         this.emoji = new ReactionEmoji(data.emoji, this.guildId, this, this.client)

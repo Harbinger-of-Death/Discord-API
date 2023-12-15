@@ -16,11 +16,12 @@ class MessageReactionRemove extends BaseAction {
             const message = channel.messages.cache.get(packet.message_id)
             if(message) {
                 const reactionId = packet.emoji?.id ?? packet.emoji?.name
-                const user = this.client.users.cache.get(packet.user_id ?? packet.member.user?.id)
+                const user = this.client.users.cache.get(packet.user_id)
                 let reaction = message.reactions.cache.get(reactionId)
                 if(reaction) {
                     if(reaction.count !== 0 && oldMessage) reaction.count--
                     reaction.users.cache.delete(user?.id)
+                    reaction.userId = packet.user_id
                     this.client.emit(EventTypes.MessageReactionRemove, reaction, user)
                     if(reaction.count <= 0) {
                         reaction.users.cache.clear()

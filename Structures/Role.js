@@ -115,7 +115,7 @@ class Role extends Base {
     }
 
     toString() {
-        return `<@&${this.id}>`
+        return this.id === this.guildId ? `@everyone` : `<@&${this.id}>`
     }
 
 }

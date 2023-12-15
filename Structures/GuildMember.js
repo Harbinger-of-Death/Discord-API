@@ -9,7 +9,7 @@ class GuildMember extends Base {
         Object.defineProperty(this, "_data", { value: data })
         this.guildId = extras.guildId ?? data.guild_id ?? null
         this.partial = data.partial ?? false
-        this.id = data.id ?? data.user?.id ?? null
+        this.id = data.id ?? data.user?.id ?? extras.id ??  null
         this.banner = data.banner ?? null
         this.nickname = data.nick ?? data.nickname ?? null
         this.avatar = data.avatar ?? null
@@ -23,11 +23,9 @@ class GuildMember extends Base {
         this.communicationDisabledUntil = data.communication_disabled_until ? new Date(data.communication_disabled_until) : null
         this.communicationDisabledUntilTimestamp = this.communicationDisabledUntil?.getTime() ?? null
         this.flags = new GuildMemberFlags(data.flags).freeze()
+        this.user = this.client.users._add(data.user ?? extras.user, { cache: true, force: true })
     }
     
-    get user() {
-        return this.client.users._add(this._data.user, { cache: true }) ?? null
-    }
 
     get roles() {
         const roles = this.guild?.roles.cache.filter(o => this._data.roles?.includes(o.id))
@@ -124,9 +122,9 @@ class GuildMember extends Base {
     manageable() {
         const me = this.guild?.me
         if(!me) throw new RangeError(`Guild me is uncached`)
-        if(this.user.id === this.client.user.id) return false;
-        if(this.user.id === this.guild.ownerId) return false;
-        if(this.client.user.id === this.guild.ownerId) return true;
+        if(this.user?.id === this.client.user?.id) return false;
+        if(this.user?.id === this.guild.ownerId) return false;
+        if(this.client.user?.id === this.guild.ownerId) return true;
         return me.roles.highest.comparePositionTo(this.roles.highest) > 0
     }
 
