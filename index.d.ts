@@ -1,4 +1,4 @@
-import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable, InteractionEditReplyOptions, WebhookResolvable, ChatInputCommandInteractionOptionData, RateLimitData, CollectorOptions, CollectorEvents, ThreadMemberFetchOptions, ModifyRoleConnection, ModifyRoleConnectionMetadata, RoleSubscriptionData, MediaFormats, MarkdownDiscordTimestamp, RestOptions, SelectMenuDefaultValues } from "./Typings/discord-api-types";
+import { ApplicationCommandData, ApplicationCommandFetchOptions, ApplicationCommandPermissions, ApplicationCommandResolvable, ApplicationFlagsResolvable, ApplicationFlagsStrings, ApplicationInstallParams, ArchiveThreadFetchOptions, BaseFetchOptions, BufferResolvable, CdnEndpoints, ChannelFlagsResolvable, ChannelFlagsString, PermissionOverwritesData, ChannelResolvable, ClientEvents, ClientOptions, ColorResolvable, ComponentEmoji, ComponentResolvable, CreateChannelData, CreateForumPostData, CreateGuildScheduledEventData, CreateGuildStickerData, CreateGuildTemplateData, CreateInviteData, CreateStageInstanceData, CreateTemplateFromGuildData, CreateThreadData, DateResolvable, EmbedAuthor, EmbedFields, EmbedFooter, EmbedImage, EmbedProvider, EmbedThumbnail, EmbedVideo, EmojiResolvable, ForumTagResolvable, GuildBanFetchOption, GuildCreateData, GuildFeatures, GuildFetchOptions, GuildIntegrationAccount, GuildMemberFetchOptions, GuildPruneOptions, GuildResolvable, GuildRoleCreateData, GuildScheduledEventEntityMetadata, GuildScheduledEventFetchOptions, GuildScheduledEventResolvable, GuildScheduledEventUserFetchOptions, GuildTemplateResolvable, HTTPOptions, ImageFormatWithoutLottie, ImageFormatWithoutLottieAnimate, ImageURLOptions, IntentsResolvable, IntentStrings, InteractionReplyOptions, InviteFetchOptions, InviteResolvable, Languages, Locales, MessageFetchOptions, MessageFlagsResolvable, MessageFlagsStrings, MessageOptionsData, MessageResolvable, ModifyApplicationCommandData, ModifyChannelPositionData, ModifyCurrentUserData, ModifyGuildMemberData, ModifyGuildRolePositions, ModifyGuildScheduledEventData, ModifyGuildWelcomeScreenData, ModifyVoiceStateData, MultiRoleResolvable, PartialChannelData, PartialGuildData, PermissionFlagsResolvable, PermissionFlagsStrings, RoleResolvable, RoleTags, Scopes, SelectMenuOptions, Choices, SnowflakeData, StickerResolvable, SystemChannelFlagsResolvable, SystemChannelFlagsStrings, UserFlagsResolvable, UserFlagsStrings, UserResolvable, WebhookPayloadOptions, WebsocketPayload, ModalFieldData, ModalData, ForumDefaultReactionEmoji, ChanenlOverwritesData, BaseOptions, MessageBulkResolvable, MessageDeleteBulkOptions, CreateGuildEmojiData, AuditLogEntryChanges, AuditLogEntryOptions, AuditLogFetchOptions, AutomoderationResolvable, AutoModerationActionData, CreateAutoModerationData, AutoModerationTriggerMetadata, InteractionWebhookOptions, BaseInteractionMixIns, ImageFormatWithPngLottie, WebhookClientOptions, WebhookMessageOptions, WebhookCreateOptions, ClientStatus, ActivityTimestamps, ActivityParty, ActivityAssets, ActivityButtons, ActivityFlagsResolvable, ActivityFlagsStrings, Oauth2Options, GroupDMChannelCreateOptions, AddRemoveRoleMember, CreateApplicationCommandPermission, CreateClientPresence, VoiceStateData, PartialEmoji, GuildMemberFlagsStrings, GuildMemberFlagsResolvable, PresenceStatus, Oauth2ClientOptions, TextInputComponent, EmojiIdentifierResolvable, InteractionEditReplyOptions, WebhookResolvable, ChatInputCommandInteractionOptionData, RateLimitData, CollectorOptions, CollectorEvents, ThreadMemberFetchOptions, ModifyRoleConnection, ModifyRoleConnectionMetadata, RoleSubscriptionData, MediaFormats, MarkdownDiscordTimestamp, RestOptions, SelectMenuDefaultValues, CacheOptions } from "./Typings/discord-api-types";
 import { EventEmitter } from "node:events"
 import { WebSocket } from "ws";
 import { Stream } from "stream"
@@ -5552,53 +5552,13 @@ export class ThreadChannel extends Channel {
      */
     public setAppliedTags(appliedTags: ForumTagResolvable[], reason?: string): Promise<this>
     /**
+     * Adds tags to the already applied ones
+     */
+    public addAppliedTags(appliedTags: ForumTagResolvable[] | ForumTagResolvable, reason?: string): Promise<this>
+    /**
      * Set the flags of this Thread
      */
     public setFlags(flags: Exclude<ChannelFlagsResolvable, "RequireTag">, reason?: string): Promise<this>
-    /**
-     * Whether or not this Channel is a Category Channel
-     */
-    public isCategory(): this is CategoryChannel
-    /**
-     * Whether or not this Channel is a DM Channel
-     */
-    public isDM(): this is DMChannel
-    /**
-     * Whether or not this Channel is a Text Channel
-     */
-    public isGuildText(): this is TextChannel
-    /**
-     * Whether or not this Channel is a Text Based Channel
-     */
-    public isText(): this is BaseGuildTextChannel | DMChannel | ThreadChannel | VoiceChannel
-    /**
-     * Whether or not this Channel is a Voice Channel
-     */
-    public isGuildVoice(): this is VoiceChannel
-    /**
-     * Whether or not this Channel is a Voice Based Channel
-     */
-    public isVoice(): this is VoiceBasedChannels
-    /**
-     * Whether or not this Channel is a Thread Channel
-     */
-    public isThread(): this is ThreadChannel
-    /**
-     * Whether or not this Channel is a News Channel
-     */
-    public isNews(): this is NewsChannel
-    /**
-     * Whether or not this Channel is a Stage Channel
-     */
-    public isStage(): this is StageChannel
-    /**
-     * Whether or not this Channel is in a Guild
-     */
-    public inGuild(): this is GuildChannel & ThreadChannel
-    /**
-     * Whether or not this Channel is a Forum Channel
-     */
-    public isForum(): this is ForumChannel
     /**
      * The Parent Channel of this Channel
      */
@@ -6942,6 +6902,10 @@ export class Collection<K, V> extends Map<K, V> {
      */
     public map<T = undefined>(fn: (value: V, key: K, index: number, collection: this) => T): Array<T>
     /**
+     * Maps the current Collection's values in to an Array
+     */
+    public mapVal<T = undefined>(fn: (value: V, index: number, collection: this) => T): Array<T>
+    /**
      * Finds a specific item in the Collection
      */
     public find(fn: (value: V, key: K) => boolean, thisArg?: any): V
@@ -6999,6 +6963,10 @@ export class Client extends EventEmitter {
     public constructor(options: ClientOptions)
     public on<K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => unknown): this
     public once<K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => unknown): this
+    /**
+     * This Client's Cache timeout
+     */
+    public cacheTimeout: number
     /**
      * The User representation of this Client
      */
