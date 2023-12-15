@@ -201,6 +201,10 @@ export interface Headers {
 
 export interface ClientOptions {
     /**
+     * The options for this Client's cache
+     */
+    cacheOptions?: CacheOptions
+    /**
      * The token of this Client
      */
     token: string
@@ -1499,6 +1503,10 @@ export interface WebhookPayloadOptions extends MessageOptionsData {
      * The name of the Thread to create
      */
     threadName?: string
+    /**
+     * The tags to apply to the Thread
+     */
+    appliedTags?: ForumTagResolvable[] | ForumTagResolvable
 }
 
 export interface ArchiveThreadFetchOptions {
@@ -2286,7 +2294,7 @@ export type UserFlagsResolvable = bigint | UserFlagsStrings
 export type UserFlagsStrings = "Staff" | "Partner" | "Hypesquad" | "BugHunterLevel1" | "HypeSquadOnlineHouse1" | "HypeSquadOnlineHouse2" | "HypeSquadOnlineHouse3" | "PremiumEarlySupporter" | "TeamPseudoUser" | "BugHunterLevel2" | "VerifiedBot" | "VerifiedDeveloper" | "CertifiedModerator" | "BotHttpInteractions" | "ActiveDeveloper" | "Spammer"
 export type ImageFormats = ".jpg" | ".jpeg" | ".png" | ".webp" | ".gif" | ".json"
 export type MediaFormats = ".mp3" | ".wav" | ".mp4" | ".webm" | ".pdf"
-export type Partials = "CHANNEL"
+export type Partials = "CHANNEL" | "MESSAGE"
 export type ChannelResolvable = string | Channel | GuildChannel | ThreadChannel
 export type ChannelFlagsResolvable = ChannelFlagsString | bigint
 export type ChannelFlagsString = "Pinned" | "RequireTag"

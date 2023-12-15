@@ -13,7 +13,6 @@ class Attachment extends Base {
     get filename() {
         return this.data?.filename ?? null
     }
-
     get description() {
         return this.data?.description ?? null
     }

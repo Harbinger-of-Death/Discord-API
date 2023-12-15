@@ -7,6 +7,7 @@ class Interaction extends Base {
     constructor(data = {}, guildId, client) {
         super(client)
         Object.defineProperties(this, {
+            _data: { value: data },
             _member: { value: data.member },
             _user: { value: data.user }
         })
@@ -24,14 +25,8 @@ class Interaction extends Base {
         this.createdTimestamp = this.createdAt?.getTime() ?? null
         this.replied = false
         this.webhook = new InteractionWebhook({ id: this.applicationId, interactionId: this.id, token: this.token, guildId: this.guildId, channelId: this.channelId }, this.client)
-    }
-
-    get member() {
-        return this.guild.members._add(this._member, { cache: true, force: true })
-    }
-
-    get user() {
-        return this.client.users._add(this._member?.user ?? this._user, { cache: true, force: true })
+        this.user = this.client.users._add(this._user ?? this._member.user, { cache: true, force: true }) ?? null
+        this.member = this.guild.members._add(this._member, { cache: true, force: true }, { id: this._user?.id }) ?? null
     }
 
     inGuild() {
@@ -87,7 +82,7 @@ class Interaction extends Base {
     }
 
     get channel() {
-        return this.guild?.channels.cache.get(this.channelId) ?? null
+        return this.guild?.channels.cache.get(this.channelId) ?? this.client.channels.cache.get(this.channelId) ?? null
     }
 }
 

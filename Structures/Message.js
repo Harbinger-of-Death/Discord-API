@@ -27,7 +27,7 @@ class Message extends Base {
             }
         })
         this.partial = data.partial ?? false
-        this.id = data.id ?? null
+        this.id = data.id ?? extras.id ?? null
         this.guildId = data.guild_id ?? extras?.guildId ?? null
         this.channelId = data.channel_id ?? extras?.channelId ?? null
         this.content = data.content ?? null
@@ -68,6 +68,8 @@ class Message extends Base {
             totalMonthsSubscribed: data.role_subscription_data.total_months_subscribed,
             renewal: data.role_subscription_data.is_renewal
         } : null
+        this.author = this.client.users._add(this._author, { cache: true, force: true }) ?? null
+        this.member = this.guild?.members._add(this._member, { cache: true, force: true }, { id: this._author?.id, user: this._author }) ?? null
     }
 
     inGuild() {
@@ -99,14 +101,6 @@ class Message extends Base {
     get system() {
         if(!NonSystemMessageTypes.includes(this.type)) return true;
         return false;
-    }
-
-    get member() {
-        return this.guild?.members._add({ user: this._author, ...this._member }, { cache: true }, { id: this._author?.id })
-    }
-
-    get author() {
-        return this.client.users._add(this._author, { cache: true })
     }
 
     get guild() {
