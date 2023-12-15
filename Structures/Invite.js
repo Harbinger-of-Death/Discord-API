@@ -7,6 +7,7 @@ class Invite extends Base {
     constructor(data = {}, client) {
         super(client)
         this.partial = data.partial ?? false
+        this.type = data.type ?? null
         this.code = data.code ?? null
         this.guild = this.client.guilds.cache.get(data.guild?.id) ?? new PartialInviteGuild(data.guild, this.client)
         this.channel = this.client.channels.cache.get(data.channel?.id) ?? new PartialInviteChannel(data.channel, this.client)
