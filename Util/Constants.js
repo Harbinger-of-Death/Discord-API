@@ -225,7 +225,8 @@ module.exports.EventTypes = {
     EmojiUpdate : "emojiUpdate",
     EmojiDelete : "emojiDelete",
     Ratelimit: "ratelimit",
-    GuildAuditLogEntryCreate: "guildAuditLogEntryCreate"
+    GuildAuditLogEntryCreate: "guildAuditLogEntryCreate",
+    VoiceChannelStatusUpdate: "voiceChannelStatusUpdate"
 }
 
 module.exports.WsCloseCodes = {
@@ -400,6 +401,8 @@ module.exports.AuditLogEventEnums = {
     AutoModerationUserCommunicationDisabled: 145,
     CreatorMonetizationRequestCreated: 150,
     CreatorMonetizationTermsAccepted: 151,
+    VoiceChannelStatusUpdate: 192,
+    VoiceChannelStatusDelete: 193
 }
 
 module.exports.AuditLogEventUpdate = [
@@ -661,7 +664,8 @@ module.exports.WebsocketEvents = {
     EmojiCreate: 'EMOJI_CREATE',
     EmojiUpdate: 'EMOJI_UPDATE',
     EmojiDelete: 'EMOJI_DELETE',
-    GuildAuditLogEntryCreate: "GUILD_AUDIT_LOG_ENTRY_CREATE"
+    GuildAuditLogEntryCreate: "GUILD_AUDIT_LOG_ENTRY_CREATE",
+    VoiceChannelStatusUpdate: "VOICE_CHANNEL_STATUS_UPDATE"
 }
 
 module.exports.WebsocketStatus = {

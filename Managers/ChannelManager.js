@@ -64,7 +64,6 @@ class ChannelManager extends CachedManager {
         return this.cache.get(channelId)
     }
 
-    
     static transformPayload(payload = {}) {
         return {
             name: payload.name,

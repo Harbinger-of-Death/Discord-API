@@ -21,7 +21,8 @@ class AuditLogEntry extends Base {
             membersRemoved: data.options.members_removed,
             messageId: data.options.messageId,
             roleName: data.options.role_name,
-            type: data.options.type  
+            type: data.options.type,
+            status: data.options.status
         } : null
         this.reason = data.reason ?? null
         this.createdAt = data.id ? Snowflake.deconstruct(data.id).createdAt : null
